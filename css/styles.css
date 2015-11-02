@@ -4,6 +4,7 @@ body {
     padding-top: 50px;
     font-family: "Roboto", "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-size: 14px;
+    height: 100%;
 }
 
 .navbar {
@@ -34,4 +35,57 @@ body {
 .content {
     padding: 40px 15px;
     text-align: center;
+}
+
+/*
+ ------------------------------------------------------------------------------------------
+                                      Splash Page
+ ------------------------------------------------------------------------------------------
+ */
+#brand-center
+{
+    position: absolute;
+    width: 100%;
+    left: 0;
+    text-align: center;
+    margin: auto;
+    color: #FFC627;
+}
+
+#nounderline {
+  text-decoration: none
+}
+
+.container {
+  min-height: 100%;
+}
+
+.jumbotron {
+  background-color: #FFFFFF;
+}
+
+.jumbotron .container .content .page-header h1 p {
+  font-size: 50px !important;
+  color: #8C1D40;
+}
+.jumbotron .container .content .page-header h2 p {
+  font-size: 40px !important;
+  color: #8C1D40;
+}
+
+.btn-default, .btn-default:hover {
+  background-color: #000000;
+  color: #FFFFFF;
+}
+
+#footer {
+  background-color: #2b2b2b;
+  text-align: center;
+}
+
+#footer .container {
+  position: relative !important;
+  clear:both !important;
+  padding-top:20px !important;
+  color: #FFFFFF !important;
 }
