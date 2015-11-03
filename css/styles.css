@@ -8,28 +8,28 @@ body {
 }
 
 .navbar {
-	font-size: 16px;
-	font-weight: bold;
-	background-color: #353535;
+    font-size: 16px;
+    font-weight: bold;
+    background-color: #353535;
 }
 
 #brand {
-	font-size: 24px;
+    font-size: 24px;
 }
 
 #brand,
 #navbar a {
-	color: #EDEDED; /* white */
-	transition: all 0.3s ease-in-out 0s;
+    color: #EDEDED; /* white */
+    transition: all 0.3s ease-in-out 0s;
 }
 
 #navbar .active {
-	background-color: #000000;
+    background-color: #000000;
 }
 
 #navbar a:hover,
 #navbar .active > a {
-	color: #FFB204; /* ASU gold */
+    color: #FFB204; /* ASU gold */
 }
 
 .content {
@@ -49,37 +49,40 @@ body {
     left: 0;
     text-align: center;
     margin: auto;
-    color: #FFC627;
+    color: #FFB204;
 }
 
-#nounderline {
-  text-decoration: none
+.btn {
+    background-color: #353535;
+    color: #FFFFFF;
+    font-size: 20px;
+    font-weight: bold;
+    text-decoration: none;
+    transition: all 0.3s ease-in-out 0s;
 }
 
-.container {
-  min-height: 100%;
+.btn:hover {
+    background-color: #000000;
+    color: #FFB204;
 }
 
-.jumbotron {
-  background-color: #FFFFFF;
-}
-
-.jumbotron .container .content .page-header h1 p {
+h1 {
   font-size: 50px !important;
   color: #8C1D40;
 }
-.jumbotron .container .content .page-header h2 p {
+
+h2 {
   font-size: 40px !important;
   color: #8C1D40;
 }
 
-.btn-default, .btn-default:hover {
-  background-color: #000000;
-  color: #FFFFFF;
+h1 > .glyphicon-menu-left,
+h1 > .glyphicon-menu-right {
+    color: #FFC627;
 }
 
 #footer {
-  background-color: #2b2b2b;
+  background-color: #353535;
   text-align: center;
 }
 
