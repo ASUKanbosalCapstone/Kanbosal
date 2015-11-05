@@ -38,15 +38,16 @@ body {
 }
 
 a:hover {
-  border-bottom: 1px dotted #D23153;
+  /*border-bottom: 1px dotted #D23153;*/
   color: #D23153;
   text-decoration: none;
 }
 
 a {
-  border-bottom: 1px dotted #A30046;
+  /*border-bottom: 1px dotted #A30046;*/
   color: #A30046;
   text-decoration: none;
+  transition: all 0.25s ease-in-out 0s;
 }
 
 /*
@@ -111,6 +112,10 @@ h1 > .glyphicon-menu-right {
                                       Overview Page
  ------------------------------------------------------------------------------------------
  */
+h4 > a {
+    border-bottom: 1px dotted #A30046;
+}
+
 .vert-panels {
   /*margin: 15px 15px 0 0;*/
   /*position: absolute;*/
@@ -140,6 +145,7 @@ h1 > .glyphicon-menu-right {
   margin: 0 0.5% 5px 0.5%;
   padding: 15px;
   z-index: 100;
+}
 
 /*
  ------------------------------------------------------------------------------------------
