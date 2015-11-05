@@ -52,7 +52,7 @@ body {
     color: #FFB204;
 }
 
-.btn {
+a.btn {
     background-color: #353535;
     color: #FFFFFF;
     font-size: 20px;
@@ -61,7 +61,9 @@ body {
     transition: all 0.3s ease-in-out 0s;
 }
 
-.btn:hover {
+a.btn:focus,
+a.btn:active,
+a.btn:hover {
     background-color: #000000;
     color: #FFB204;
 }
@@ -91,4 +93,92 @@ h1 > .glyphicon-menu-right {
   clear:both !important;
   padding-top:20px !important;
   color: #FFFFFF !important;
+}
+
+/*
+ ------------------------------------------------------------------------------------------
+                                      Sidebar and Content
+ ------------------------------------------------------------------------------------------
+ */
+#mainview {
+    padding-left: 0px;
+    transition: all 0.5s ease;
+}
+
+#mainview.toggled {
+    width: 80%;
+    padding-left: 200px;
+}
+
+#sidebar {
+    z-index: 1000px;
+    position: fixed;
+    left: 250px;
+    width: 0px;
+    height: 100%;
+    margin-left: -250px;
+    overflow-y: auto;
+    background-color: #353535;
+    transition: all 0.5s ease;
+}
+
+#mainview.toggled #sidebar {
+    width: 200px;
+}
+
+#contentview {
+    width: 100%;
+    position: absolute;
+    padding-left: 50px;
+    padding-right: 50px;
+    transition: all 0.5s ease;
+}
+
+#mainview.toggled #contentview {
+    width: 100%;
+    position: absolute;
+    padding-left: 15px;
+    padding-right: 250px;
+}
+
+#mainview.toggled #contentview {
+    position: absolute;
+    margin-right: -250px;
+}
+
+.sidebar-nav {
+    position: absolute;
+    top: 0px;
+    width: 200px;
+    margin: 0px;
+    padding: 0px;
+    list-style: none;
+    font-size: 16px;
+    font-weight: bold;
+    background-color: #353535;
+}
+
+.sidebar-nav li {
+    text-indent: 20px;
+    line-height: 40px;
+}
+
+.sidebar-nav li a {
+    display: block;
+    text-decoration: none;
+    color: #EDEDED; /* white */
+    transition: all 0.3s ease-in-out 0s;
+}
+
+.sidebar-nav li a:hover {
+    text-decoration: none;
+    color: #FFB204;
+    background-color: #000000;
+}
+
+.sidebar-nav li.active,
+.sidebar-nav li a:focus {
+    text-decoration: none;
+    color: #FFB204;
+    background-color: #000000;
 }
