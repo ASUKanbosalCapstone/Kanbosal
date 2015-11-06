@@ -112,6 +112,7 @@ h1 > .glyphicon-menu-right {
                                       Overview Page
  ------------------------------------------------------------------------------------------
  */
+
 h4 > a {
     border-bottom: 1px dotted #A30046;
 }
@@ -146,6 +147,37 @@ h4 > a {
   padding: 15px;
   z-index: 100;
 }
+
+/*
+ ------------------------------------------------------------------------------------------
+                                    Detailed Grant Page
+ ------------------------------------------------------------------------------------------
+ */
+
+.container > .progress {
+  position: relative;
+  top: 2em;
+  height: 1.5em;
+}
+
+.asu-progressbar {
+  background-color: #FFB204 !important;
+  color: #a30046;
+  text-shadow: 0 1px 0px rgba(0,0,0,0.9);
+}
+
+.vert-panels.three-set > div {
+  text-align: center;
+  width: 30%;
+  border-top: 8px solid #a30046 !important;
+  border: 1px solid #e9e9e9;
+  display: inline-block;
+  margin: 50px 1.52% 0 1.52%;
+  padding: 15px;
+  float: inherit;
+  z-index: 50;
+}
+
 
 /*
  ------------------------------------------------------------------------------------------
