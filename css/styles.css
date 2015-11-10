@@ -178,6 +178,24 @@ h4 > a {
   z-index: 50;
 }
 
+.detail-cards > div  {
+  width: 30%;
+  display: inline-block;
+  float: inherit;
+  text-align: center;
+	color: black;
+	text-shadow: 1px 1px white;
+  margin: 5px 1.52% 0 1.52%;
+  background-color: white;
+  background-image: repeating-linear-gradient(45deg, transparent, transparent 35px, rgba(210, 50, 50, 0.5) 35px, rgba(210, 50, 50, 0.5) 70px);
+}
+
+.detail-cards .assigned-person {
+  float: right;
+  margin: 0.25em;
+  width: 12%;
+}
+
 
 /*
  ------------------------------------------------------------------------------------------
