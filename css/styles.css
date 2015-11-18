@@ -231,16 +231,17 @@ h4 > a {
 #contentview {
     width: 100%;
     position: absolute;
+    padding-top: 50px;
     padding-left: 50px;
-    padding-right: 50px;
+    padding-right: 0px;
     transition: all 0.5s ease;
 }
 
 #mainview.toggled #contentview {
-    width: 85%;
+    width: 86%;
     position: absolute;
     padding-left: 50px;
-    padding-right: 250px;
+    padding-right: 0px;
 }
 
 #mainview.toggled #contentview {
@@ -298,8 +299,8 @@ h4 > a {
 
 #toggleIcon.toggled .glyphicon {
     color: #FFB204;
-    -ms-transform: rotateY(180deg); /* IE 9 */
-    -webkit-transform: rotateY(180deg); /* Chrome, Safari, Opera */
+    -ms-transform: rotateY(180deg);
+    -webkit-transform: rotateY(180deg);
     transform: rotateY(180deg);
 }
 
