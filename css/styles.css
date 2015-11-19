@@ -174,19 +174,23 @@ h4 > a {
     display: inline-block;
     margin: 50px 1.52% 0 1.52%;
     padding: 15px;
-    float: inherit;
     z-index: 50;
 }
 
 .detail-cards > div  {
     width: 30%;
-    display: inline-block;
-    float: inherit;
-    text-align: center;
-    color: #000000;
     margin: 5px 1.52% 0 1.52%;
-    background-color: #67ed64;
-    box-shadow: 0 0 5px 2px rgba(0,0,0,.35);
+    float: left;
+}
+
+.detail-cards > div > div {
+  width: 100%;
+  display: inline-block;
+  float: left;
+  text-align: center;
+  color: #000000;
+  margin: 5px 0% 0 0%;
+  background-color: #67ed64;
 }
 
 .detail-cards .assigned-person {
