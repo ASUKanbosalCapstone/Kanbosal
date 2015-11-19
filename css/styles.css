@@ -183,11 +183,10 @@ h4 > a {
     display: inline-block;
     float: inherit;
     text-align: center;
-    color: black;
-    text-shadow: 1px 1px white;
+    color: #000000;
     margin: 5px 1.52% 0 1.52%;
-    background-color: white;
-    background-image: repeating-linear-gradient(45deg, transparent, transparent 35px, rgba(210, 50, 50, 0.5) 35px, rgba(210, 50, 50, 0.5) 70px);
+    background-color: #67ed64;
+    box-shadow: 0 0 5px 2px rgba(0,0,0,.35);
 }
 
 .detail-cards .assigned-person {
@@ -220,7 +219,7 @@ h4 > a {
     height: 100%;
     margin-left: -250px;
     overflow-y: auto;
-    background-color: #353535;
+    background-color: #4b4b4b;
     transition: all 0.5s ease;
 }
 
