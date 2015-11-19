@@ -179,24 +179,33 @@ h4 > a {
 
 .detail-cards > div  {
     width: 30%;
+    position: relative;
     margin: 5px 1.52% 0 1.52%;
     float: left;
 }
 
-.detail-cards > div > div {
+.detail-card {
   width: 100%;
-  display: inline-block;
+  height: 100%;
+  position: relative;
   float: left;
   text-align: center;
   color: #000000;
-  margin: 5px 0% 0 0%;
+  margin: 5px 0 5px 0;
   background-color: #67ed64;
 }
 
-.detail-cards .assigned-person {
+.detail-card .assigned-person {
     float: right;
-    margin: 0.25em;
+    margin: 0 0.25em 0.5em 0.25em;
     width: 12%;
+}
+
+.detail-card-placeholder {
+    border: 1px dotted black;
+    margin: 2px;
+    margin-bottom: 5px;
+    height: 100%;
 }
 
 
