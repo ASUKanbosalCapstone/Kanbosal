@@ -24,7 +24,7 @@
       <div class="navbar-header">
         <div class="btn-group">
           <a id="brand" class="navbar-brand" href="" data-toggle="dropdown" type="button" aria-haspopup="true" aria-expanded="false">
-            NSF Grant Kanbosal Board
+            NSF Career Proposal
           </a>
         </div>
       </div>
@@ -44,7 +44,6 @@
   <div id="mainview">
     <!-- Sidebar -->
     <div id="sidebar"></div>
-
     <div class="container">
       <div class="progress">
         <div class="progress-bar asu-progressbar progress-bar-striped active" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%">
@@ -75,26 +74,33 @@
       </div>
       <div class="container detail-cards">
         <div class="detail-column">
-          <div class="detail-card panel panel-default">
-            <div class="detail-card-header"><h3 class="detail-card-title">Summary Paragraph</h3></div>
-          </div><div class="detail-card panel panel-default">
-            <div class="detail-card-header"><h3 class="detail-card-title">Detail 4</h3></div>
+          <div class="detail-card panel panel-default" data-toggle="modal" data-target="#detailModal">
+            <div class="detail-card-header"><h3 class="detail-card-title">Cover Sheet</h3></div>
+          </div>
+          <div class="detail-card panel panel-default" data-toggle="modal" data-target="#detailModal">
+            <div class="detail-card-header"><h3 class="detail-card-title">Project Description</h3></div>
+          </div>
+          <div class="detail-card panel panel-default" data-toggle="modal" data-target="#detailModal">
+            <div class="detail-card-header"><h3 class="detail-card-title">Budget</h3></div>
+          </div>
+          <div class="detail-card panel panel-default" data-toggle="modal" data-target="#detailModal">
+            <div class="detail-card-header"><h3 class="detail-card-title">Budget Justification</h3></div>
           </div>
         </div>
         <div class="detail-column">
-          <div class="detail-card panel panel-default">
-            <div class="detail-card-header"><h3 class="detail-card-title">Detail 1</h3></div>
+          <div class="detail-card panel panel-default" data-toggle="modal" data-target="#detailModal">
+            <div class="detail-card-header"><h3 class="detail-card-title">References Cited</h3></div>
             <img class="assigned-person" src="resources/square-facebook-64.png">
             <img class="assigned-person" src="resources/square-facebook-64.png">
           </div>
-          <div class="detail-card panel panel-default">
-            <div class="detail-card-header"><h3 class="detail-card-title">Detail 2</h3></div>
+          <div class="detail-card panel panel-default" data-toggle="modal" data-target="#detailModal">
+            <div class="detail-card-header"><h3 class="detail-card-title">Biosketch</h3></div>
             <img class="assigned-person" src="resources/square-facebook-64.png">
           </div>
         </div>
         <div class="detail-column">
-          <div class="detail-card panel panel-default">
-            <div class="detail-card-header"><h3 class="detail-card-title">Detail 3</h3></div>
+          <div class="detail-card panel panel-default" data-toggle="modal" data-target="#detailModal">
+            <div class="detail-card-header"><h3 class="detail-card-title">Departmental Letter</h3></div>
           </div>
         </div>
       </div>
@@ -132,6 +138,31 @@
 
   <script src="javascript/sortable.js"></script>
   <script src="javascript/sidebar.js"></script>
+
+  <div class="modal fade" id="detailModal" tabindex="-1" role="dialog" aria-labelledby="detailModalLabel">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" id="myModalLabel">The Cover Sheet</h4>
+        </div>
+        <div class="modal-body">
+          <h2>Required</h2>
+          <ul>
+            <li><b>Program Solicitation Number</b></li>
+            <li><b>NSF Unit of Consideration</b></li>
+            <li><b>Project Title</b></li>
+            <li><b>Co-PIs</b></li>
+            <li><b>PI eligibility information</b></li>
+          </ul>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary">Open Document</button>
+        </div>
+      </div>
+    </div>
+  </div>
 
 </body>
 </html>
