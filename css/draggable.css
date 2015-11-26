@@ -1,9 +1,9 @@
 .column {
     width: 30%;
-    height: 600px;
+    min-height: 600px;
     float: left;
     margin-right: 5px;
-    padding-bottom: 100px;
+    margin-bottom: 50px;
 }
 
 .portlet {
