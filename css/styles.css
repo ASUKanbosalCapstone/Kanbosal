@@ -1,16 +1,26 @@
 @import url(https://fonts.googleapis.com/css?family=Roboto:100,300,400,400italic,700,700italic);
 
-body {
-    padding-top: 50px;
+html, body {
+    margin: 0;
+    padding: 0;
     font-family: "Roboto", "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-size: 14px;
     height: 100%;
+}
+
+#wrapper {
+    min-height: 100%;
+    position: relative;
 }
 
 .navbar {
     font-size: 16px;
     font-weight: bold;
     background-color: #353535;
+}
+
+#content {
+    padding: 50px 0 200px 0;
 }
 
 #brand {
@@ -95,17 +105,22 @@ h1 > .glyphicon-menu-right {
     color: #FFC627;
 }
 
-#footer {
+footer {
     background-color: #353535;
+    width: 100%;
+    min-height: 200px;
+    position: absolute;
+    bottom: 0;
+    color: #FFFFFF;
     text-align: center;
 }
 
-#footer .container {
+/*footer .container {
     position: relative !important;
     clear: both !important;
     padding-top: 20px !important;
     color: #FFFFFF !important;
-}
+}*/
 
 /*
  ------------------------------------------------------------------------------------------
@@ -247,7 +262,7 @@ h4 > a {
 }
 
 #sidebar {
-    z-index: 1000px;
+    z-index: 1000;
     position: fixed;
     left: 250px;
     width: 0px;
