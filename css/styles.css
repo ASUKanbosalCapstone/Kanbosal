@@ -5,7 +5,9 @@ html, body {
     padding: 0;
     font-family: "Roboto", "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-size: 16px;
+    font-weight: 300;
     height: 100%;
+    min-width: 850px;
 }
 
 #wrapper {
@@ -51,6 +53,7 @@ a:hover {
     /*border-bottom: 1px dotted #D23153;*/
     color: #D23153;
     text-decoration: none;
+    transition: all 0.25s ease-in-out 0s;
 }
 
 a {
@@ -110,13 +113,15 @@ h1 > .glyphicon-menu-right {
                                       Footer
  ------------------------------------------------------------------------------------------
  */
-
+/* TODO if horizontal scroll, the position needs
+    to be fixed (pun not intended), else it will scroll */
 footer {
     background-color: #353535;
     width: 100%;
     min-height: 170px;
     position: absolute;
     bottom: 0;
+    right: 0;
     color: #FFFFFF;
     z-index: 10000;
     padding: 20px 0 20px 0;
@@ -137,13 +142,6 @@ footer p, footer h2 {
     padding: 0 3% 0 3%;
 }
 
-/*footer .container {
-    position: relative !important;
-    clear: both !important;
-    padding-top: 20px !important;
-    color: #FFFFFF !important;
-}*/
-
 /*
  ------------------------------------------------------------------------------------------
                                       Overview Page
@@ -152,11 +150,6 @@ footer p, footer h2 {
 
 h4 > a {
     border-bottom: 1px dotted #A30046;
-}
-
-.vert-panels {
-    /*margin: 15px 15px 0 0;*/
-    /*position: absolute;*/
 }
 
 .vert-panels > div {
@@ -273,63 +266,48 @@ h4 > a {
                                       Sidebar and Content
  ------------------------------------------------------------------------------------------
  */
-#mainview {
-    padding-left: 0px;
-    transition: all 0.5s ease;
-}
-
-#mainview.toggled {
-    width: 100%;
-    padding-left: 200px;
-}
 
 #sidebar {
     z-index: 1000;
     position: fixed;
-    left: 250px;
-    width: 0px;
+    width: 20%;
     height: 100%;
-    margin-left: -250px;
+    overflow-x: hidden;
     overflow-y: auto;
-    background-color: #4b4b4b;
+    background-color: #404040;
+    min-width: 170px;
+    padding-bottom: 170px;
     transition: all 0.5s ease;
 }
 
-#mainview.toggled #sidebar {
-    width: 200px;
+#sidebar.toggled {
+    width: 0%;
+    min-width: 0;
+    transition: width 0.5s ease;
 }
 
 #contentview {
-    width: 100%;
-    position: absolute;
-    padding-top: 50px;
-    padding-left: 50px;
-    padding-right: 0px;
+    width: 78%;
+    position: relative;
+    margin-top: -20px;
+    margin-left: 22%;
     transition: all 0.5s ease;
 }
 
-#mainview.toggled #contentview {
-    width: 86%;
-    position: absolute;
-    padding-left: 50px;
-    padding-right: 0px;
-}
-
-#mainview.toggled #contentview {
-    position: absolute;
-    margin-right: -250px;
+#contentview.toggled {
+    width: 98%;
+    margin-left: 2%;
+    margin-right: 0px;
 }
 
 .sidebar-nav {
-    position: absolute;
-    top: 0px;
-    width: 200px;
+    width: 300px;
     margin: 0px;
     padding: 0px;
     list-style: none;
     font-size: 16px;
-    font-weight: bold;
-    background-color: #353535;
+    font-weight: 700;
+    background-color: #404040;
 }
 
 .sidebar-nav li {
@@ -344,31 +322,26 @@ h4 > a {
     transition: all 0.3s ease-in-out 0s;
 }
 
-.sidebar-nav li a:hover {
+.sidebar-nav li a:hover,
+.sidebar-nav li a:active {
     text-decoration: none;
     color: #FFB204;
     background-color: #000000;
 }
 
-.sidebar-nav li.active {
-    text-decoration: none;
-    color: #FFB204;
-    background-color: #000000;
+#menu-toggle {
+    transition: all 0.5s ease 0s;
+    padding: 20px 0 0 10px;
+    z-index: 500;
 }
 
-#toggleIcon {
-    padding: 20px;
-}
-
-#toggleIcon .glyphicon {
-    transition: all 0.3s ease-in-out 0s;
-}
-
-#toggleIcon .glyphicon:hover {
+#menu-toggle:hover {
     color: #FFB204;
 }
 
-#toggleIcon.toggled .glyphicon {
+#menu-toggle.toggled {
+    margin-left: 20%;
+    padding: 20px 10px 0 0;
     color: #FFB204;
     -ms-transform: rotateY(180deg);
     -webkit-transform: rotateY(180deg);

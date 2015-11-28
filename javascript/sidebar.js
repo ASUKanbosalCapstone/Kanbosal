@@ -1,23 +1,35 @@
-var source;
-var data = { grants: [
-    {name:"John Doe's Grant"},
-    {name:"Lowell's Grant"}
-]};
+
+var toggleElement = $('#menu-toggle');
+var template;
+var input = {
+    grants: [
+        {name: 'John Doe\'s Grant'},
+        {name: 'Lowell\'s Grant'},
+        {name: 'Another Grant'},
+        {name: 'And Another Grant'},
+        {name: 'And Another Grant'},
+        {name: 'And Another Grant'},
+        {name: 'And Another Grant'},
+        {name: 'And Another Grant'},
+        {name: 'And Another Grant'}]
+};
 
 $.ajax({
-    url : "templates/sidebar.html",
-    dataType: "html",
-    method: "GET",
+    url: 'templates/sidebar.html',
+    dataType: 'html',
+    method: 'GET',
     async: false,
     success: function(data) {
-        source = data;
+        template = Handlebars.compile(data);
+        $('#sidebar').html(template(input));
     }
 });
-var template = Handlebars.compile(source);
-$("#sidebar").html(template(data));
 
-$("#menu-toggle").click(function(e) {
-    e.preventDefault();
-    $("#mainview").toggleClass("toggled");
-    $("#toggleIcon").toggleClass("toggled");
+$(function() {
+    toggleElement.on('click', function(e) {
+        e.preventDefault();
+        $('#sidebar').toggleClass('toggled');
+        $('#contentview').toggleClass('toggled');
+        toggleElement.toggleClass('toggled');
+    });
 });
