@@ -29,35 +29,39 @@
 
     <!-- grant panels can be color coded when process is complete -->
     <div id="content">
-      <div id="overview-board">
-        <div class="container vert-panels">
-          <div class="vert-panel tab-top">
-            <h4>Research</h4>
+      <div id="sidebar" class="toggled"></div>
+      <div><a id="menu-toggle" class="glyphicon glyphicon-menu-right large"></a></div>
+      <div id="contentview" class="container-fluid toggled">
+        <!-- <div id="overview-board"> -->
+        <div class="container-fluid vert-panels">
+            <div class="vert-panel tab-top">
+              <h4>Research</h4>
+            </div>
+            <div class="vert-panel tab-top">
+              <h4>Internal</h4>
+            </div>
+            <div class="vert-panel tab-top">
+              <h4>ASU</h4>
+            </div>
+            <div class="vert-panel tab-top">
+              <h4>Complete</h4>
+            </div>
           </div>
-          <div class="vert-panel tab-top">
-            <h4>Internal</h4>
-          </div>
-          <div class="vert-panel tab-top">
-            <h4>ASU</h4>
-          </div>
-          <div class="vert-panel tab-top">
-            <h4>Complete</h4>
-          </div>
-        </div>
 
-        <div class="container grant-panels">
-          <!-- this will eventually be dynamic with injection from jQuery -->
-          <div class="grant-panel">
-            <div class="grant-info">
-              <h4><a href="detail.html">Sample NSF</a></h4>
+          <div class="container-fluid grant-panels">
+            <!-- this will eventually be dynamic with injection from jQuery -->
+            <div class="grant-panel">
+              <div class="grant-info">
+                <h4><a href="detail.html">Sample NSF</a></h4>
+              </div>
+            </div>
+            <div class="grant-panel">
+              <div class="grant-info">
+                <h4><a href="#">Grant Name</a></h4>
+              </div>
             </div>
           </div>
-          <div class="grant-panel">
-            <div class="grant-info">
-              <h4><a href="#">Grant Name</a></h4>
-            </div>
-          </div>
-        </div>
+        <!-- </div> -->
       </div>
     </div>
 
@@ -66,6 +70,7 @@
 
   <script src="javascript/handlebars-v4.0.4.js"></script>
   <script src="javascript/footer.js"></script>
+  <script src="javascript/sidebar.js"></script>
 
 </body>
 </html>
