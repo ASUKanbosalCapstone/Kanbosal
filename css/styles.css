@@ -22,7 +22,7 @@ html, body {
 }
 
 #content {
-    padding: 50px 0 300px 0; /* top >= height of navbar, bottom >= footer height */
+    padding: 50px 0 220px 0; /* top >= height of navbar, bottom >= footer height */
 }
 
 #brand {
@@ -140,6 +140,16 @@ footer h2 {
 
 footer p, footer h2 {
     padding: 0 3% 0 3%;
+}
+
+footer .col-4 {
+    width: 35%;
+    display: inline-block;
+}
+
+footer .col-2 {
+    width: 20%;
+    display: inline-block;
 }
 
 /*
