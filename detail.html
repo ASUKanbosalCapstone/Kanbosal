@@ -41,72 +41,77 @@
     </nav>
 
     <div id="content">
-      <!-- <div id="mainview"> -->
-      <!-- Sidebar -->
+      <!-- BEGIN sidebar -->
       <div id="sidebar" class="toggled"></div>
       <div id="menu-toggle" class="glyphicon glyphicon-menu-right large"></div>
+      <!-- END sidebar -->
+      
       <div id="contentview" class="container-fluid toggled">
-        <div class="container-fluid">
-          <div class="progress">
-            <div class="progress-bar asu-progressbar progress-bar-striped active" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%">
-              60% Complete
-            </div>
+        <div class="progress"> <!-- todo: use handlebars templating to inject data [#complete/#total + ((1/2) * #inprogress)/#total] -->
+          <div class="progress-bar asu-progressbar progress-bar-striped active" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%">
+            60% Complete
           </div>
         </div>
+        
         <!-- grant panels can be color coded when process is complete/on the next review stage/section -->
-        <div id="overview-board">
-          <div class="row">
-            <div class="container-fluid vert-panels three-set">
-              <div class="col-md-4">
-                <div class="vert-panel">
-                  <h4>Complete</h4>
-                </div>
-              </div>
-              <div class="col-md-4">
-                <div class="vert-panel">
-                  <h4>In Progress</h4>
-                </div>
-              </div>
-              <div class="col-md-4">
-                <div class="vert-panel">
-                  <h4>TODO</h4>
-                </div>
-              </div>
+
+        <!-- BEGIN column 1: To Do -->
+        <div class="column collapsed tab-top">
+          <h4>To Do</h4>
+          <div class="portlet panel panel-default">
+            <div class="portlet-header panel-heading"><h3 class="panel-title">Cover Sheet</h3></div>
+            <!-- <div class="portlet-content panel-body">{{ optional body }}</div> -->
+          </div>
+          <div class="portlet panel panel-default">
+            <div class="portlet-header panel-heading"><h3 class="panel-title">Project Description</h3></div>
+            <!-- <div class="portlet-content panel-body">{{ optional body }}</div> -->
+          </div>
+          <div class="portlet panel panel-default">
+            <div class="portlet-header panel-heading"><h3 class="panel-title">Budget</h3></div>
+            <!-- <div class="portlet-content panel-body">{{ optional body }}</div> -->
+          </div>
+          <div class="portlet panel panel-default">
+            <div class="portlet-header panel-heading"><h3 class="panel-title">Budget Justification</h3></div>
+            <!-- <div class="portlet-content panel-body">{{ optional body }}</div> -->
+          </div>
+        </div>
+        <!-- END column 1: To Do -->
+
+        <!-- BEGIN column 2: In Progress -->
+        <div class="column collapsed tab-top">
+          <h4>In Progress</h4>
+          <div class="portlet panel panel-default">
+            <div class="portlet-header panel-heading"><h3 class="panel-title">References Cited</h3></div>
+            <div class="portlet-content panel-body">
+              <span class="glyphicon glyphicon-file card-icons"></span>
+              <span class="glyphicon glyphicon-user assigned-person card-icons"></span>
+              <span class="glyphicon glyphicon-user assigned-person card-icons"></span>
             </div>
           </div>
-          <div class="container-fluid detail-cards">
-            <div class="detail-column">
-              <div class="detail-card panel panel-default" data-toggle="modal" data-target="#detailModal">
-                <div class="detail-card-header"><h3 class="detail-card-title">Cover Sheet</h3></div>
-              </div>
-              <div class="detail-card panel panel-default" data-toggle="modal" data-target="#detailModal">
-                <div class="detail-card-header"><h3 class="detail-card-title">Project Description</h3></div>
-              </div>
-              <div class="detail-card panel panel-default" data-toggle="modal" data-target="#detailModal">
-                <div class="detail-card-header"><h3 class="detail-card-title">Budget</h3></div>
-              </div>
-              <div class="detail-card panel panel-default" data-toggle="modal" data-target="#detailModal">
-                <div class="detail-card-header"><h3 class="detail-card-title">Budget Justification</h3></div>
-              </div>
-            </div>
-            <div class="detail-column">
-              <div class="detail-card panel panel-default" data-toggle="modal" data-target="#detailModal">
-                <div class="detail-card-header"><h3 class="detail-card-title">References Cited</h3></div>
-                <img class="assigned-person" src="resources/square-facebook-64.png">
-                <img class="assigned-person" src="resources/square-facebook-64.png">
-              </div>
-              <div class="detail-card panel panel-default" data-toggle="modal" data-target="#detailModal">
-                <div class="detail-card-header"><h3 class="detail-card-title">Biosketch</h3></div>
-                <img class="assigned-person" src="resources/square-facebook-64.png">
-              </div>
-            </div>
-            <div class="detail-column">
-              <div class="detail-card panel panel-default" data-toggle="modal" data-target="#detailModal">
-                <div class="detail-card-header"><h3 class="detail-card-title">Departmental Letter</h3></div>
-              </div>
+          <div class="portlet panel panel-default">
+            <div class="portlet-header panel-heading"><h3 class="panel-title">Biosketch</h3></div>
+            <div class="portlet-content panel-body">
+              <span class="glyphicon glyphicon-file card-icons"></span>
+              <span class="glyphicon glyphicon-folder-close card-icons"></span>
+              <span class="glyphicon glyphicon-user assigned-person card-icons"></span>
             </div>
           </div>
         </div>
+        <!-- END column 2: In Progress -->
+
+        <!-- BEGIN column 3: Complete -->
+        <div class="column collapsed tab-top">
+          <h4>Complete</h4>
+          <div class="portlet panel panel-default">
+            <div class="portlet-header panel-heading"><h3 class="panel-title">Departmental Letter</h3></div>
+            <div class="portlet-content panel-body">
+              <span class="glyphicon glyphicon-file card-icons"></span>
+              <span class="label label-success card-icons">Under Review</span>
+              <span class="glyphicon glyphicon-user assigned-person card-icons"></span>
+            </div>
+          </div>
+        </div>
+        <!-- END column 3: Complete -->
       </div>
     </div>
 

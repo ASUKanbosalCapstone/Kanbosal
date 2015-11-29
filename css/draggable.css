@@ -19,6 +19,10 @@
     text-align: center;
 }
 
+.panel-heading, .panel-body {
+    padding: 7px;
+}
+
 .portlet-placeholder {
     border: 1px dotted black;
     margin: 2px;
