@@ -14,46 +14,62 @@
             "Cards": [
               {
                 "Card_Name": "Cover Sheet",
-                "Modal_Body": "<h3>Required</h3><li><b>Program Solicitation Number</b></li><li><b>NSF Unit of Consideration</b></li><li><b>Project Title</b></li><li><b>Co-PIs</b></li><li><b>PI eligibility information</b></li>",
-                "Document_Link": "http://www.github.com",
-                "Assigned_People" : []
-              },
-              {
-                "Card_Name": "Project Description",
-                "Modal_Body": "<h3>Required</h3>",
-                "Document_Link": "http://www.github.com",
-                "Assigned_People" : []
+                "Modal_ID" : "Cover_Sheet",
+                "Modal_Body": "<h3>Required</h3><ul><li><b>Program Solicitation Number</b></li><li><b>NSF Unit of Consideration</b></li><li><b>Project Title</b></li><li><b>Co-PIs</b></li><li><b>PI eligibility information</b></li></ul>",
+                "Document_Link": "http://www.github.com"
               }
             ]
           },
 
           {
             "Column_Name" : "In Progress",
-            "Cards": [...]
+            "Cards": [
+              {
+                "Card_Name": "References Cited",
+                "Modal_ID" : "References_Cited",
+                "Modal_Body": "",
+                "Document_Link": "http://www.github.com",
+                "Assigned_People" : ["Waffles", "Waffles"]
+              }
+            ]
           },
 
           {
             "Column_Name" : "Complete",
-            "Cards": [...]
+            "Cards": [
+              {
+                "Card_Name": "Departmental Letter",
+                "Modal_ID" : "Departmental_Letter",
+                "Modal_Body": "",
+                "Document_Link": "http://www.github.com",
+                "Tag_List" : ["Under Review", "Complete"]
+              }
+            ]
           }
         ]
       }
     ]
   }
 
+  NOTE:
+    * Tag_List and Assigned_People are optional
+    * Rest of the fields are required
+
   Current Status:
     * Dynamic column generation
     * Dynamic card generation
-    * Display people, iff they are on a card.
+    * Displays body contents on In Progress or Complete column (People, Links, Tags)
+    * Supported Tags for Complete column are, Under Review and Complete
     * Sick documentation @see above
   TODO:
     * Support Comments
-    * Support Tags (e.g under review)
+    * Support additional tags
 
   @author: Morgan Nesbitt
 */
 
-var template;
+var cardTemplate;
+var modalTemplate;
 var grantName = "NSF Career";
 var jsonInfo;
 
@@ -67,7 +83,18 @@ $.ajax({
     method: 'GET',
     async: false,
     success: function(data) {
-        template = Handlebars.compile(data);
-        $('#columnList').html(template(jsonInfo));
+        cardTemplate = Handlebars.compile(data);
+        $('#columnList').html(cardTemplate(jsonInfo));
+    }
+});
+
+$.ajax({
+    url: 'templates/card_modal.html',
+    dataType: 'html',
+    method: 'GET',
+    async: false,
+    success: function(data) {
+        modalTemplate = Handlebars.compile(data);
+        $('#cardModals').html(modalTemplate(jsonInfo));
     }
 });
