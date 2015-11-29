@@ -187,6 +187,7 @@ h4 > a {
  */
 
 .modal {
+  padding-bottom: 5em;
   text-align: center;
 }
 
@@ -208,7 +209,7 @@ h4 > a {
 .container > .progress {
     position: relative;
     top: 2em;
-    height: 1.5em;
+    height: 1.3em;
 }
 
 .asu-progressbar {
