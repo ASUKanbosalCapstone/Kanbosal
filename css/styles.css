@@ -329,6 +329,7 @@ h4 > a {
 }
 
 #menu-toggle {
+    color: #A30046;
     transition: all 0.5s ease 0s;
     padding: 20px 0 0 10px;
     z-index: 500;
