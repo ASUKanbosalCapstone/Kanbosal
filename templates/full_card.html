@@ -5,14 +5,26 @@
     {{#if Cards}}
       {{#each Cards}}
         <div class="portlet panel panel-default">
-          <div class="portlet-header panel-heading"><h3 class="panel-title">{{Card_Name}}</h3></div>
-          {{#if Assigned_People}}
+          <div class="portlet-header panel-heading" data-toggle="modal" data-target="#{{Modal_ID}}"><h3 class="panel-title">{{Card_Name}}</h3></div>
+          {{#compare ../Column_Name "!=" "To Do"}}
             <div class="portlet-content panel-body">
-              {{#each Assigned_People}}
-                 <span class="glyphicon glyphicon-user assigned-person card-icons"></span>
-              {{/each}}
+              {{#if Document_Link}}
+                <a href="{{Document_Link}}"><span class="glyphicon glyphicon-file card-icons"></span></a>
+              {{/if}}
+              {{#compare ../Column_Name "Complete"}}
+                {{#if Tag_List}}
+                  {{#each Tag_List}}
+                    <span class="label label-success card-icons">{{this}}</span>
+                  {{/each}}
+                {{/if}}
+              {{/compare}}
+              {{#if Assigned_People}}
+                {{#each Assigned_People}}
+                  <span class="glyphicon glyphicon-user assigned-person card-icons"></span>
+                {{/each}}
+              {{/if}}
             </div>
-          {{/if}}
+          {{/compare}}
         </div>
       {{/each}}
     {{/if}}
