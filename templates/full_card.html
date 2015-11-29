@@ -1,0 +1,21 @@
+{{#if Grant_Columns}}
+  {{#each Grant_Columns}}
+  <div class="column collapsed tab-top">
+    <h4>{{Column_Name}}</h4>
+    {{#if Cards}}
+      {{#each Cards}}
+        <div class="portlet panel panel-default">
+          <div class="portlet-header panel-heading"><h3 class="panel-title">{{Card_Name}}</h3></div>
+          {{#if Assigned_People}}
+            <div class="portlet-content panel-body">
+              {{#each Assigned_People}}
+                 <span class="glyphicon glyphicon-user assigned-person card-icons"></span>
+              {{/each}}
+            </div>
+          {{/if}}
+        </div>
+      {{/each}}
+    {{/if}}
+  </div>
+  {{/each}}
+{{/if}}
