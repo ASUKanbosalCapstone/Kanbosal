@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet" integrity="sha256-MfvZlkHCEqatNoGiOXveE8FIwMzZg4W85qfrfIFBfYc= sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ==" crossorigin="anonymous">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js" integrity="sha512-K1qjQ+NcF2TYO/eI3M6v8EiNYZfA95pQumfvcVrTHtwQVDG+aHRqLi/ETn2uB+1JqwYqVG3LIvdm9lj6imS/pQ==" crossorigin="anonymous"></script>
+  <link rel="stylesheet" type="text/css" href="css/styles.css">
+  <title>Kanbosal - Overview</title>
+
+</head>
+<body>
+
+  <div id="wrapper">
+    <nav class="navbar navbar-fixed-top">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <a id="brand" class="navbar-brand" href="">ASU Grant Kanbosal Overview Board</a>
+        </div>
+        <div id="navbar" class="collapse navbar-collapse">
+          <ul class="nav navbar-nav navbar-right">
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <!-- grant panels can be color coded when process is complete -->
+    <div id="content">
+      <div id="sidebar" class="toggled"></div>
+      <div><a id="menu-toggle" class="glyphicon glyphicon-menu-right large"></a></div>
+      <div id="contentview" class="container-fluid toggled">
+        <!-- <div id="overview-board"> -->
+        <div class="container-fluid vert-panels">
+            <div class="vert-panel tab-top">
+              <h4>Research</h4>
+            </div>
+            <div class="vert-panel tab-top">
+              <h4>Internal</h4>
+            </div>
+            <div class="vert-panel tab-top">
+              <h4>ASU</h4>
+            </div>
+            <div class="vert-panel tab-top">
+              <h4>Complete</h4>
+            </div>
+          </div>
+
+          <div class="container-fluid grant-panels">
+            <!-- this will eventually be dynamic with injection from jQuery -->
+            <div class="grant-panel">
+              <div class="grant-info">
+                <h4><a href="detail.html">Sample NSF</a></h4>
+              </div>
+            </div>
+            <div class="grant-panel">
+              <div class="grant-info">
+                <h4><a href="#">Grant Name</a></h4>
+              </div>
+            </div>
+          </div>
+        <!-- </div> -->
+      </div>
+    </div>
+
+    <footer></footer>
+  </div>
+
+  <script src="javascript/handlebars-v4.0.4.js"></script>
+  <script src="javascript/footer.js"></script>
+  <script src="javascript/sidebar.js"></script>
+
+</body>
+</html>

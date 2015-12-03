@@ -1,7 +1,372 @@
-body {
-    padding-top:50px;
+@import url(https://fonts.googleapis.com/css?family=Roboto:100,300,400,400italic,700,700italic);
+
+html, body {
+    margin: 0;
+    padding: 0;
+    font-family: "Roboto", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 16px;
+    font-weight: 300;
+    height: 100%;
+    min-width: 850px;
 }
+
+#wrapper {
+    min-height: 100%;
+    position: relative;
+}
+
+.navbar {
+    font-size: 16px;
+    font-weight: bold;
+    background-color: #353535;
+}
+
+#content {
+    padding: 50px 0 220px 0; /* top >= height of navbar, bottom >= footer height */
+}
+
+#brand {
+    font-size: 24px;
+}
+
+#brand,
+#navbar a {
+    color: #EDEDED; /* white */
+    transition: all 0.3s ease-in-out 0s;
+}
+
+#navbar .active {
+    background-color: #000000;
+}
+
+#navbar a:hover,
+#navbar .active > a {
+    color: #FFB204; /* ASU gold */
+}
+
 .content {
     padding: 40px 15px;
     text-align: center;
+}
+
+a:hover {
+    /*border-bottom: 1px dotted #D23153;*/
+    color: #D23153;
+    text-decoration: none;
+    transition: all 0.25s ease-in-out 0s;
+}
+
+a {
+    /*border-bottom: 1px dotted #A30046;*/
+    color: #A30046;
+    text-decoration: none;
+    transition: all 0.25s ease-in-out 0s;
+}
+
+/*
+ ------------------------------------------------------------------------------------------
+                                      Splash Page
+ ------------------------------------------------------------------------------------------
+ */
+#brand-center {
+    position: absolute;
+    width: 100%;
+    left: 0;
+    text-align: center;
+    margin: auto;
+    color: #FFB204;
+}
+
+a.btn {
+    background-color: #353535;
+    color: #FFFFFF;
+    font-size: 20px;
+    font-weight: bold;
+    text-decoration: none;
+    transition: all 0.3s ease-in-out 0s;
+}
+
+a.btn:focus,
+a.btn:active,
+a.btn:hover {
+    background-color: #000000;
+    color: #FFB204;
+}
+
+h1 {
+    font-size: 48px !important;
+    color: #8C1D40;
+}
+
+h2 {
+    font-size: 36px !important;
+    color: #8C1D40;
+}
+
+h1 > .glyphicon-menu-left,
+h1 > .glyphicon-menu-right {
+    color: #FFC627;
+}
+
+/*
+ ------------------------------------------------------------------------------------------
+                                      Footer
+ ------------------------------------------------------------------------------------------
+ */
+/* TODO if horizontal scroll, the position needs
+    to be fixed (pun not intended), else it will scroll */
+footer {
+    background-color: #353535;
+    width: 100%;
+    min-height: 170px;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    color: #FFFFFF;
+    z-index: 10000;
+    padding: 20px 0 20px 0;
+    font-weight: 300;
+}
+
+footer a {
+    color: #A9A9A9;
+    border-bottom: 1px dotted #A9A9A9;
+}
+
+footer h2 {
+    font-size: 21px !important;
+    color: #FFFFFF;
+}
+
+footer p, footer h2 {
+    padding: 0 3% 0 3%;
+}
+
+footer .col-4 {
+    width: 35%;
+    display: inline-block;
+}
+
+footer .col-2 {
+    width: 20%;
+    display: inline-block;
+}
+
+/*
+ ------------------------------------------------------------------------------------------
+                                      Overview Page
+ ------------------------------------------------------------------------------------------
+ */
+
+h4 > a {
+    border-bottom: 1px dotted #A30046;
+}
+
+.vert-panels > div {
+    width: 20%;
+    display: inline-block;
+    margin-right: 1.5%;
+    float: right;
+    z-index: 50;
+}
+
+.tab-top {
+    border-top: 8px solid #a30046 !important;
+    border: 1px solid #e9e9e9;
+    padding: 15px;
+}
+
+.grant-panels {
+    margin-top: -1px;
+}
+
+.grant-panels > div {
+    /*width: 99%;*/
+    border-left: 8px solid #a30046 !important;
+    border: 1px solid #e9e9e9;
+    display: block;
+    margin: 0 0.5% 5px 0.5%;
+    padding: 15px;
+    z-index: 100;
+}
+
+/*
+ ------------------------------------------------------------------------------------------
+                                    Detailed Grant Page
+ ------------------------------------------------------------------------------------------
+ */
+
+.modal {
+  padding-bottom: 5em;
+  text-align: center;
+}
+
+@media screen and (min-width: 768px) {
+  .modal:before {
+    display: inline-block;
+    vertical-align: middle;
+    content: " ";
+    height: 100%;
+  }
+}
+
+.modal-dialog {
+  display: inline-block;
+  text-align: left;
+  vertical-align: middle;
+}
+
+.container > .progress {
+    position: relative;
+    top: 2em;
+    height: 1.3em;
+}
+
+.asu-progressbar {
+    background-color: #FFB204 !important;
+    color: #a30046;
+    text-shadow: 0 1px 0px rgba(0,0,0,0.9);
+}
+
+.vert-panels.three-set > div {
+    text-align: center;
+    width: 30%;
+    border-top: 8px solid #a30046 !important;
+    border: 1px solid #e9e9e9;
+    display: inline-block;
+    margin: 50px 1.52% 0 1.52%;
+    padding: 15px;
+    z-index: 50;
+}
+
+.detail-cards > div  {
+    width: 30%;
+    position: relative;
+    margin: 5px 1.52% 0 1.52%;
+    float: left;
+}
+
+.detail-card {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  float: left;
+  text-align: center;
+  color: #000000;
+  margin: 5px 0 5px 0;
+  background-color: #67ed64;
+}
+
+.assigned-person {
+    float: right;
+}
+
+.card-icons {
+    margin: 0 5px;
+}
+
+.detail-card-placeholder {
+    border: 1px dotted black;
+    margin: 2px;
+    margin-bottom: 5px;
+    height: 100%;
+}
+
+
+/*
+ ------------------------------------------------------------------------------------------
+                                      Sidebar and Content
+ ------------------------------------------------------------------------------------------
+ */
+
+#sidebar {
+    z-index: 1000;
+    position: fixed;
+    width: 20%;
+    height: 100%;
+    overflow-x: hidden;
+    overflow-y: auto;
+    background-color: #404040;
+    min-width: 170px;
+    padding-bottom: 220px;
+    transition: all 0.5s ease;
+}
+
+#sidebar.toggled {
+    width: 0%;
+    min-width: 0;
+    transition: width 0.5s ease;
+}
+
+#contentview {
+    width: 78%;
+    position: relative;
+    margin-top: -20px;
+    margin-left: 22%;
+    transition: all 0.5s ease;
+}
+
+#contentview.toggled {
+    width: 98%;
+    margin-left: 2%;
+    margin-right: 0px;
+}
+
+.sidebar-nav {
+    width: 300px;
+    margin: 0px;
+    padding: 0px;
+    list-style: none;
+    font-size: 16px;
+    font-weight: 700;
+    background-color: #404040;
+}
+
+.sidebar-nav li {
+    text-indent: 20px;
+    line-height: 40px;
+}
+
+.sidebar-nav li a {
+    display: block;
+    text-decoration: none;
+    color: #EDEDED; /* white */
+    transition: all 0.3s ease-in-out 0s;
+}
+
+.sidebar-nav li a:hover,
+.sidebar-nav li a:active {
+    text-decoration: none;
+    color: #FFB204;
+    background-color: #000000;
+}
+
+#menu-toggle {
+    color: #A30046;
+    transition: all 0.5s ease 0s;
+    padding: 20px 0 0 10px;
+    z-index: 500;
+}
+
+#menu-toggle:hover {
+    color: #FFB204;
+}
+
+#menu-toggle.toggled {
+    margin-left: 20%;
+    padding: 20px 10px 0 0;
+    color: #FFB204;
+    -ms-transform: rotateY(180deg);
+    -webkit-transform: rotateY(180deg);
+    transform: rotateY(180deg);
+}
+
+/*
+ ------------------------------------------------------------------------------------------
+                                      About Page
+ ------------------------------------------------------------------------------------------
+ */
+
+#about-image {
+    margin: 0 auto;
 }
