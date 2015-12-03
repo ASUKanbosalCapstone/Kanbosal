@@ -73,28 +73,37 @@ var modalTemplate;
 var grantName = "NSF Career";
 var jsonInfo;
 
-$.getJSON( "json/cards.json", {}, function( data ) {
-  jsonInfo = data.Grants[0];
-});
-
-$.ajax({
-    url: 'templates/full_card.html',
-    dataType: 'html',
-    method: 'GET',
-    async: false,
-    success: function(data) {
-        cardTemplate = Handlebars.compile(data);
-        $('#columnList').html(cardTemplate(jsonInfo));
+$(document).ready(function(){
+  $.ajax({
+    url: "json/cards.json", // path to file
+    dataType: 'json', // type of file (text, json, xml, etc)
+    success: function(data) { // callback for successful completion
+      jsonInfo = data.Grants[0];
+    },
+    error: function() { // callback if there's an error
+      alert("error");
     }
-});
+  });
+  $.ajax({
+      url: 'templates/full_card.html',
+      dataType: 'html',
+      method: 'GET',
+      async: false,
+      success: function(data) {
+          cardTemplate = Handlebars.compile(data);
+          $('#columnList').html(cardTemplate(jsonInfo));
+      }
+  });
 
-$.ajax({
-    url: 'templates/card_modal.html',
-    dataType: 'html',
-    method: 'GET',
-    async: false,
-    success: function(data) {
-        modalTemplate = Handlebars.compile(data);
-        $('#cardModals').html(modalTemplate(jsonInfo));
-    }
+  $.ajax({
+      url: 'templates/card_modal.html',
+      dataType: 'html',
+      method: 'GET',
+      async: false,
+      success: function(data) {
+          modalTemplate = Handlebars.compile(data);
+          $('#cardModals').html(modalTemplate(jsonInfo));
+      }
+  });
+
 });
