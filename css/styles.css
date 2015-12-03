@@ -196,6 +196,15 @@ h4 > a {
  ------------------------------------------------------------------------------------------
  */
 
+#myModalLabel, #modalHeader > input:focus {
+  border:none;
+  outline: 0;
+  font-size: 36px !important;
+  height: 100%;
+  box-shadow: none;
+  color: #a30046;
+}
+
 .modal {
   padding-bottom: 5em;
   text-align: center;
