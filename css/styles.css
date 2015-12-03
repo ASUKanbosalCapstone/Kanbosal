@@ -196,6 +196,11 @@ h4 > a {
  ------------------------------------------------------------------------------------------
  */
 
+.editable {
+  border:none;
+  outline: 0;
+}
+
 #myModalLabel, #modalHeader > input:focus {
   border:none;
   outline: 0;
