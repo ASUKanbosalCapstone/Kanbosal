@@ -1,0 +1,31 @@
+.column {
+    width: 30%;
+    min-height: 600px;
+    float: left;
+    margin-right: 1.5%;
+    margin-left: 1.5%;
+}
+
+.portlet {
+    margin-bottom: 5px;
+}
+
+.portlet-header {
+    position: relative;
+}
+
+.panel-heading > h3 {
+    color: #8C1D40;
+    text-align: center;
+}
+
+.panel-heading, .panel-body {
+    padding: 7px;
+}
+
+.portlet-placeholder {
+    border: 1px dotted black;
+    margin: 2px;
+    margin-bottom: 5px;
+    height: 50px;
+}
