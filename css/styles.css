@@ -201,7 +201,7 @@ h4 > a {
   outline: 0;
 }
 
-#myModalLabel, #modalHeader > input:focus {
+#myModalLabel, #modalHeader > input:focus, #cardGenTitle, #cardGenTitle > input:focus {
   border:none;
   outline: 0;
   font-size: 36px !important;
