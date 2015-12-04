@@ -70,7 +70,9 @@
 
 var cardTemplate;
 var modalTemplate;
+var newCardTemplate;
 var grantName = "NSF Career";
+var cardGenInfo;
 var jsonInfo = {
   Grants: [
     {
@@ -143,6 +145,7 @@ var jsonInfo = {
     }
   ]
 };
+
 /*
 $.getJSON( "json/cards.json", {}, function( data ) {
   jsonInfo = data.Grants[0];
@@ -169,3 +172,47 @@ $.ajax({
         $('#cardModals').html(modalTemplate(jsonInfo.Grants[0]));
     }
 });
+
+$.ajax({
+    url : 'templates/newCard.html',
+    dataType: 'html',
+    method: 'GET',
+    success: function(data) {
+        newCardTemplate = Handlebars.compile(data);
+    }
+});
+
+$(function() {
+    $( "#cardGenCreate" ).click(function() {
+      var title = $("#cardGenTitle").val();
+      var body = $("#cardGenBody").html();
+      var documentLink = $("#cardGenDocLink").val();
+      var modalID = title.replace(" ", "-");
+      cardGenInfo = {
+          Card_Name: title,
+          Modal_ID: modalID
+      };
+      var modalLink = {
+        Grant_Columns : [
+          {
+            Cards: [
+              {
+                Card_Name: title,
+                Modal_ID : modalID,
+                Modal_Body: body,
+                Document_Link: documentLink
+              }
+            ]
+          }
+        ]
+      };
+      $("#columnList > div:first-child").append(newCardTemplate(cardGenInfo));
+      $('#cardModals').append(modalTemplate(modalLink));
+    });
+});
+
+$('#cardGen').on('hidden.bs.modal', function () {
+  $("#cardGenTitle").val("");
+  $("#cardGenBody").val("Enter card body here");
+  $("#cardGenDocLink").val("");
+})
