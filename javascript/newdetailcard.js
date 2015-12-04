@@ -16,6 +16,6 @@ $.ajax({
 $(function() {
     $('#new-card').on('click', function(e) {
         e.preventDefault();
-        $('#columnList > div:first-child').append(template(input));
+        $("#columnList > div:first-child").append(template(input));
     });
 });
