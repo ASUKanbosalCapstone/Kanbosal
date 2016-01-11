@@ -190,6 +190,13 @@ h4 > a {
     z-index: 100;
 }
 
+.grant-info {
+    white-space: nowrap;
+    overflow: hidden;
+    width: 11%;
+    text-overflow: ellipsis;
+}
+
 /*
  ------------------------------------------------------------------------------------------
                                     Detailed Grant Page

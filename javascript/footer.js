@@ -8,7 +8,7 @@ $(function() {
         method: "GET",
         success: function(data) {
             template = Handlebars.compile(data);
-        	$("footer").append(template(input));
+            $("footer").append(template(input));
         }
     });
 });
