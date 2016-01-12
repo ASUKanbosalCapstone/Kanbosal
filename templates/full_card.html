@@ -9,7 +9,7 @@
           {{#compare ../Column_Name "!=" "To Do"}}
             <div class="portlet-content panel-body">
               {{#if Document_Link}}
-                <a href="{{Document_Link}}"><span class="glyphicon glyphicon-file card-icons"></span></a>
+                <a target="_blank" href="{{Document_Link}}"><span class="glyphicon glyphicon-file card-icons"></span></a>
               {{/if}}
               {{#compare ../Column_Name "Complete"}}
                 {{#if Tag_List}}
