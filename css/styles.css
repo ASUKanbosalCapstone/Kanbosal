@@ -63,6 +63,14 @@ a {
     transition: all 0.25s ease-in-out 0s;
 }
 
+.center-image
+{
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+
 /*
  ------------------------------------------------------------------------------------------
                                       Splash Page
