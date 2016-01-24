@@ -54,24 +54,12 @@
         </div>
       </div>
     </div>
-
     <footer></footer>
   </div>
 
   <script src="javascript/handlebars-v4.0.4.js"></script>
   <script src="javascript/footer.js"></script>
-  <script>
-  function onSignIn(googleUser)
-  {
-    var profile = googleUser.getBasicProfile();
-    console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
-    console.log('Name: ' + profile.getName());
-    console.log('Image URL: ' + profile.getImageUrl());
-    console.log('Email: ' + profile.getEmail());
-
-    window.location.href = "overview"
-  }
-  </script>
+  <script src="javascript/authentication.js"></script>
   <script src="https://apis.google.com/js/platform.js" async defer></script>
 </body>
 </html>
