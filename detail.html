@@ -5,6 +5,9 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="google-signin-client_id" content="994369169298-85bcp2rukasedk61fu4rl6o4q4na71vq.apps.googleusercontent.com">
+  <script src="javascript/authentication.js"></script>
+  <script src="https://apis.google.com/js/platform.js?onload=onLoad" async defer></script>
   <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet" integrity="sha256-MfvZlkHCEqatNoGiOXveE8FIwMzZg4W85qfrfIFBfYc= sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ==" crossorigin="anonymous">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js" integrity="sha512-K1qjQ+NcF2TYO/eI3M6v8EiNYZfA95pQumfvcVrTHtwQVDG+aHRqLi/ETn2uB+1JqwYqVG3LIvdm9lj6imS/pQ==" crossorigin="anonymous"></script>
@@ -33,10 +36,12 @@
             <li><a data-toggle="modal" data-target="#cardGen">New Card</a></li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
-            <li><a class="navbar-brand">Richard</a></li>
-            <li>
-              <a class="navbar-brand" rel="home" href="#" title="">
-                <img style="max-width:35px; margin-top: -7px;" src="resources/Github/GitHub-Mark-Light-64px.png">
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle profile-image" data-toggle="dropdown">
+                <img src="resources/square-facebook-64.png" class="img-circle special-image"><b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                  <li><a href="#" onclick="signOut();"><i class="fa fa-sign-out"></i>Sign-out</a></li>
+                </ul>
               </a>
             </li>
           </ul>
