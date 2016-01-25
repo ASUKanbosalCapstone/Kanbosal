@@ -36,10 +36,12 @@
             <li><a data-toggle="modal" data-target="#cardGen">New Card</a></li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
-            <li><a class="navbar-brand">Richard</a></li>
-            <li>
-              <a class="navbar-brand" rel="home" href="#" title="">
-                <img style="max-width:35px; margin-top: -7px;" src="resources/Github/GitHub-Mark-Light-64px.png">
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle profile-image" data-toggle="dropdown">
+                <img src="resources/square-facebook-64.png" class="img-circle special-image"><b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                  <li><a href="#" onclick="signOut();"><i class="fa fa-sign-out"></i>Sign-out</a></li>
+                </ul>
               </a>
             </li>
           </ul>
