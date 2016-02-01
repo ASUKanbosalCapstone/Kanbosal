@@ -189,11 +189,12 @@ footer .col-2 {
 
 .vert-panels {
     margin-top: 50px;
-    padding-left: 15%;
+    padding-left: 23px;
+    padding-right: 30px;
 }
 
-.vert-panels > div {
-    padding-left: 0;
+.panel-tabs > div {
+    padding-right: 0;
 }
 
 /* when using this class, child must be div for borders*/
@@ -216,7 +217,7 @@ footer .col-2 {
 .tab-left > div {
     border: 1px solid #e9e9e9;
     border-left: 0;
-    padding: 15px;
+    padding: 15px 15px 15px 0;
 }
 
 .grant-panel {
@@ -231,20 +232,24 @@ footer .col-2 {
     overflow: hidden;
     width: 10.5%;
     text-overflow: ellipsis;
+    padding-left: 2%;
 }
 
 .grant-info > a {
     border-bottom: 1px dotted #A30046;
 }
 
-.grant-content {
+.grant-content, .panel-tabs {
+    float: right;
     display: inline-block;
-    width: 88.9%;
+    width: 88%;
 }
 
 .grant-content > div {
     padding-right: 0;
+    padding-left: 30px;
     border: 1px solid #e9e9e9;
+    /*text-align: right;*/
 }
 
 /*
