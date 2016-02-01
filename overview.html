@@ -27,59 +27,68 @@
           <ul class="nav navbar-nav navbar-right">
             <li class="dropdown">
               <a href="#" class="dropdown-toggle profile-image" data-toggle="dropdown">
-                <img src="resources/square-facebook-64.png" class="img-circle special-image"><b class="caret"></b></a>
-                <ul class="dropdown-menu">
-                  <li><a href="#" onclick="signOut();"><i class="fa fa-sign-out"></i>Sign-out</a></li>
-                </ul>
+                <img src="resources/square-facebook-64.png" class="img-circle special-image"><b class="caret"></b>
               </a>
-            </li>
-          </ul>
+              <ul class="dropdown-menu">
+                <li><a href="#" onclick="signOut();"><i class="fa fa-sign-out"></i>Sign-out</a></li>
+              </ul>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- grant panels can be color coded when process is complete -->
+  <div id="content">
+    <div id="contentview" class="container-fluid toggled">
+      <div class="container-fluid vert-panels">
+        <div class="col-xs-3">
+          <div class="tab-top">
+            <div><h4>Research</h4></div>
+          </div>
+        </div>
+        <div class="col-xs-3">
+          <div class="tab-top">
+            <div><h4>Internal</h4></div>
+          </div>
+        </div>
+        <div class="col-xs-3">
+          <div class="tab-top">
+            <div><h4>ASU</h4></div>
+          </div>
+        </div>
+        <div class="col-xs-3">
+          <div class="tab-top">
+            <div><h4>Complete</h4></div>
+          </div>
         </div>
       </div>
-    </nav>
 
-    <!-- grant panels can be color coded when process is complete -->
-    <div id="content">
-      <div id="contentview" class="container-fluid toggled">
-        <!-- <div id="overview-board"> -->
-        <div class="container-fluid vert-panels">
-          <div class="vert-panel tab-top">
-            <h4>Complete</h4>
-          </div>
-          <div class="vert-panel tab-top">
-            <h4>ASU</h4>
-          </div>
-          <div class="vert-panel tab-top">
-            <h4>Internal</h4>
-          </div>
-          <div class="vert-panel tab-top">
-            <h4>Research</h4>
-          </div>
-        </div>
-
-        <div id="grant-overview" class="container-fluid grant-panels">
-          <!-- this will eventually be dynamic with injection from jQuery -->
-          <div class="grant-panel">
+      <div class="container-fluid grant-panels">
+        <div class="grant-panel tab-left">
+          <div>
             <div class="grant-info">
               <a href="detail">NSF Career</a>
             </div>
-          </div>
-          <div class="grant-panel">
-            <div class="grant-info">
-              <a href="#">NSF S-STEM</a>
+            <div class="grant-content">
+              <div class="col-xs-3">test column content</div>
+              <div class="col-xs-3">test column content</div>
+              <div class="col-xs-3">test column content</div>
+              <div class="col-xs-3">test column content</div>
             </div>
           </div>
         </div>
-        <!-- </div> -->
       </div>
     </div>
-
-    <footer></footer>
   </div>
 
-  <script src="javascript/handlebars-v4.0.4.js"></script>
-  <script src="javascript/footer.js"></script>
-  <script src="javascript/sidebar.js"></script>
+  <footer></footer>
+</div>
+
+<script src="javascript/handlebars-v4.0.4.js"></script>
+<script src="javascript/footer.js"></script>
+<script src="javascript/sidebar.js"></script>
 
 </body>
 </html>
