@@ -218,6 +218,7 @@ footer .col-2 {
     border: 1px solid #e9e9e9;
     border-left: 0;
     padding: 15px 15px 15px 0;
+    overflow: auto;
 }
 
 .grant-panel {
@@ -230,7 +231,7 @@ footer .col-2 {
     display: inline-block;
     white-space: nowrap;
     overflow: hidden;
-    width: 10.5%;
+    width: 11.7%;
     text-overflow: ellipsis;
     padding-left: 2%;
 }
@@ -246,10 +247,12 @@ footer .col-2 {
 }
 
 .grant-content > div {
-    padding-right: 0;
     padding-left: 30px;
-    border: 1px solid #e9e9e9;
-    /*text-align: right;*/
+}
+
+.grant-content * .progress {
+    height: 10px;
+    margin-bottom: 10px;
 }
 
 /*
