@@ -206,7 +206,7 @@ $(function() {
           }
         ]
       };
-      $("#columnList > div:first-child").append(newCardTemplate(cardGenInfo));
+      $("#columnList > div:first-child * .column").append(newCardTemplate(cardGenInfo));
       $('#cardModals').append(modalTemplate(modalLink));
     });
 });
