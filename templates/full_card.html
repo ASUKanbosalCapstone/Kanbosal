@@ -6,7 +6,7 @@
         <h4>
           {{Column_Name}}
           {{#compare Column_Name "To Do"}}
-            <a data-toggle="modal" data-target="#cardGen"><span class="fa fa-plus-square assigned-person" data-toggle="tooltip" data-placement="top" title="New Card"></span></a>
+            <a data-toggle="modal" data-target="#cardGen"><span class="fa fa-plus-square float-right" data-toggle="tooltip" data-placement="top" title="New Card"></span></a>
           {{/compare}}
         </h4>
         {{#if Cards}}
@@ -27,7 +27,7 @@
                   {{/compare}}
                   {{#if Assigned_People}}
                     {{#each Assigned_People}}
-                      <span class="fa fa-user assigned-person card-icons"></span>
+                      <span class="fa fa-user float-right card-icons"></span>
                     {{/each}}
                   {{/if}}
                 </div>
