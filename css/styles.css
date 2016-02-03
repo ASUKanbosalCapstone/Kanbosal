@@ -15,18 +15,27 @@ html, body {
     position: relative;
 }
 
+#content {
+    padding: 50px 0 220px 0; /* top >= height of navbar, bottom >= footer height */
+}
+
 .navbar {
     font-size: 16px;
     font-weight: bold;
     background-color: #353535;
 }
 
-#content {
-    padding: 50px 0 220px 0; /* top >= height of navbar, bottom >= footer height */
+.btn-primary {
+    background-color: #a30046;
+}
+
+.btn-gold {
+    background-color: #ffc425;
 }
 
 #brand {
     font-size: 24px;
+    font-weight: 100;
 }
 
 #brand,
@@ -42,6 +51,7 @@ html, body {
 #navbar a:hover,
 #navbar .active > a {
     color: #FFB204; /* ASU gold */
+    background-color: #000000;
 }
 
 .content {
@@ -49,35 +59,39 @@ html, body {
     text-align: center;
 }
 
-a:hover {
-    /*border-bottom: 1px dotted #D23153;*/
-    color: #D23153;
+.navbar * a, #sidebar * a,
+.navbar * a:hover, #sidebar * a:hover,
+.glyphicon {
+    border-bottom: 0;
+}
+
+a, a:hover {
     text-decoration: none;
     transition: all 0.25s ease-in-out 0s;
 }
 
 a {
-    /*border-bottom: 1px dotted #A30046;*/
+    border-bottom: 1px dotted #A30046;
     color: #A30046;
-    text-decoration: none;
-    transition: all 0.25s ease-in-out 0s;
 }
 
-.center-image
-{
+a:hover {
+    border-bottom: 1px dotted #D23153;
+    color: #D23153;
+}
+
+.center-image {
   display: flex;
   justify-content: center;
   width: 100%;
 }
 
-.profile-image
-{
+.profile-image {
   padding-top: 0px;
   padding-bottom: 0px;
 }
 
-.special-image
-{
+.special-image {
   position: relative;
   top: -5px;
   float: left;

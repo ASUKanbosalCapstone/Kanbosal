@@ -6,13 +6,20 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="google-signin-client_id" content="994369169298-85bcp2rukasedk61fu4rl6o4q4na71vq.apps.googleusercontent.com">
-  <script src="javascript/authentication.js"></script>
-  <script src="https://apis.google.com/js/platform.js?onload=onLoad" async defer></script>
+  <title>Kanbosal</title>
+  
+  <!-- css libraries -->
   <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet" integrity="sha256-MfvZlkHCEqatNoGiOXveE8FIwMzZg4W85qfrfIFBfYc= sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ==" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+
+  <!-- local stylesheets -->
+  <link rel="stylesheet" type="text/css" href="css/styles.css">
+
+  <!-- js libraries -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js" integrity="sha512-K1qjQ+NcF2TYO/eI3M6v8EiNYZfA95pQumfvcVrTHtwQVDG+aHRqLi/ETn2uB+1JqwYqVG3LIvdm9lj6imS/pQ==" crossorigin="anonymous"></script>
-  <link rel="stylesheet" type="text/css" href="css/styles.css">
-  <title>Kanbosal - Overview</title>
+  <script src="https://apis.google.com/js/platform.js?onload=onLoad" async defer></script>
+  <script src="javascript/authentication.js"></script>
 
 </head>
 <body>
@@ -36,232 +43,232 @@
                 <img src="resources/square-facebook-64.png" class="img-circle special-image"><b class="caret"></b>
               </a>
               <ul class="dropdown-menu">
-                <li><a href="account"><i class="glyphicon glyphicon-cog"></i> Account</a></li>
-                <li><a href="#" onclick="signOut();"><i class="glyphicon glyphicon-log-out"></i> Sign-out</a></li>
+                <li><a href="account"><i class="fa fa-cog"></i> Account</a></li>
+                <li><a href="#" onclick="signOut();"><i class="fa fa-sign-out"></i> Sign-out</a></li>
               </ul>
-            </a>
-          </li>
-        </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <div id="content">
+      <div id="contentview" class="container-fluid toggled">
+        <div class="container-fluid vert-panels">
+          <div class="panel-tabs">
+            <div class="col-xs-3">
+              <div class="tab-top">
+                <div><h4>Research</h4></div>
+              </div>
+            </div>
+            <div class="col-xs-3">
+              <div class="tab-top">
+                <div><h4>Internal</h4></div>
+              </div>
+            </div>
+            <div class="col-xs-3">
+              <div class="tab-top">
+                <div><h4>ASU</h4></div>
+              </div>
+            </div>
+            <div class="col-xs-3">
+              <div class="tab-top">
+                <div><h4>Complete</h4></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="container-fluid">
+
+          <!-- make this container fill with template -->
+
+          <div class="grant-panel tab-left">
+            <div>
+              <div class="grant-info">
+                <a href="detail" title="NSF Career">NSF Career</a><br>
+                <small>John Doe</small>
+              </div>
+              <div class="grant-content">
+                <div class="col-xs-3">
+                  <div>
+                    <div class="progress">
+                      <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 40%">
+                        <span class="sr-only">40% Complete (success)</span>
+                      </div>
+                    </div>
+                    <div class="progress">
+                      <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width: 20%">
+                        <span class="sr-only">20% Complete</span>
+                      </div>
+                    </div>
+                    <div class="progress">
+                      <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width: 80%">
+                        <span class="sr-only">80% Complete (danger)</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-xs-3">
+                  <div>
+                    <div class="progress">
+                      <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 40%">
+                        <span class="sr-only">40% Complete (success)</span>
+                      </div>
+                    </div>
+                    <div class="progress">
+                      <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width: 20%">
+                        <span class="sr-only">20% Complete</span>
+                      </div>
+                    </div>
+                    <div class="progress">
+                      <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width: 80%">
+                        <span class="sr-only">80% Complete (danger)</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-xs-3">
+                  <div>
+                    <div class="progress">
+                      <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 40%">
+                        <span class="sr-only">40% Complete (success)</span>
+                      </div>
+                    </div>
+                    <div class="progress">
+                      <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width: 20%">
+                        <span class="sr-only">20% Complete</span>
+                      </div>
+                    </div>
+                    <div class="progress">
+                      <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width: 80%">
+                        <span class="sr-only">80% Complete (danger)</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-xs-3">
+                  <div>
+                    <div class="progress">
+                      <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 40%">
+                        <span class="sr-only">40% Complete (success)</span>
+                      </div>
+                    </div>
+                    <div class="progress">
+                      <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width: 20%">
+                        <span class="sr-only">20% Complete</span>
+                      </div>
+                    </div>
+                    <div class="progress">
+                      <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width: 80%">
+                        <span class="sr-only">80% Complete (danger)</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+          <div class="grant-panel tab-left">
+            <div>
+              <div class="grant-info">
+                <a href="detail" title="NSF Career Copy">NSF Career Copy</a><br>
+                <small>Jane Doe</small>
+              </div>
+              <div class="grant-content">
+                <div class="col-xs-3">
+                  <div>
+                    <div class="progress">
+                      <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 40%">
+                        <span class="sr-only">40% Complete (success)</span>
+                      </div>
+                    </div>
+                    <div class="progress">
+                      <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width: 20%">
+                        <span class="sr-only">20% Complete</span>
+                      </div>
+                    </div>
+                    <div class="progress">
+                      <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width: 80%">
+                        <span class="sr-only">80% Complete (danger)</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-xs-3">
+                  <div>
+                    <div class="progress">
+                      <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 40%">
+                        <span class="sr-only">40% Complete (success)</span>
+                      </div>
+                    </div>
+                    <div class="progress">
+                      <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width: 20%">
+                        <span class="sr-only">20% Complete</span>
+                      </div>
+                    </div>
+                    <div class="progress">
+                      <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width: 80%">
+                        <span class="sr-only">80% Complete (danger)</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-xs-3">
+                  <div>
+                    <div class="progress">
+                      <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 40%">
+                        <span class="sr-only">40% Complete (success)</span>
+                      </div>
+                    </div>
+                    <div class="progress">
+                      <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width: 20%">
+                        <span class="sr-only">20% Complete</span>
+                      </div>
+                    </div>
+                    <div class="progress">
+                      <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width: 80%">
+                        <span class="sr-only">80% Complete (danger)</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-xs-3">
+                  <div>
+                    <div class="progress">
+                      <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 40%">
+                        <span class="sr-only">40% Complete (success)</span>
+                      </div>
+                    </div>
+                    <div class="progress">
+                      <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width: 20%">
+                        <span class="sr-only">20% Complete</span>
+                      </div>
+                    </div>
+                    <div class="progress">
+                      <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width: 80%">
+                        <span class="sr-only">80% Complete (danger)</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+        </div>
       </div>
     </div>
-  </nav>
 
-  <div id="content">
-    <div id="contentview" class="container-fluid toggled">
-      <div class="container-fluid vert-panels">
-        <div class="panel-tabs">
-          <div class="col-xs-3">
-            <div class="tab-top">
-              <div><h4>Research</h4></div>
-            </div>
-          </div>
-          <div class="col-xs-3">
-            <div class="tab-top">
-              <div><h4>Internal</h4></div>
-            </div>
-          </div>
-          <div class="col-xs-3">
-            <div class="tab-top">
-              <div><h4>ASU</h4></div>
-            </div>
-          </div>
-          <div class="col-xs-3">
-            <div class="tab-top">
-              <div><h4>Complete</h4></div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="container-fluid">
-
-<!-- make this container fill with template -->
-
-        <div class="grant-panel tab-left">
-          <div>
-            <div class="grant-info">
-              <a href="detail" title="NSF Career">NSF Career</a><br>
-              <small>John Doe</small>
-            </div>
-            <div class="grant-content">
-              <div class="col-xs-3">
-                <div>
-                  <div class="progress">
-                    <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 40%">
-                      <span class="sr-only">40% Complete (success)</span>
-                    </div>
-                  </div>
-                  <div class="progress">
-                    <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width: 20%">
-                      <span class="sr-only">20% Complete</span>
-                    </div>
-                  </div>
-                  <div class="progress">
-                    <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width: 80%">
-                      <span class="sr-only">80% Complete (danger)</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="col-xs-3">
-                <div>
-                  <div class="progress">
-                    <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 40%">
-                      <span class="sr-only">40% Complete (success)</span>
-                    </div>
-                  </div>
-                  <div class="progress">
-                    <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width: 20%">
-                      <span class="sr-only">20% Complete</span>
-                    </div>
-                  </div>
-                  <div class="progress">
-                    <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width: 80%">
-                      <span class="sr-only">80% Complete (danger)</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="col-xs-3">
-                <div>
-                  <div class="progress">
-                    <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 40%">
-                      <span class="sr-only">40% Complete (success)</span>
-                    </div>
-                  </div>
-                  <div class="progress">
-                    <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width: 20%">
-                      <span class="sr-only">20% Complete</span>
-                    </div>
-                  </div>
-                  <div class="progress">
-                    <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width: 80%">
-                      <span class="sr-only">80% Complete (danger)</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="col-xs-3">
-                <div>
-                  <div class="progress">
-                    <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 40%">
-                      <span class="sr-only">40% Complete (success)</span>
-                    </div>
-                  </div>
-                  <div class="progress">
-                    <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width: 20%">
-                      <span class="sr-only">20% Complete</span>
-                    </div>
-                  </div>
-                  <div class="progress">
-                    <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width: 80%">
-                      <span class="sr-only">80% Complete (danger)</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-
-        <div class="grant-panel tab-left">
-          <div>
-            <div class="grant-info">
-              <a href="detail" title="NSF Career Copy">NSF Career Copy</a><br>
-              <small>Jane Doe</small>
-            </div>
-            <div class="grant-content">
-              <div class="col-xs-3">
-                <div>
-                  <div class="progress">
-                    <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 40%">
-                      <span class="sr-only">40% Complete (success)</span>
-                    </div>
-                  </div>
-                  <div class="progress">
-                    <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width: 20%">
-                      <span class="sr-only">20% Complete</span>
-                    </div>
-                  </div>
-                  <div class="progress">
-                    <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width: 80%">
-                      <span class="sr-only">80% Complete (danger)</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="col-xs-3">
-                <div>
-                  <div class="progress">
-                    <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 40%">
-                      <span class="sr-only">40% Complete (success)</span>
-                    </div>
-                  </div>
-                  <div class="progress">
-                    <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width: 20%">
-                      <span class="sr-only">20% Complete</span>
-                    </div>
-                  </div>
-                  <div class="progress">
-                    <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width: 80%">
-                      <span class="sr-only">80% Complete (danger)</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="col-xs-3">
-                <div>
-                  <div class="progress">
-                    <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 40%">
-                      <span class="sr-only">40% Complete (success)</span>
-                    </div>
-                  </div>
-                  <div class="progress">
-                    <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width: 20%">
-                      <span class="sr-only">20% Complete</span>
-                    </div>
-                  </div>
-                  <div class="progress">
-                    <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width: 80%">
-                      <span class="sr-only">80% Complete (danger)</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="col-xs-3">
-                <div>
-                  <div class="progress">
-                    <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 40%">
-                      <span class="sr-only">40% Complete (success)</span>
-                    </div>
-                  </div>
-                  <div class="progress">
-                    <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width: 20%">
-                      <span class="sr-only">20% Complete</span>
-                    </div>
-                  </div>
-                  <div class="progress">
-                    <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width: 80%">
-                      <span class="sr-only">80% Complete (danger)</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-
-      </div>
-    </div>
+    <footer></footer>
   </div>
 
-  <footer></footer>
-</div>
-
-<script src="javascript/handlebars-v4.0.4.js"></script>
-<script src="javascript/footer.js"></script>
+  <!-- local scripts -->
+  <script src="javascript/handlebars-v4.0.4.js"></script>
+  <script src="javascript/footer.js"></script>
 
 </body>
 </html>
