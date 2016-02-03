@@ -187,43 +187,72 @@ footer .col-2 {
  ------------------------------------------------------------------------------------------
  */
 
-h4 > a {
-    border-bottom: 1px dotted #A30046;
+.vert-panels {
+    margin-top: 50px;
+    padding-left: 23px;
+    padding-right: 30px;
 }
 
-.vert-panels > div {
-    width: 20%;
-    display: inline-block;
-    margin-right: 1.5%;
-    float: right;
-    z-index: 50;
+.panel-tabs > div {
+    padding-right: 0;
 }
 
+/* when using this class, child must be div for borders*/
 .tab-top {
-    border-top: 8px solid #a30046 !important;
-    border: 1px solid #e9e9e9;
-    padding: 15px;
+    border-top: 8px solid #a30046;
+    padding: 0;
 }
 
-.grant-panels {
-    margin-top: -1px;
+.tab-top > div {
+    border-left: 1px solid #e9e9e9;
+    border-right: 1px solid #e9e9e9;
+    padding: 7px 15px;
 }
 
-.grant-panels > div {
-    /*width: 99%;*/
-    border-left: 8px solid #a30046 !important;
+.tab-left {
+    border-left: 8px solid #a30046;
+    padding: 0;
+}
+
+.tab-left > div {
     border: 1px solid #e9e9e9;
+    border-left: 0;
+    padding: 15px 15px 15px 0;
+    overflow: auto;
+}
+
+.grant-panel {
     display: block;
-    margin: 0 0.5% 5px 0.5%;
-    padding: 15px;
+    margin-bottom: 5px;
     z-index: 100;
 }
 
 .grant-info {
+    display: inline-block;
     white-space: nowrap;
     overflow: hidden;
-    width: 11%;
+    width: 11.7%;
     text-overflow: ellipsis;
+    padding-left: 2%;
+}
+
+.grant-info > a {
+    border-bottom: 1px dotted #A30046;
+}
+
+.grant-content, .panel-tabs {
+    float: right;
+    display: inline-block;
+    width: 88%;
+}
+
+.grant-content > div {
+    padding-left: 30px;
+}
+
+.grant-content * .progress {
+    height: 10px;
+    margin-bottom: 10px;
 }
 
 /*
