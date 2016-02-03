@@ -142,8 +142,7 @@ h1 > .glyphicon-menu-right {
                                       Footer
  ------------------------------------------------------------------------------------------
  */
-/* TODO if horizontal scroll, the position needs
-    to be fixed (pun not intended), else it will scroll */
+
 footer {
     background-color: #353535;
     width: 100%;
@@ -165,20 +164,6 @@ footer a {
 footer h2 {
     font-size: 21px !important;
     color: #FFFFFF;
-}
-
-footer p, footer h2 {
-    padding: 0 3% 0 3%;
-}
-
-footer .col-4 {
-    width: 35%;
-    display: inline-block;
-}
-
-footer .col-2 {
-    width: 20%;
-    display: inline-block;
 }
 
 /*
