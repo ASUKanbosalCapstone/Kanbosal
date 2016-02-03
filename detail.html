@@ -38,78 +38,80 @@
           <ul class="nav navbar-nav navbar-right">
             <li class="dropdown">
               <a href="#" class="dropdown-toggle profile-image" data-toggle="dropdown">
-                <img src="resources/square-facebook-64.png" class="img-circle special-image"><b class="caret"></b></a>
-                <ul class="dropdown-menu">
-                  <li><a href="#" onclick="signOut();"><i class="fa fa-sign-out"></i>Sign-out</a></li>
-                </ul>
+                <img src="resources/square-facebook-64.png" class="img-circle special-image"><b class="caret"></b>
               </a>
-            </li>
-          </ul>
+              <ul class="dropdown-menu">
+                <li><a href="account"><i class="glyphicon glyphicon-cog"></i> Account</a></li>
+                <li><a href="#" onclick="signOut();"><i class="glyphicon glyphicon-log-out"></i> Sign-out</a></li>
+              </ul>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <div id="content">
+    <!-- BEGIN sidebar -->
+    <div id="sidebar" class="toggled"></div>
+    <div id="menu-toggle" class="glyphicon glyphicon-menu-right large"></div>
+    <!-- END sidebar -->
+
+    <div id="contentview" class="container-fluid toggled">
+      <div class="progress"> <!-- todo: use handlebars templating to inject data [#complete/#total + ((1/2) * #inprogress)/#total] -->
+        <div class="progress-bar asu-progressbar progress-bar-striped active" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%">
+          60% Complete
         </div>
       </div>
-    </nav>
 
-    <div id="content">
-      <!-- BEGIN sidebar -->
-      <div id="sidebar" class="toggled"></div>
-      <div id="menu-toggle" class="glyphicon glyphicon-menu-right large"></div>
-      <!-- END sidebar -->
+      <!-- grant panels can be color coded when process is complete/on the next review stage/section -->
 
-      <div id="contentview" class="container-fluid toggled">
-        <div class="progress"> <!-- todo: use handlebars templating to inject data [#complete/#total + ((1/2) * #inprogress)/#total] -->
-          <div class="progress-bar asu-progressbar progress-bar-striped active" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%">
-            60% Complete
-          </div>
-        </div>
+      <!-- BEGIN column 1: To Do -->
+      <div id="columnList"></div>
+      <div id="cardModals"></div>
 
-        <!-- grant panels can be color coded when process is complete/on the next review stage/section -->
-
-        <!-- BEGIN column 1: To Do -->
-        <div id="columnList"></div>
-        <div id="cardModals"></div>
-
-        <div class="modal fade" id="cardGen" tabindex="-1" role="dialog" aria-labelledby="detailModalLabel">
-          <div class="modal-dialog" role="document">
-            <div class="modal-content">
-              <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <div class="modal-title">
-                  <form id="modalHeader">
-                    <input class="form-control" id="cardGenTitle" placeholder="Enter a title here!">
-                  </form>
-                </div>
-              </div>
-              <div class="modal-body">
-                <div class="editable" id="cardGenBody">
-                  Enter card body here
-                </div>
-                <br>
-                <form>
-                  <input class="form-control" id="cardGenDocLink" placeholder="Enter a document link here!">
+      <div class="modal fade" id="cardGen" tabindex="-1" role="dialog" aria-labelledby="detailModalLabel">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+              <div class="modal-title">
+                <form id="modalHeader">
+                  <input class="form-control" id="cardGenTitle" placeholder="Enter a title here!">
                 </form>
               </div>
-              <div class="modal-footer">
-                <a type="button" class="btn btn-default" id="cardGenDismiss" data-dismiss="modal">Close</a>
-                <a type="button" class="btn btn-primary" id="cardGenCreate" data-dismiss="modal">Create</a>
+            </div>
+            <div class="modal-body">
+              <div class="editable" id="cardGenBody">
+                Enter card body here
               </div>
+              <br>
+              <form>
+                <input class="form-control" id="cardGenDocLink" placeholder="Enter a document link here!">
+              </form>
+            </div>
+            <div class="modal-footer">
+              <a type="button" class="btn btn-default" id="cardGenDismiss" data-dismiss="modal">Close</a>
+              <a type="button" class="btn btn-primary" id="cardGenCreate" data-dismiss="modal">Create</a>
             </div>
           </div>
         </div>
-
       </div>
-    </div>
 
-    <footer></footer>
+    </div>
   </div>
 
-  <script src="javascript/handlebars-v4.0.4.js"></script>
-  <script src="javascript/helpers.js"></script>
-  <script src="javascript/sortable.js"></script>
-  <script src="javascript/sidebar.js"></script>
-  <script src="javascript/footer.js"></script>
-  <script src="javascript/detailcards.js"></script>
-  <script src="javascript/newdetailcard.js"></script>
-  <script src="http://cdn.tinymce.com/4/tinymce.min.js"></script>
-  <script src="javascript/tinymceChanges.js"></script>
+  <footer></footer>
+</div>
+
+<script src="javascript/handlebars-v4.0.4.js"></script>
+<script src="javascript/helpers.js"></script>
+<script src="javascript/sortable.js"></script>
+<script src="javascript/sidebar.js"></script>
+<script src="javascript/footer.js"></script>
+<script src="javascript/detailcards.js"></script>
+<script src="javascript/newdetailcard.js"></script>
+<script src="http://cdn.tinymce.com/4/tinymce.min.js"></script>
+<script src="javascript/tinymceChanges.js"></script>
 </body>
 </html>
