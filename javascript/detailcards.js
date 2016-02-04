@@ -216,7 +216,6 @@ $.ajax({
 });
 
 $(function() {
-  $('[data-toggle="tooltip"]').tooltip();
   $( "#cardGenCreate" ).click(function() {
     var title = $("#cardGenTitle").val();
     var body = $("#cardGenBody").html();

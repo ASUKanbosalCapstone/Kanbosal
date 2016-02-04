@@ -6,7 +6,7 @@
         <h4>
           {{Column_Name}}
           {{#compare Column_Name "To Do"}}
-            <a data-toggle="modal" data-target="#cardGen"><span class="fa fa-plus-square float-right" data-toggle="tooltip" data-placement="top" title="New Card"></span></a>
+            <a data-toggle="modal" data-target="#cardGen" class="fa fa-plus-square float-right" title="New Card"></a>
           {{/compare}}
         </h4>
         {{#if Cards}}
@@ -16,7 +16,7 @@
               {{#compare ../Column_Name "!=" "To Do"}}
                 <div class="portlet-content panel-body">
                   {{#if Document_Link}}
-                    <a target="_blank" href="{{Document_Link}}"><span class="fa fa-file card-icons"></span></a>
+                    <a target="_blank" href="{{Document_Link}}" class="fa fa-file card-icons"></a>
                   {{/if}}
                   {{#compare ../Column_Name "Complete"}}
                     {{#if Tag_List}}

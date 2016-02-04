@@ -63,9 +63,11 @@
       <!-- END sidebar -->
 
       <div id="contentview" class="container-fluid toggled">
-        <div class="progress"> <!-- todo: use handlebars templating to inject data [#complete/#total + ((1/2) * #inprogress)/#total] -->
-          <div class="progress-bar asu-progressbar progress-bar-striped active" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%">
-            60% Complete
+        <div class="col-xs-12">
+          <div class="progress">
+          <div class="progress-bar asu-progressbar" role="progressbar" aria-valuenow="28.57" aria-valuemin="0" aria-valuemax="100" style="width: 28.57%">
+              28.57% Complete
+            </div>
           </div>
         </div>
 
@@ -93,8 +95,8 @@
                 </form>
               </div>
               <div class="modal-footer">
-                <a class="btn btn-lg btn-gold" id="cardGenDismiss" data-dismiss="modal">Close</a>
-                <a class="btn btn-lg btn-primary" id="cardGenCreate" data-dismiss="modal">Create</a>
+                <a class="btn btn-primary" id="cardGenDismiss" data-dismiss="modal">Close</a>
+                <a class="btn btn-gold" id="cardGenCreate" data-dismiss="modal">Create</a>
               </div>
             </div>
           </div>

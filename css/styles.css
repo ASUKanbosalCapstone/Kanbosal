@@ -32,6 +32,7 @@ html, body {
 
 .btn-primary:hover {
     background-color: #d13252;
+    border: 1px solid transparent;
 }
 
 .btn-gold {
@@ -69,9 +70,9 @@ html, body {
     text-align: center;
 }
 
-.navbar * a, #sidebar * a,
-.navbar * a:hover, #sidebar * a:hover,
-.glyphicon {
+.navbar * a, #sidebar * a, .btn,
+.navbar * a:hover, #sidebar * a:hover, .btn:hover,
+.fa, .glyphicon, .fa:hover, .glyphicon:hover {
     border-bottom: 0;
 }
 
