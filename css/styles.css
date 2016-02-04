@@ -27,10 +27,20 @@ html, body {
 
 .btn-primary {
     background-color: #a30046;
+    border: 1px solid transparent;
+}
+
+.btn-primary:hover {
+    background-color: ;
 }
 
 .btn-gold {
+    color: #2a2a2a;
     background-color: #ffc425;
+}
+
+.btn-gold:hover {
+    background-color: ;
 }
 
 #brand {
@@ -121,19 +131,15 @@ a:hover {
 }
 
 a.btn {
-    background-color: #353535;
-    color: #FFFFFF;
-    font-size: 20px;
-    font-weight: bold;
-    text-decoration: none;
+    /*text-decoration: none;*/
     transition: all 0.3s ease-in-out 0s;
 }
 
 a.btn:focus,
 a.btn:active,
 a.btn:hover {
-    background-color: #000000;
-    color: #FFB204;
+    /*background-color: #000000;*/
+    /*color: #FFB204;*/
 }
 
 h1 {
