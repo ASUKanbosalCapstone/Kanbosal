@@ -3,7 +3,12 @@
   <div class="col-xs-4">
     <div class="tab-top">
       <div class="column">
-        <h4>{{Column_Name}}</h4>
+        <h4>
+          {{Column_Name}}
+          {{#compare Column_Name "To Do"}}
+            <a data-toggle="modal" data-target="#cardGen"><span class="fa fa-plus-square float-right" data-toggle="tooltip" data-placement="top" title="New Card"></span></a>
+          {{/compare}}
+        </h4>
         {{#if Cards}}
           {{#each Cards}}
             <div class="portlet panel panel-default">
@@ -11,7 +16,7 @@
               {{#compare ../Column_Name "!=" "To Do"}}
                 <div class="portlet-content panel-body">
                   {{#if Document_Link}}
-                    <a target="_blank" href="{{Document_Link}}"><span class="glyphicon glyphicon-file card-icons"></span></a>
+                    <a target="_blank" href="{{Document_Link}}"><span class="fa fa-file card-icons"></span></a>
                   {{/if}}
                   {{#compare ../Column_Name "Complete"}}
                     {{#if Tag_List}}
@@ -22,7 +27,7 @@
                   {{/compare}}
                   {{#if Assigned_People}}
                     {{#each Assigned_People}}
-                      <span class="glyphicon glyphicon-user assigned-person card-icons"></span>
+                      <span class="fa fa-user float-right card-icons"></span>
                     {{/each}}
                   {{/if}}
                 </div>
