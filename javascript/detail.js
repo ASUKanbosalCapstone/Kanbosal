@@ -232,7 +232,7 @@ $(function() {
           Cards: [
             {
               Card_Name: title,
-              Modal_ID : modalID,
+              Modal_ID: modalID,
               Modal_Body: body,
               Document_Link: documentLink
             }
