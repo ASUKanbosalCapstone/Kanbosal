@@ -216,6 +216,7 @@ $.ajax({
 });
 
 $(function() {
+  $('[data-toggle="tooltip"]').tooltip();
   $( "#cardGenCreate" ).click(function() {
     var title = $("#cardGenTitle").val();
     var body = $("#cardGenBody").html();
@@ -231,7 +232,7 @@ $(function() {
           Cards: [
             {
               Card_Name: title,
-              Modal_ID : modalID,
+              Modal_ID: modalID,
               Modal_Body: body,
               Document_Link: documentLink
             }
