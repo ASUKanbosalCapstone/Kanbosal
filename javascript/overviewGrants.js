@@ -53,12 +53,37 @@ var input = {
       "complete" : [card, card, card]
     }, {
       "progress" : 0,
-      "toDo" : [card, card],                      //this = internal.complete[]
+      "toDo" : [],                      //this = internal.complete[]
       "inProgress" : [],
-      "complete" : [card]
+      "complete" : [card, card, card]
     }, {
       "progress" : 0,
-      "cards" : [card]                      //this = asu.complete[]
+      "cards" : [card, card, card]                      //this = asu.complete[]
+    }]
+  }, {
+    "title" : "NSF Air Force Copy",
+    "description" : "This is also a description of the grant proposal.",
+    "url" : "http://www.nsf.gov/awardsearch/showAward?AWD_ID=1313312&HistoricalAwards=false",
+    "users" : ["string", "string", "string", "string"],
+    "cardCount" : 10,
+    "stage" : [{
+      "progress" : 28.5714286,
+      "toDo" : [],
+      "inProgress" : [],
+      "complete" : [card, card, card, card, card, card, card, card, card, card]
+    }, {
+      "progress" : 0,
+      "toDo" : [card],                  //this = research.complete[]
+      "inProgress" : [card, card, card, card, card, card],
+      "complete" : [card, card, card]
+    }, {
+      "progress" : 0,
+      "toDo" : [card],                      //this = internal.complete[]
+      "inProgress" : [],
+      "complete" : [card, card]
+    }, {
+      "progress" : 0,
+      "cards" : [card, card]                      //this = asu.complete[]
     }]
   }]
 };

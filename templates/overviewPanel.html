@@ -12,19 +12,15 @@
         <div class="col-xs-3">
           <div>
             {{#compare @index "<=" 2}}
-            <div class="progress" data-toggle="tooltip" data-placement="top" title="To do: {{toDo.length}} of {{math complete.length "+" (math inProgress.length "+" toDo.length)}}">
-              <div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="{{math toDo.length "/" ../cardCount}}" aria-valuemin="0" aria-valuemax="1" style="width:{{math (math (math (math complete.length "+" (math inProgress.length "+" toDo.length)) "-" toDo.length) "/" (math complete.length "+" (math inProgress.length "+" toDo.length))) "*" 100}}%">
-                <span class="sr-only">{{math toDo.length "/" (math complete.length "+" (math inProgress.length "+" toDo.length))}}%</span>
+            <div class="progress">
+              <div class="progress-bar progress-bar-warning" style="width:{{math (math toDo.length "/" (math complete.length "+" (math inProgress.length "+" toDo.length))) "*" 100}}%">
+                <span class="sr-only">{{math (math toDo.length "/" (math complete.length "+" (math inProgress.length "+" toDo.length))) "*" 100}}%</span>
               </div>
-            </div>
-            <div class="progress" data-toggle="tooltip" data-placement="top" title="In progress: {{inProgress.length}} of {{math complete.length "+" (math inProgress.length "+" toDo.length)}}">
-              <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="{{math inProgress.length "/" (math complete.length "+" (math inProgress.length "+" toDo.length))}}" aria-valuemin="0" aria-valuemax="1" style="width:{{math (math (math (math complete.length "+" (math inProgress.length "+" toDo.length)) "-" inProgress.length) "/" (math complete.length "+" (math inProgress.length "+" toDo.length))) "*" 100}}%">
-                <span class="sr-only">{{math inProgress.length "/" (math complete.length "+" (math inProgress.length "+" toDo.length))}}%</span>
+              <div class="progress-bar progress-bar-info" style="width:{{math (math inProgress.length "/" (math complete.length "+" (math inProgress.length "+" toDo.length))) "*" 100}}%">
+                <span class="sr-only">{{math (math inProgress.length "/" (math complete.length "+" (math inProgress.length "+" toDo.length))) "*" 100}}%</span>
               </div>
-            </div>
-            <div class="progress" data-toggle="tooltip" data-placement="top" title="Complete: {{complete.length}} of {{math complete.length "+" (math inProgress.length "+" toDo.length)}}">
-              <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="{{math complete.length "/" ../cardCount}}" aria-valuemin="0" aria-valuemax="1" style="width:{{math (math complete.length "/" (math complete.length "+" (math inProgress.length "+" toDo.length))) "*" 100}}%">
-                <span class="sr-only">{{math complete.length "/" (math complete.length "+" (math inProgress.length "+" toDo.length))}}%</span>
+              <div class="progress-bar progress-bar-success" style="width:{{math (math complete.length "/" (math complete.length "+" (math inProgress.length "+" toDo.length))) "*" 100}}%">
+                <span class="sr-only">{{math (math complete.length "/" (math complete.length "+" (math inProgress.length "+" toDo.length))) "*" 100}}%</span>
               </div>
             </div>
             {{/compare}}
