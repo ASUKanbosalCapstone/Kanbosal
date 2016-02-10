@@ -1,0 +1,45 @@
+{{#if grant}}
+  {{#each grant}}
+  <div class="grant-panel tab-left">
+    <div>
+      <div class="grant-info">
+        <a href="detail" title="{{title}}">{{title}}</a><br>
+        <small><small><strong><a href="{{url}}" target="_blank">View Official Grant</a></strong></small></small>
+      </div>
+      <div class="grant-content">
+        {{!-- since each grant will for sure have a stage, even if no cards, check not needed --}}
+        {{#each stage}}
+        <div class="col-xs-3">
+          <div>
+            {{#compare @index "<=" 2}}
+            <div class="progress" data-toggle="tooltip" data-placement="top" title="To do: {{toDo.length}} of {{math complete.length "+" (math inProgress.length "+" toDo.length)}}">
+              <div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="{{math toDo.length "/" ../cardCount}}" aria-valuemin="0" aria-valuemax="1" style="width:{{math (math (math (math complete.length "+" (math inProgress.length "+" toDo.length)) "-" toDo.length) "/" (math complete.length "+" (math inProgress.length "+" toDo.length))) "*" 100}}%">
+                <span class="sr-only">{{math toDo.length "/" (math complete.length "+" (math inProgress.length "+" toDo.length))}}%</span>
+              </div>
+            </div>
+            <div class="progress" data-toggle="tooltip" data-placement="top" title="In progress: {{inProgress.length}} of {{math complete.length "+" (math inProgress.length "+" toDo.length)}}">
+              <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="{{math inProgress.length "/" (math complete.length "+" (math inProgress.length "+" toDo.length))}}" aria-valuemin="0" aria-valuemax="1" style="width:{{math (math (math (math complete.length "+" (math inProgress.length "+" toDo.length)) "-" inProgress.length) "/" (math complete.length "+" (math inProgress.length "+" toDo.length))) "*" 100}}%">
+                <span class="sr-only">{{math inProgress.length "/" (math complete.length "+" (math inProgress.length "+" toDo.length))}}%</span>
+              </div>
+            </div>
+            <div class="progress" data-toggle="tooltip" data-placement="top" title="Complete: {{complete.length}} of {{math complete.length "+" (math inProgress.length "+" toDo.length)}}">
+              <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="{{math complete.length "/" ../cardCount}}" aria-valuemin="0" aria-valuemax="1" style="width:{{math (math complete.length "/" (math complete.length "+" (math inProgress.length "+" toDo.length))) "*" 100}}%">
+                <span class="sr-only">{{math complete.length "/" (math complete.length "+" (math inProgress.length "+" toDo.length))}}%</span>
+              </div>
+            </div>
+            {{/compare}}
+            {{#compare @index "===" 3}}
+            <div class="progress" data-toggle="tooltip" data-placement="top" title="Complete: {{cards.length}} of {{../cardCount}}">
+              <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="{{math cards.length "/" ../cardCount}}" aria-valuemin="0" aria-valuemax="1" style="width:{{math (math cards.length "/" ../cardCount) "*" 100}}%">
+                <span class="sr-only">{{math cards.length "/" ../cardCount}}%</span>
+              </div>
+            </div>
+            {{/compare}}
+          </div>
+        </div>
+        {{/each}}
+      </div>
+    </div>
+  </div>
+  {{/each}}
+{{/if}}

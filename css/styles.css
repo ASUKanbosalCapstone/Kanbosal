@@ -25,6 +25,7 @@ html, body {
     background-color: #353535;
 }
 
+/* bootstrap style mods begin */
 .btn-primary {
     background-color: #a30046;
     border: 1px solid transparent;
@@ -43,6 +44,19 @@ html, body {
 .btn-gold:hover {
     background-color: #ffcf54;
 }
+
+.progress-bar-success {
+    background-color: #78be20; /* asu secondary color */
+}
+
+.progress-bar-info {
+    background-color: #00a3e0; /* asu secondary color */
+}
+
+.progress-bar-warning {
+    background-color: #ff7f32; /* asu secondary color */
+}
+/* bootstrap style mods end */
 
 #brand {
     font-size: 24px;
