@@ -1,20 +1,32 @@
 var template;
+var user = {
+  "name" : "string",        //google email -- use as ref when user logs in?
+  "email" : "string",
+  "hashKey" : "string",       //from google auth, stored hash
+  "imageUrl" : "string",
+  "title" : "string",
+  "description" : "string",
+  "permissions" : {
+    "level" : "int",        //normal (0), PI (1), etc
+    "department" : "string"     //Research, Internal, ASU, etc
+  }//,
+  // "grantIds" : [input.grant[0], input.grant[1], input.grant[2]]   //grants they have access to
+};
 var card = {
   "title" : "string",
   "notes" : ["string"],       //array of strings using boots
   "documentUrl" : "string",        //url to document
   "timeCreated" : "datetime",
   "timeLastEdit" : "datetime",
-  "status" : "string",        //to_do, in_progress, complete
   "tags" : ["string"],        //might be unnecessary
   "userIds" : ["string"]      //users who have contributed
-}
+};
 var input = {
   "grant" : [{
     "title" : "NSF Career",
     "description" : "Example description of this grant proposal.",
     "url" : "http://www.nsf.gov/awardsearch/showAward?AWD_ID=1323753&HistoricalAwards=false",
-    "users" : ["string", "string", "string", "string"],
+    "users" : [user, user, user, user],
     "cardCount" : 7,
     "stage" : [{
       "progress" : "28.5714286",
@@ -39,7 +51,7 @@ var input = {
     "title" : "NSF Air Force",
     "description" : "This is also a description of the grant proposal.",
     "url" : "http://www.nsf.gov/awardsearch/showAward?AWD_ID=1313312&HistoricalAwards=false",
-    "users" : ["string", "string", "string", "string"],
+    "users" : [user, user, user, user],
     "cardCount" : 10,
     "stage" : [{
       "progress" : 28.5714286,
@@ -63,8 +75,8 @@ var input = {
   }, {
     "title" : "NSF Air Force Copy",
     "description" : "This is also a description of the grant proposal.",
-    "url" : "http://www.nsf.gov/awardsearch/showAward?AWD_ID=1313312&HistoricalAwards=false",
-    "users" : ["string", "string", "string", "string"],
+    "url" : null,
+    "users" : [user, user, user, user],
     "cardCount" : 10,
     "stage" : [{
       "progress" : 28.5714286,
@@ -94,11 +106,7 @@ $.ajax({
   method: 'GET',
   success: function(data) {
     template = Handlebars.compile(data);
-    // before using input, we can manipulate the object to display to the template.
     $("#overviewContent").append(template(input));
+    $('[data-toggle="tooltip"]').tooltip({container:'body'});
   }
-});
-
-$(function() {
-  $('[data-toggle="tooltip"]').tooltip();
 });
