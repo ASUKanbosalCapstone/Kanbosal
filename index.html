@@ -10,6 +10,7 @@
 
   <!-- css libraries -->
   <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet" integrity="sha256-MfvZlkHCEqatNoGiOXveE8FIwMzZg4W85qfrfIFBfYc= sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ==" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
   
   <!-- local stylesheets -->
   <link rel="stylesheet" type="text/css" href="css/styles.css">
@@ -31,32 +32,19 @@
     </nav>
 
     <div id="content">
-      <div class="container-fluid">
-        <div class="content">
-          <div class="page-header">
-            <h1>
-              Clean
-              <span class="glyphicon glyphicon-menu-left small" aria-hidden="true"></span>
-              Simple
-              <span class="glyphicon glyphicon-menu-right small" aria-hidden="true"></span>
-              Pure
-            </h1>
-            <h2>
-              <small>grant proposal manager</small>
-            </h2>
+      <!-- <div class="container-fluid"> -->
+        <div id="hero" class="jumbotron" style="background-image: url('/resources/hero-bg/asu-coor.jpg'); background-size: cover;">
+          <div class="text-center">
+            <h1>Clean <span class="glyphicon glyphicon-menu-left small" aria-hidden="true"></span> Simple <span class="glyphicon glyphicon-menu-right small" aria-hidden="true"></span> Pure</h1>
+            <h3>grant proposal manager</h3>
           </div>
         </div>
-      </div>
+      <!-- </div> -->
 
-      <div class="container-fluid">
-        <div class="content">
-          <div class="row">
-            <div class="col-md-4 col-md-offset-4">
-              <div class="center-image">
-                <div class="g-signin2" data-onsuccess="onSignIn"></div>
-              </div>
-            </div>
-          </div>
+      <div class="container">
+        <div class="center-block text-center">
+          <h4>Login with your Google account.</h4>
+            <div class="g-signin2 center-block" style="width:120px;" data-onsuccess="onSignIn"></div>
         </div>
       </div>
     </div>
