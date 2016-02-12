@@ -25,6 +25,7 @@ html, body {
     background-color: #353535;
 }
 
+/* bootstrap style mods begin */
 .btn-primary {
     background-color: #a30046;
     border: 1px solid transparent;
@@ -43,6 +44,12 @@ html, body {
 .btn-gold:hover {
     background-color: #ffcf54;
 }
+
+/* asu secondary color */
+.progress-bar-success { background-color: #78be20; }
+.progress-bar-info { background-color: #00a3e0; }
+.progress-bar-warning { background-color: #ff7f32; }
+/* bootstrap style mods end */
 
 #brand {
     font-size: 24px;
@@ -111,8 +118,12 @@ a:hover {
   height: 2em;
 }
 
-.dropdown, .navbar-nav > li > .dropdown-menu, .dropdown li > a:hover, .dropdown > a:focus, .dropdown > a:hover, .dropdown > a
-{
+.dropdown,
+.navbar-nav > li > .dropdown-menu,
+.dropdown li > a:hover,
+.dropdown > a:focus,
+.dropdown > a:hover,
+.dropdown > a {
   color: #EDEDED;
   background-color: #353535 !important;
 }
@@ -132,15 +143,7 @@ a:hover {
 }
 
 a.btn {
-    /*text-decoration: none;*/
     transition: all 0.3s ease-in-out 0s;
-}
-
-a.btn:focus,
-a.btn:active,
-a.btn:hover {
-    /*background-color: #000000;*/
-    /*color: #FFB204;*/
 }
 
 h1 {
@@ -230,7 +233,6 @@ footer h2 {
 .grant-panel {
     display: block;
     margin-bottom: 5px;
-    z-index: 100;
 }
 
 .grant-info {
@@ -260,6 +262,10 @@ footer h2 {
     height: 10px;
     margin-bottom: 10px;
 }
+
+.grant-content * .progress-bar-success:hover { background-color: #5cb85c; }
+.grant-content * .progress-bar-info:hover { background-color: #5bc0de; }
+.grant-content * .progress-bar-warning:hover { background-color: #f0ad4e; }
 
 /*
  ------------------------------------------------------------------------------------------
