@@ -25,7 +25,7 @@ function onLoad() {
 
     auth2.then(function () {
       if (!auth2.isSignedIn.get()) {
-        window.location.href = "/Kanbosal";
+        window.location.href = "/";
         console.log("Requested access to page when not logged in");
       }
     });
