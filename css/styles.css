@@ -1,4 +1,4 @@
-@import url(https://fonts.googleapis.com/css?family=Roboto:100,300,400,400italic,700,700italic);
+@import url(https://fonts.googleapis.com/css?family=Roboto:100,300,400,400italic,700,700italic,900);
 
 html, body {
     margin: 0;
@@ -9,6 +9,13 @@ html, body {
     height: 100%;
     min-width: 850px;
 }
+
+h1 { font-size: 48px; }
+h2 { font-size: 36px; }
+h3 { font-size: 24px; }
+h4 { font-size: 21px; }
+h5 { font-size: 16px; font-weight: 700; }
+h6 { font-size: 16px; font-style: italic; }
 
 #wrapper {
     min-height: 100%;
@@ -51,12 +58,16 @@ html, body {
 .progress-bar-warning { background-color: #ff7f32; }
 /* bootstrap style mods end */
 
-#brand {
+#hero {
+    height: 270px;
+}
+
+#brand, #brand-center {
     font-size: 24px;
     font-weight: 100;
 }
 
-#brand,
+#brand, #brand-center,
 #navbar a {
     color: #EDEDED; /* white */
     transition: all 0.3s ease-in-out 0s;
@@ -74,7 +85,6 @@ html, body {
 
 .content {
     padding: 40px 15px;
-    text-align: center;
 }
 
 .navbar * a, #sidebar * a, .btn,
@@ -109,7 +119,7 @@ a:hover {
   padding-bottom: 0px;
 }
 
-.special-image {
+.profile-image > img {
   position: relative;
   top: -5px;
   float: left;
@@ -118,14 +128,18 @@ a:hover {
   height: 2em;
 }
 
-.dropdown,
-.navbar-nav > li > .dropdown-menu,
-.dropdown li > a:hover,
-.dropdown > a:focus,
-.dropdown > a:hover,
+nav * .dropdown-menu,
 .dropdown > a {
   color: #EDEDED;
   background-color: #353535 !important;
+}
+
+.dropdown li > a:hover {
+  background-color: #000000 !important;
+}
+
+.abcRioButton {
+    box-shadow: none !important;
 }
 
 /*
@@ -133,31 +147,37 @@ a:hover {
                                       Splash Page
  ------------------------------------------------------------------------------------------
  */
+
 #brand-center {
     position: absolute;
     width: 100%;
-    left: 0;
     text-align: center;
-    margin: auto;
-    color: #FFB204;
 }
 
 a.btn {
     transition: all 0.3s ease-in-out 0s;
 }
 
-h1 {
-    font-size: 48px !important;
-    color: #8C1D40;
+#hero * h1 {
+    max-width: 1170px;
+    margin: 0 auto;
+    padding: 0 15px;
+    color: #FFFFFF !important;
+    font-weight: 900 !important;
+    font-size: 60px !important;
+    text-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
 }
 
-h2 {
-    font-size: 36px !important;
-    color: #8C1D40;
+#hero * h3 {
+    max-width: 1170px;
+    margin: 0 auto;
+    padding: 0 15px;
+    color: #FFFFFF !important;
+    font-weight: 900 !important;
+    text-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
 }
 
-h1 > .glyphicon-menu-left,
-h1 > .glyphicon-menu-right {
+#hero * .glyphicon {
     color: #FFC627;
 }
 
@@ -196,6 +216,10 @@ footer h2 {
  ------------------------------------------------------------------------------------------
  */
 
+.grant-content * .progress-bar-success:hover { background-color: #5cb85c; }
+.grant-content * .progress-bar-info:hover { background-color: #5bc0de; }
+.grant-content * .progress-bar-warning:hover { background-color: #f0ad4e; }
+
 .vert-panels {
     margin-top: 50px;
     padding-left: 23px;
@@ -207,22 +231,14 @@ footer h2 {
 }
 
 /* when using this class, child must be div for borders*/
-.tab-top {
-    border-top: 8px solid #a30046;
-    padding: 0;
-}
-
+.tab-top { border-top: 8px solid #a30046; padding: 0; }
 .tab-top > div {
     border-left: 1px solid #e9e9e9;
     border-right: 1px solid #e9e9e9;
     padding: 7px 15px;
 }
 
-.tab-left {
-    border-left: 8px solid #a30046;
-    padding: 0;
-}
-
+.tab-left { border-left: 8px solid #a30046; padding: 0; }
 .tab-left > div {
     border: 1px solid #e9e9e9;
     border-left: 0;
@@ -262,10 +278,6 @@ footer h2 {
     height: 10px;
     margin-bottom: 10px;
 }
-
-.grant-content * .progress-bar-success:hover { background-color: #5cb85c; }
-.grant-content * .progress-bar-info:hover { background-color: #5bc0de; }
-.grant-content * .progress-bar-warning:hover { background-color: #f0ad4e; }
 
 /*
  ------------------------------------------------------------------------------------------
@@ -454,6 +466,10 @@ footer h2 {
  ------------------------------------------------------------------------------------------
  */
 
-#about-image {
-    margin: 0 auto;
+#about * #hero {
+
+}
+
+#hero * h2 {
+    color: #8C1D40;
 }
