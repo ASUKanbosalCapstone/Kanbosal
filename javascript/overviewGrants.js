@@ -100,13 +100,35 @@ var input = {
   }]
 };
 
-$.ajax({
-  url : 'templates/overviewPanel.html',
-  dataType: 'html',
-  method: 'GET',
-  success: function(data) {
-    template = Handlebars.compile(data);
-    $("#overviewContent").append(template(input));
-    $('[data-toggle="tooltip"]').tooltip({container:'body'});
-  }
+$(function () {
+  $.ajax({
+    url : 'templates/overviewPanel.html',
+    dataType: 'html',
+    method: 'GET',
+    success: function(data) {
+      template = Handlebars.compile(data);
+      $("#overviewContent").append(template(input));
+      $('[data-toggle="tooltip"]').tooltip({container:'body'});
+    }
+  });
+
+  $('#grant-descr-editor').markdown({
+    iconlibrary: 'fa',
+    hiddenButtons: ['cmdPreview'],
+    fullscreen: {
+      enable: false
+    },
+    footer: '<small><div id="grant-descr-editor-ftr" style="display:none;"></div></small>',
+    onChange: function(e) {
+      var content = e.parseContent();
+      var content_length = (content.match(/\n/g)||[]).length + content.length;
+      if (content == '') $('#grant-descr-editor-ftr').hide();
+      else $('#grant-descr-editor-ftr').show().html(content);
+    }
+  });
+
+  $('#grantGen * [data-toggle="popover"]').popover({
+    container:'body',
+    html : true
+  });
 });
