@@ -113,17 +113,16 @@ $(function () {
   });
 
   $('#grant-descr-editor').markdown({
+    resize: 'vertical',
     iconlibrary: 'fa',
     hiddenButtons: ['cmdPreview'],
     fullscreen: {
       enable: false
     },
-    footer: '<small><div id="grant-descr-editor-ftr" style="display:none;"></div></small>',
+    footer: '<small><div id="grant-descr-editor-ftr"></div></small>',
     onChange: function(e) {
       var content = e.parseContent();
-      var content_length = (content.match(/\n/g)||[]).length + content.length;
-      if (content == '') $('#grant-descr-editor-ftr').hide();
-      else $('#grant-descr-editor-ftr').show().html(content);
+      $('#grant-descr-editor-ftr').show().html(content);
     }
   });
 
