@@ -195,7 +195,7 @@ footer {
     bottom: 0;
     right: 0;
     color: #FFFFFF;
-    z-index: 10000;
+    z-index: 100;
     padding: 20px 0 20px 0;
     font-weight: 300;
 }
@@ -379,7 +379,7 @@ footer h2 {
  */
 
 #sidebar {
-    z-index: 1000;
+    z-index: 70;
     position: fixed;
     width: 20%;
     height: 100%;
