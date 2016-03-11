@@ -1,0 +1,10 @@
+{
+    "name": "kanbosalService",
+    "version": "0.0.1",
+    "private": true,
+    "dependencies": {
+        "express": "~4.13.4",
+        "jade": "~1.11.0",
+        "mongodb": "~2.1.7"
+    }
+}
