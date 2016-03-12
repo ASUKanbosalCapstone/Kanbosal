@@ -4,9 +4,10 @@ var path = require('path');
 
 var MongoClient = require('mongodb').MongoClient;
 var assert = require('assert');
-var ObjectId = require('mongodb').ObjectID;
-
-// var CollectionDriver = require('./collectionDriver').CollectionDriver;
+// var ObjectId = require('mongodb').ObjectID;
+var Server = require('mongodb').Server;
+var CollectionDriver = require('./collectionDriver').CollectionDriver;
+var bodyParser = require('body-parser');
 
 var app = express();
 app.set('port', process.env.PORT || 3000);
@@ -17,104 +18,74 @@ app.set('view engine', 'jade');
 var mongoHost = 'localHost';
 var mongoPort = 27017;
 var mongoDatabase = 'kanbosal';
-var url = 'mongodb://' + mongoHost + ':' + 27017 + '/' + mongoDatabase;
-// var collectionDriver;
- 
-// var mongoClient = new MongoClient(new Server(mongoHost, mongoPort));
+var url = 'mongodb://' + mongoHost + ':' + mongoPort + '/' + mongoDatabase;
+var collectionDriver;
 
-// mongoClient.connect(function(err, mongoClient) {
-//     if (!mongoClient) {
-//         console.error("Error! Exiting... Must start MongoDB first");
-//         process.exit(1);
-//     }
+/* Connects to our mongo database running at url. */
+MongoClient.connect(url, function(error, db) {
+      assert.equal(null, error);
+      console.log("Connected correctly to mongodb server at database " + mongoDatabase + ".");
 
-//     var db = mongoClient.db("kanbosal");
-//     collectionDriver = new CollectionDriver(db);
-// });
-
-
-// MongoClient.connect(url, function(err, db) {
-//   assert.equal(null, err);
-//   console.log("Connected correctly to server.");
-//   db.close();
-// });
+      collectionDriver = new CollectionDriver(db);
+      // db.close();
+});
 
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(bodyParser.json());
 
-// app.get('/', function (req, res) {
-//     res.send('<html><body><h1>Hello World</h1></body></html>');
-// });
-
+/* GET: findAll of collection. */
 app.get('/:collection', function(req, res) {
-    MongoClient.connect(url, function(err, db) {
-        assert.equal(null, err);
-        findAll(db, req.params.collection, function() {
-            db.close();
-        });
-    });
-
-    var findAll = function(db, collectionName, callback) {
-        var cursor = db.collection(collectionName).find();
-
-        cursor.each(function(err, doc) {
-            assert.equal(err, null);
-
-            if (doc != null) {
-                // console.dir(doc);
-                res.set('Content-Type','application/json');
-                res.status(200).send(doc)
-            }
-            else
-                callback();
-        });
-    };
-
+    var collectionName = req.params.collection;
     // var params = req.params;
 
-    // collectionDriver.findAll(req.params.collection, function(error, objs) {
-    //     if (error)
-    //         res.send(400, error);
-    //     else { 
-    //         if (req.accepts('html'))
-    //             res.render('data',{objects: objs, collection: req.params.collection});
-    //         else {
-    //             res.set('Content-Type','application/json');
-    //             res.send(200, objs);
-    //         }
-    //     }
-    // });
+    collectionDriver.findAll(collectionName, function(error, documents) {
+        if (error)
+            res.send(400, error);
+        else { 
+            if (req.accepts('html'))
+                res.render('data', {documents: documents, collection: collectionName});
+            else {
+                res.set('Content-Type','application/json');
+                res.json(documents);
+            }
+        }
+    });
 });
- 
-app.get('/:collection/:entity', function(req, res) {
-    var params = req.params;
-    var entity = params.entity;
-    var collection = params.collection;
 
-    if (entity) {
-        collectionDriver.get(collection, entity, function(error, objs) {
+/* GET: find id in collection. */
+app.get('/:collection/:id', function(req, res) {
+    var collection = req.params.collection;
+    var id = req.params.id;
+
+    if (id) {
+        collectionDriver.get(collection, id, function(error, documents) {
             if (error)
-                res.send(400, error);
+                res.status(400).send(error);
             else
-                res.send(200, objs);
+                res.status(200).send(documents);
         });
     }
     else
-        res.send(400, {error: 'bad url', url: req.url});
+        res.status(400).send({error: 'bad url', url: req.url});
 });
 
-app.use(function (req,res) { //1
-    res.render('404', {url:req.url}); //2
+/* POST: insert document in collection. */
+app.post('/:collection', function(req, res) {
+    var object = req.body;
+    var collection = req.params.collection;
+
+    collectionDriver.save(collection, object, function(error, doc) {
+        if (error)
+            res.status(400).send(error);
+        else
+            res.status(201).send(doc);
+     });
+});
+
+app.use(function (req,res) {
+    res.render('404', {url:req.url});
 });
 
 http.createServer(app).listen(app.get('port'), function(){
     console.log('Express server listening on port ' + app.get('port'));
 });
-
-var mongoConnect = function(functionName) {
-    MongoClient.connect(url, function(err, db) {
-        assert.equal(null, err);
-        findAll(db, req.params.collection, function() {
-            db.close();
-        });
-    });
-}
