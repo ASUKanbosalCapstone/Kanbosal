@@ -1,24 +1,24 @@
+// Requirements
 var http = require('http');
 var express = require('express');
 var path = require('path');
-
 var MongoClient = require('mongodb').MongoClient;
 var assert = require('assert');
-// var ObjectId = require('mongodb').ObjectID;
-var Server = require('mongodb').Server;
 var CollectionDriver = require('./collectionDriver').CollectionDriver;
 var bodyParser = require('body-parser');
 
+// Express settings
 var app = express();
 app.set('port', process.env.PORT || 3000);
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
-// Change if running elsewhere
+// Mongo settings
 var mongoHost = 'localHost';
 var mongoPort = 27017;
 var mongoDatabase = 'kanbosal';
 var url = 'mongodb://' + mongoHost + ':' + mongoPort + '/' + mongoDatabase;
+
 var collectionDriver;
 
 /* Connects to our mongo database running at url. */
@@ -36,18 +36,19 @@ app.use(bodyParser.json());
 /* GET: findAll of collection. */
 app.get('/:collection', function(req, res) {
     var collectionName = req.params.collection;
-    // var params = req.params;
 
-    collectionDriver.findAll(collectionName, function(error, documents) {
+    collectionDriver.findAll(collectionName, function(error, results) {
         if (error)
             res.send(400, error);
         else { 
-            if (req.accepts('html'))
-                res.render('data', {documents: documents, collection: collectionName});
-            else {
-                res.set('Content-Type','application/json');
-                res.json(documents);
-            }
+            // if (req.accepts('html'))
+            //     res.render('data', {documents: results, collection: collectionName});
+            // else {
+            //     res.set('Content-Type','application/json');
+            //     res.json(results);
+            // }
+            res.set('Content-Type','application/json');
+            res.json(results);
         }
     });
 });
@@ -58,11 +59,11 @@ app.get('/:collection/:id', function(req, res) {
     var id = req.params.id;
 
     if (id) {
-        collectionDriver.get(collection, id, function(error, documents) {
+        collectionDriver.get(collection, id, function(error, results) {
             if (error)
                 res.status(400).send(error);
             else
-                res.status(200).send(documents);
+                res.status(200).send(results);
         });
     }
     else
@@ -71,19 +72,57 @@ app.get('/:collection/:id', function(req, res) {
 
 /* POST: insert document in collection. */
 app.post('/:collection', function(req, res) {
-    var object = req.body;
+    var doc = req.body;
     var collection = req.params.collection;
 
-    collectionDriver.save(collection, object, function(error, doc) {
+    collectionDriver.save(collection, doc, function(error, results) {
         if (error)
             res.status(400).send(error);
         else
-            res.status(201).send(doc);
+            res.status(201).send(results);
      });
 });
 
+/* PUT: updates a document with id in the collection. */
+app.put('/:collection/:id', function(req, res) {
+    var docUpdates = req.body;
+    var id = req.params.id;
+    var collection = req.params.collection;
+
+    if (id) {
+        collectionDriver.update(collection, docUpdates, id, function(error, results) {
+            if (error)
+                res.status(400).send(error);
+            else 
+                res.status(200).send("Updated id " + id + " at collection " + collection + ".");
+        });
+    }
+    else {
+        var error = { "message" : "Cannot PUT a whole collection" };
+        res.status(400).send(error);
+    }
+});
+
+/* DELETE: deletes a document with id in the collection. */
+app.delete('/:collection/:id', function(req, res) {
+    var id = req.params.id;
+    var collection = req.params.collection;
+
+    if (id) {
+        collectionDriver.delete(collection, id, function(error, results) {
+            if (error)
+                res.status(400).send(error);
+            else
+                res.status(200).send(results);
+        });
+    } else {
+        var error = { "message" : "Cannot DELETE a whole collection" };
+        res.status(400).send(error);
+   }
+});
+
 app.use(function (req,res) {
-    res.render('404', {url:req.url});
+    res.render('404', {url: req.url});
 });
 
 http.createServer(app).listen(app.get('port'), function(){
