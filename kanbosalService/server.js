@@ -10,11 +10,9 @@ var bodyParser = require('body-parser');
 // Express settings
 var app = express();
 app.set('port', process.env.PORT || 3000);
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'jade');
 
 // Mongo settings
-var mongoHost = 'localHost';
+var mongoHost = '127.0.0.1';
 var mongoPort = 27017;
 var mongoDatabase = 'kanbosal';
 var url = 'mongodb://' + mongoHost + ':' + mongoPort + '/' + mongoDatabase;

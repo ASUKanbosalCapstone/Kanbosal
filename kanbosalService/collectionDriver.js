@@ -1,36 +1,5 @@
 var ObjectID = require('mongodb').ObjectID;
 
-
-/* Ensures the card is of a certain format otherwise throws an error. */
-var ensureCardFormat = function(doc, errorCallback) {
-    if (!doc.title instanceof String)
-        errorCallback(new Error("title must be a string."));
-    doc.notes.forEach(function(note) {
-        if (!note instanceof String)
-            errorCallback(new Error("notes must be strings."));
-    });
-    if (!doc.documentUrl instanceof String)
-        errorCallback(new Error("documentUrl must be a string."));
-    if (!doc.timeCreated instanceof Object)
-        errorCallback(new Error("timeCreated must be an object of Date."));
-    if (!doc.timeLastEdit instanceof Object)
-        errorCallback(new Error("timeLastEdit must be an object of Date."));
-    if (!doc.status instanceof String)
-        errorCallback(new Error("status must be a string."));
-    doc.tags.forEach(function(tag) {
-        if (!tag instanceof String)
-            errorCallback(new Error("tags must be strings."));
-    });
-    doc.userIds.forEach(function(userId) {
-        if (!userId instanceof String)
-            errorCallback(new Error("userIds must be ObjectIDs."));
-    });
-    doc.lock.forEach(function(l) {
-        if (!l instanceof Boolean)
-            errorCallback(new Error("locks must be booleans."));
-    })
-}
-
 CollectionDriver = function(db) {
     this.db = db;
 };
