@@ -68,8 +68,8 @@ app.get('/:collection/:id', function(req, res) {
         res.status(400).send({error: 'bad url', url: req.url});
 });
 
-/* POST: insert document in collection. */
-app.post('/:collection', function(req, res) {
+/* PUT: insert document in collection. */
+app.put('/:collection', function(req, res) {
     var doc = req.body;
     var collection = req.params.collection;
 
@@ -81,8 +81,8 @@ app.post('/:collection', function(req, res) {
      });
 });
 
-/* PUT: updates a document with id in the collection. */
-app.put('/:collection/:id', function(req, res) {
+/* POST: updates a document with id in the collection. */
+app.post('/:collection/:id', function(req, res) {
     var docUpdates = req.body;
     var id = req.params.id;
     var collection = req.params.collection;
