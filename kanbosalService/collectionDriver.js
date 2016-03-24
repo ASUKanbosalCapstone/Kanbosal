@@ -1,22 +1,13 @@
 var ObjectID = require('mongodb').ObjectID;
+var db;
 
-CollectionDriver = function(db) {
-    this.db = db;
-};
-
-/* Returns the given collection belonging to collectionName in the_collection. */
-CollectionDriver.prototype.getCollection = function(collectionName, callback) {
-    this.db.collection(collectionName, function(error, collection) {
-        if (error)
-            callback(error);
-        else
-            callback(null, collection);
-    });
+CollectionDriver = function(datab) {
+    db = datab;
 };
 
 /* Returns all documents in the collectionName in results. */
 CollectionDriver.prototype.findAll = function(collectionName, callback) {
-    this.getCollection(collectionName, function(error, collection) {
+    db.collection(collectionName, function(error, collection) {
         if (error)
             callback(error);
         else
@@ -31,7 +22,7 @@ CollectionDriver.prototype.findAll = function(collectionName, callback) {
 
 /* Returns the documents with the provided id in collectionName to results. */
 CollectionDriver.prototype.get = function(collectionName, id, callback) {
-    this.getCollection(collectionName, function(error, collection) {
+    db.collection(collectionName, function(error, collection) {
         if (error)
             callback(error);
         else {
@@ -39,16 +30,44 @@ CollectionDriver.prototype.get = function(collectionName, id, callback) {
 
             if (!checkForHexRegExp.test(id))
                 callback({error: "invalid id"});
-            else
-                collection.findOne({'_id':ObjectID(id)}, function(error, results) {
+            else {
+                collection.findOne({'_id': ObjectID(id)}, function(error, results) {
                     if (error)
                         callback(error);
                     else
                         callback(null, results);
                 });
+            }
         }
     });
 };
+
+/* Returns a collection of cards matching the given grant ObjectID and userPermissionId. */
+CollectionDriver.prototype.getCards = function(grantId, userPermissionId, callback) {
+    db.collection("grants").findOne({'_id': ObjectID(grantId)}, function(error, grant) {
+        if (error)
+            callback(error);
+        else {
+            var cards = grant.stages[userPermissionId];
+            var objIds = cards.toDo.map(function(item) {
+                return ObjectID(item);
+            });
+            var inProgressIds = cards.inProgress.map(function(item) {
+                return ObjectID(item);
+            });
+            var completeIds = cards.complete.map(function(item) {
+                return ObjectID(item);
+            });
+            objIds.concat(inProgressIds, completeIds)
+            db.collection("cards").find({'_id': {'$in': objIds}}).toArray(function(error, cards) {
+                if (error)
+                    callback(error);
+                else
+                    callback(null, cards);
+            });
+        }
+    });
+}
 
 /* Inserts the doc in the collection with collectionName. */
 CollectionDriver.prototype.save = function(collectionName, doc, callback) {
@@ -75,7 +94,7 @@ CollectionDriver.prototype.save = function(collectionName, doc, callback) {
         callback({error: "invalid collection"});
     }
 
-    this.getCollection(collectionName, function(error, collection) {
+    db.collection(collectionName, function(error, collection) {
         if (error)
             callback(error);
         else {
@@ -103,7 +122,7 @@ CollectionDriver.prototype.update = function(collectionName, docUpdates, docId, 
         };
     }
 
-    this.getCollection(collectionName, function(error, collection) {
+    db.collection(collectionName, function(error, collection) {
         if (error)
             callback(error);
         else {
@@ -123,7 +142,7 @@ CollectionDriver.prototype.update = function(collectionName, docUpdates, docId, 
 
 /* Deletes the doc with the given docId in collectionName */
 CollectionDriver.prototype.delete = function(collectionName, docId, callback) {
-    this.getCollection(collectionName, function(error, collection) {
+    db.collection(collectionName, function(error, collection) {
         if (error)
             callback(error);
         else {

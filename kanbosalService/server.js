@@ -68,6 +68,23 @@ app.get('/:collection/:id', function(req, res) {
         res.status(400).send({error: 'bad url', url: req.url});
 });
 
+/* GET: find ids to the passed grant for the given user. */
+app.get('/grants/:id/:userPerm', function(req, res) {
+    var grantId = req.params.id;
+    var userPermissionId = req.params.userPerm;
+
+    if (grantId) {
+        collectionDriver.getCards(grantId, userPermissionId, function(error, results) {
+            if (error)
+                res.status(400).send(error);
+            else
+                res.status(200).send(results);
+        });
+    }
+    else
+        res.status(400).send({error: 'bad grant id'});
+})
+
 /* PUT: insert document in collection. */
 app.put('/:collection', function(req, res) {
     var doc = req.body;
