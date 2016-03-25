@@ -42,6 +42,25 @@ CollectionDriver.prototype.get = function(collectionName, id, callback) {
     });
 };
 
+/* Returns the grants belonging to the user with userId. */
+CollectionDriver.prototype.getGrants = function(userId, callback) {
+    db.collection("users").findOne({'_id': ObjectID(userId)}, function(error, user) {
+        if (error)
+            callback(error);
+        else {
+            var grantIds = user.grantIds.map(function(grant) {
+                return ObjectID(grant);
+            });
+            db.collection("grants").find({'_id': {'$in': grantIds}}).toArray(function(error, grants) {
+                if (error)
+                    callback(error);
+                else
+                    callback(null, grants);
+            });
+        }
+    })
+}
+
 /* Returns a collection of cards matching the given grant ObjectID and userPermissionId. */
 CollectionDriver.prototype.getCards = function(grantId, userPermissionId, callback) {
     db.collection("grants").findOne({'_id': ObjectID(grantId)}, function(error, grant) {
