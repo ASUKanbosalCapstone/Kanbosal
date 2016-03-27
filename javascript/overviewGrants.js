@@ -106,11 +106,10 @@ $(function () {
     dataType: 'html',
     method: 'GET',
     success: function(json) {
-      var thing = JSON.parse(json);
+      var cardsArray = JSON.parse(json);
       var retrieved = {
-        "grant" : thing
+        "grant" : cardsArray
       };
-      console.log(retrieved);
 
       $.ajax({
         url : 'templates/overviewPanel.html',
