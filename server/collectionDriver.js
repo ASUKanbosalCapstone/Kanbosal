@@ -20,7 +20,7 @@ CollectionDriver.prototype.findAll = function(collectionName, callback) {
     });
 };
 
-/* Returns the documents with the provided id in collectionName to results. */
+/* Returns the document with the provided id in collectionName to results. */
 CollectionDriver.prototype.get = function(collectionName, id, callback) {
     db.collection(collectionName, function(error, collection) {
         if (error)
@@ -38,6 +38,22 @@ CollectionDriver.prototype.get = function(collectionName, id, callback) {
                         callback(null, results);
                 });
             }
+        }
+    });
+};
+
+/* Returns the user document with the provided email. */
+CollectionDriver.prototype.getEmail = function(collectionName, email, callback) {
+    db.collection(collectionName, function(error, collection) {
+        if (error)
+            callback(error);
+        else {
+            collection.findOne({'email': email}, function(error, results) {
+                if (error)
+                    callback(error);
+                else
+                    callback(null, results);
+            });
         }
     });
 };

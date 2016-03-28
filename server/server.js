@@ -38,7 +38,7 @@ app.get('/:collection', function(req, res) {
     collectionDriver.findAll(collectionName, function(error, results) {
         if (error)
             res.send(400, error);
-        else { 
+        else {
             // if (req.accepts('html'))
             //     res.render('data', {documents: results, collection: collectionName});
             // else {
@@ -58,6 +58,23 @@ app.get('/:collection/:id', function(req, res) {
 
     if (id) {
         collectionDriver.get(collection, id, function(error, results) {
+            if (error)
+                res.status(400).send(error);
+            else
+                res.status(200).send(results);
+        });
+    }
+    else
+        res.status(400).send({error: 'bad url', url: req.url});
+});
+
+/* GET: find a user by email. */
+app.get('/users?email=:email', function(req, res) {
+    var collection = req.params.collection;
+    var email = req.params.email;
+
+    if (id) {
+        collectionDriver.getEmail(collection, id, function(error, results) {
             if (error)
                 res.status(400).send(error);
             else
