@@ -33,6 +33,28 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(bodyParser.json());
 app.use(cors({origin: 'http://localhost:8080'}));
 
+/* GET: find a user by email. */
+app.get('/users', function(req, res) {
+    var email = req.query.email;
+
+    if (email) {
+        collectionDriver.getEmail(email, function(error, results) {
+            if (error)
+                res.status(400).send(error);
+            else
+                res.json(results);
+        });
+    }
+    else {
+        collectionDriver.findAll("users", function(error, results) {
+            if (error)
+                res.status(400).send(error);
+            else
+                res.json(results);
+        });
+    }
+});
+
 /* GET: findAll of collection. */
 app.get('/:collection', function(req, res) {
     var collectionName = req.params.collection;
@@ -41,14 +63,7 @@ app.get('/:collection', function(req, res) {
         if (error)
             res.send(400, error);
         else {
-            // if (req.accepts('html'))
-            //     res.render('data', {documents: results, collection: collectionName});
-            // else {
-            //     res.set('Content-Type','application/json');
-            //     res.json(results);
-            // }
-            res.set('Content-Type','application/json');
-            res.json(results);
+            res.status(200).send(results);
         }
     });
 });
@@ -63,24 +78,7 @@ app.get('/:collection/:id', function(req, res) {
             if (error)
                 res.status(400).send(error);
             else
-                res.status(200).send(results);
-        });
-    }
-    else
-        res.status(400).send({error: 'bad url', url: req.url});
-});
-
-/* GET: find a user by email. */
-app.get('/users?email=:email', function(req, res) {
-    var collection = req.params.collection;
-    var email = req.params.email;
-
-    if (id) {
-        collectionDriver.getEmail(collection, id, function(error, results) {
-            if (error)
-                res.status(400).send(error);
-            else
-                res.status(200).send(results);
+                res.json(results);
         });
     }
     else
@@ -96,7 +94,7 @@ app.get('/users/:id/grants', function(req, res) {
             if (error)
                 res.status(400).send(error);
             else
-                res.status(200).send(results);
+                res.json(results);
         });
     }
     else
@@ -114,7 +112,7 @@ app.get('/grants/:id/:userPerm/cards', function(req, res) {
             if (error)
                 res.status(400).send(error);
             else
-                res.status(200).send(results);
+                res.json(results);
         });
     }
     else
@@ -130,7 +128,7 @@ app.put('/:collection', function(req, res) {
         if (error)
             res.status(400).send(error);
         else
-            res.status(201).send(results);
+            res.json(results);
      });
 });
 
