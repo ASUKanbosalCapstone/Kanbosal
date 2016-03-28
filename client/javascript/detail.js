@@ -241,12 +241,33 @@ $(function() {
       ]
     };
     $("#columnList > div:first-child * .column").append(newCardTemplate(cardGenInfo));
-    $('#cardModals').append(modalTemplate(modalLink));
+
+    var testCard = {
+      title: title,
+      notes: body,
+      documentUrl: documentLink,
+      status: "to_do",
+      tags: [],
+      userIds: [],  // add current user id here
+      lock: [false, false, false, false]
+    }
+
+    var test = JSON.stringify(testCard);
+
+    $.ajax({
+      url: 'http://localhost:3000/cards',
+      type: 'PUT',
+      data: test,
+      contentType: 'application/json',
+      sucess: function(result) {
+        $('#cardModals').append(modalTemplate(modalLink));
+      }
+    });
   });
 });
 
 $('#cardGen').on('hidden.bs.modal', function () {
   $("#cardGenTitle").val("");
-  $("#cardGenBody").val("Enter card body here");
+  $("#cardGenBody").val("Enter card body here.");
   $("#cardGenDocLink").val("");
 })

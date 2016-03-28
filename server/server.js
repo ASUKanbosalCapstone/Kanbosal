@@ -6,6 +6,7 @@ var MongoClient = require('mongodb').MongoClient;
 var assert = require('assert');
 var CollectionDriver = require('./collectionDriver').CollectionDriver;
 var bodyParser = require('body-parser');
+var cors = require('cors');
 
 // Express settings
 var app = express();
@@ -30,6 +31,7 @@ MongoClient.connect(url, function(error, db) {
 
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(bodyParser.json());
+app.use(cors({origin: 'http://localhost:8080'}));
 
 /* GET: findAll of collection. */
 app.get('/:collection', function(req, res) {
