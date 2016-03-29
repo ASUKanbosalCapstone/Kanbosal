@@ -51,8 +51,9 @@ CollectionDriver.prototype.getEmail = function(email, callback) {
             collection.findOne({'email': email}, function(error, results) {
                 if (error)
                     callback(error);
-                else
+                else {
                     callback(null, results);
+                }
             });
         }
     });
@@ -100,7 +101,7 @@ CollectionDriver.prototype.getCards = function(grantId, userPermissionId, callba
             var completeIds = cards.complete.map(function(item) {
                 return ObjectID(item);
             });
-            var toDoCards = db.collection("cards").find({'_id': {'$in': toDoIds}}).toArray(function(error, cards) {
+            db.collection("cards").find({'_id': {'$in': toDoIds}}).toArray(function(error, cards) {
                 if (error)
                     callback(error);
                 else {
@@ -169,13 +170,8 @@ CollectionDriver.prototype.update = function(collectionName, docUpdates, docId, 
 
     if (collectionName == "cards") {
         updateObject = {
-            $set: docUpdates,
+            docUpdates,
             $currentDate: {'timeLastEdit': true}    // updates timeLastEdit with current time
-        };
-    }
-    else {
-        updateObject = {
-            $set: docUpdates
         };
     }
 
@@ -186,11 +182,11 @@ CollectionDriver.prototype.update = function(collectionName, docUpdates, docId, 
             collection.updateOne(
                 {'_id': ObjectID(docId)},
                 updateObject,
-                function(error, docUpdates) {
+                function(error, results) {
                     if (error)
                         callback(error);
                     else
-                        callback(null, docUpdates);
+                        callback(null, results);
                 }
             );
         }
