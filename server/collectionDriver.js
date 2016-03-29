@@ -83,8 +83,15 @@ CollectionDriver.prototype.getCards = function(grantId, userPermissionId, callba
         if (error)
             callback(error);
         else {
+            var returnCards = {
+                progress: 0,
+                toDo: [],
+                inProgress: [],
+                complete: []
+            };
             var cards = grant.stages[userPermissionId];
-            var objIds = cards.toDo.map(function(item) {
+            returnCards.progress = cards.progress;
+            var toDoIds = cards.toDo.map(function(item) {
                 return ObjectID(item);
             });
             var inProgressIds = cards.inProgress.map(function(item) {
@@ -93,12 +100,27 @@ CollectionDriver.prototype.getCards = function(grantId, userPermissionId, callba
             var completeIds = cards.complete.map(function(item) {
                 return ObjectID(item);
             });
-            objIds.concat(inProgressIds, completeIds)
-            db.collection("cards").find({'_id': {'$in': objIds}}).toArray(function(error, cards) {
+            var toDoCards = db.collection("cards").find({'_id': {'$in': toDoIds}}).toArray(function(error, cards) {
                 if (error)
                     callback(error);
-                else
-                    callback(null, cards);
+                else {
+                    returnCards.toDo = cards;
+                    db.collection("cards").find({'_id': {'$in': inProgressIds}}).toArray(function(error, cards) {
+                        if (error)
+                            callback(error);
+                        else {
+                            returnCards.inProgress = cards;
+                            db.collection("cards").find({'_id': {'$in': completeIds}}).toArray(function(error, cards) {
+                                if (error)
+                                    callback(error);
+                                else {
+                                    returnCards.complete = cards;
+                                    callback(null, returnCards);
+                                }
+                            });
+                        }
+                    });
+                }
             });
         }
     });

@@ -31,9 +31,10 @@ MongoClient.connect(url, function(error, db) {
 
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(bodyParser.json());
+// Might need to change based on localhost's port. Allows for the client to make ajax calls to the server.
 app.use(cors({origin: 'http://localhost:8080'}));
 
-/* GET: find a user by email. */
+/* GET: find a user by email or return all users. */
 app.get('/users', function(req, res) {
     var email = req.query.email;
 
@@ -45,7 +46,7 @@ app.get('/users', function(req, res) {
                 res.json(results);
         });
     }
-    else {
+    else if (req.originalUrl == "/users" || req.originalUrl == "/users/") {
         collectionDriver.findAll("users", function(error, results) {
             if (error)
                 res.status(400).send(error);
@@ -53,6 +54,8 @@ app.get('/users', function(req, res) {
                 res.json(results);
         });
     }
+    else 
+        res.status(400).send({error: 'bad url', url: req.url});
 });
 
 /* GET: findAll of collection. */
@@ -61,7 +64,7 @@ app.get('/:collection', function(req, res) {
 
     collectionDriver.findAll(collectionName, function(error, results) {
         if (error)
-            res.send(400, error);
+            res.status(400).send(error);
         else {
             res.status(200).send(results);
         }
