@@ -1,0 +1,10 @@
+# MongoDB ignores
+journal/
+diagnostic.data/
+local.0
+local.ns
+*.lock
+*.wt
+*.turtle
+WiredTiger
+

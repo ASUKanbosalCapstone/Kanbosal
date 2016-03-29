@@ -1,0 +1,11 @@
+{
+  "name": "kanbosalService",
+  "version": "0.0.1",
+  "private": true,
+  "dependencies": {
+    "body-parser": "^1.15.0",
+    "cors": "^2.7.1",
+    "express": "~4.13.4",
+    "mongodb": "~2.1.7"
+  }
+}
