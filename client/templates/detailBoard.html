@@ -1,42 +1,82 @@
-{{#if Grant_Columns}}
-  {{#each Grant_Columns}}
-  <div class="col-xs-4 col-xs-height">
-    <div class="tab-top inside-full-height">
-      <div class="column">
-        <h4>
-          {{Column_Name}}
-          {{#compare Column_Name "To Do"}}
-            <a data-toggle="modal" data-target="#cardGen"><span class="fa fa-plus-square pull-right" data-toggle="tooltip" data-placement="left" title="New Card"></span></a>
-          {{/compare}}
-        </h4>
-        {{#if Cards}}
-          {{#each Cards}}
-            <div class="portlet panel panel-default">
-              <div class="portlet-header panel-heading" data-toggle="modal" data-target="#{{Modal_ID}}"><h3 class="panel-title">{{Card_Name}}</h3></div>
-              {{#compare ../Column_Name "!=" "To Do"}}
-                <div class="portlet-content panel-body">
-                  {{#if Document_Link}}
-                    <a target="_blank" href="{{Document_Link}}" class="fa fa-file card-icons"></a>
-                  {{/if}}
-                  {{#compare ../Column_Name "Complete"}}
-                    {{#if Tag_List}}
-                      {{#each Tag_List}}
-                        <span class="label label-success card-icons">{{this}}</span>
-                      {{/each}}
-                    {{/if}}
-                  {{/compare}}
-                  {{#if Assigned_People}}
-                    {{#each Assigned_People}}
-                      <span class="fa fa-user pull-right card-icons"></span>
-                    {{/each}}
-                  {{/if}}
-                </div>
-              {{/compare}}
-            </div>
-          {{/each}}
-        {{/if}}
-      </div>
+<div class="col-xs-4 col-xs-height">
+  <div class="tab-top inside-full-height">
+    <div class="column">
+      <h4>
+        To Do
+        <a data-toggle="modal" data-target="#cardGen"><span class="fa fa-plus-square pull-right" data-toggle="tooltip" data-placement="left" title="New Card"></span></a>
+      </h4>
+      {{#each toDo}}
+        <div class="portlet panel panel-default">
+          <div class="portlet-header panel-heading" data-toggle="modal" data-target="#{{_id}}">
+            <h3 class="panel-title">{{title}}</h3>
+          </div>
+          <div class="portlet-content panel-body">
+            <a target="_blank" href="{{documentUrl}}" class="fa fa-file card-icons"></a>
+            {{#each tags}}
+              <span class="label label-success card-icons">{{this}}</span>
+            {{/each}}
+            {{#each userIds}}
+              <span class="fa fa-user pull-right card-icons"></span>
+            {{/each}}
+          </div>
+        </div>
+      {{/each}}
     </div>
   </div>
-  {{/each}}
-{{/if}}
+</div>
+
+<div class="col-xs-4 col-xs-height">
+  <div class="tab-top inside-full-height">
+    <div class="column">
+      <h4>
+        In Progress
+      </h4>
+      {{#each inProgress}}
+        <div class="portlet panel panel-default">
+          <div class="portlet-header panel-heading" data-toggle="modal" data-target="#{{_id}}">
+            <h3 class="panel-title">{{title}}</h3>
+          </div>
+          <div class="portlet-content panel-body">
+            {{#if documentUrl}}
+              <a target="_blank" href="{{documentUrl}}" class="fa fa-file card-icons"></a>
+            {{/if}}
+            {{#each tags}}
+              <span class="label label-success card-icons">{{this}}</span>
+            {{/each}}
+            {{#each userIds}}
+              <span class="fa fa-user pull-right card-icons"></span>
+            {{/each}}
+          </div>
+        </div>
+      {{/each}}
+    </div>
+  </div>
+</div>
+
+<div class="col-xs-4 col-xs-height">
+  <div class="tab-top inside-full-height">
+    <div class="column">
+      <h4>
+        Complete
+      </h4>
+      {{#each complete}}
+        <div class="portlet panel panel-default">
+          <div class="portlet-header panel-heading" data-toggle="modal" data-target="#{{_id}}">
+            <h3 class="panel-title">{{title}}</h3>
+          </div>
+          <div class="portlet-content panel-body">
+            {{#if documentUrl}}
+              <a target="_blank" href="{{documentUrl}}" class="fa fa-file card-icons"></a>
+            {{/if}}
+            {{#each tags}}
+              <span class="label label-success card-icons">{{this}}</span>
+            {{/each}}
+            {{#each userIds}}
+              <span class="fa fa-user pull-right card-icons"></span>
+            {{/each}}
+          </div>
+        </div>
+      {{/each}}
+    </div>
+  </div>
+</div>

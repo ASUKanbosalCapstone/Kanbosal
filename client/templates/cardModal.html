@@ -1,4 +1,4 @@
-{{#if Grant_Columns}}
+<!-- {{#if Grant_Columns}}
   {{#each Grant_Columns}}
     {{#if Cards}}
       {{#each Cards}}
@@ -28,4 +28,85 @@
       {{/each}}
     {{/if}}
   {{/each}}
-{{/if}}
+{{/if}} -->
+
+{{#each toDo}}
+  <div class="modal fade" id="{{_id}}" tabindex="-1" role="dialog" aria-labelledby="detailModalLabel">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <div class="modal-title">
+            <form id="modalHeader">
+              <input class="form-control" id="myModalLabel" value="{{title}}" placeholder="Enter a title here!">
+            </form>
+          </div>
+        </div>
+        <div class="modal-body">
+          <div class="editable">
+            {{{notes}}}
+          </div>
+        </div>
+        <div class="modal-footer">
+          <p>Lasted Edited: {{timeLastEdit}}</p>
+          <a class="btn btn-primary" data-dismiss="modal">Close</a>
+          <a class="btn btn-gold" target="_blank" href="{{documentUrl}}">Open Document</a>
+        </div>
+      </div>
+    </div>
+  </div>
+{{/each}}
+
+{{#each inProgress}}
+  <div class="modal fade" id="{{_id}}" tabindex="-1" role="dialog" aria-labelledby="detailModalLabel">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <div class="modal-title">
+            <form id="modalHeader">
+              <input class="form-control" id="myModalLabel" value="{{title}}" placeholder="Enter a title here!">
+            </form>
+          </div>
+        </div>
+        <div class="modal-body">
+          <div class="editable">
+            {{{notes}}}
+          </div>
+        </div>
+        <div class="modal-footer">
+          <p>Lasted Edited: {{timeLastEdit}}</p>
+          <a class="btn btn-primary" data-dismiss="modal">Close</a>
+          <a class="btn btn-gold" target="_blank" href="{{documentUrl}}">Open Document</a>
+        </div>
+      </div>
+    </div>
+  </div>
+{{/each}}
+
+{{#each complete}}
+  <div class="modal fade" id="{{_id}}" tabindex="-1" role="dialog" aria-labelledby="detailModalLabel">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <div class="modal-title">
+            <form id="modalHeader">
+              <input class="form-control" id="myModalLabel" value="{{title}}" placeholder="Enter a title here!">
+            </form>
+          </div>
+        </div>
+        <div class="modal-body">
+          <div class="editable">
+            {{{notes}}}
+          </div>
+        </div>
+        <div class="modal-footer">
+          <p>Lasted Edited: {{timeLastEdit}}</p>
+          <a class="btn btn-primary" data-dismiss="modal">Close</a>
+          <a class="btn btn-gold" target="_blank" href="{{documentUrl}}">Open Document</a>
+        </div>
+      </div>
+    </div>
+  </div>
+{{/each}}
