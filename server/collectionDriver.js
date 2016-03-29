@@ -100,7 +100,7 @@ CollectionDriver.prototype.getCards = function(grantId, userPermissionId, callba
             var completeIds = cards.complete.map(function(item) {
                 return ObjectID(item);
             });
-            var toDoCards = db.collection("cards").find({'_id': {'$in': toDoIds}}).toArray(function(error, cards) {
+            db.collection("cards").find({'_id': {'$in': toDoIds}}).toArray(function(error, cards) {
                 if (error)
                     callback(error);
                 else {
