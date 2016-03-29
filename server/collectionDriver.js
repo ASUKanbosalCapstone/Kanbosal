@@ -43,7 +43,7 @@ CollectionDriver.prototype.get = function(collectionName, id, callback) {
 };
 
 /* Returns the user document with the provided email. */
-CollectionDriver.prototype.getEmail = function(email, callback) {
+CollectionDriver.prototype.getEmail = function(email, body, callback) {
     db.collection("users", function(error, collection) {
         if (error)
             callback(error);
@@ -51,8 +51,13 @@ CollectionDriver.prototype.getEmail = function(email, callback) {
             collection.findOne({'email': email}, function(error, results) {
                 if (error)
                     callback(error);
-                else
-                    callback(null, results);
+                else {
+                    if (results)
+                        callback(null, results);
+                    else {
+                        save("users", body, callback);
+                    }
+                }
             });
         }
     });
@@ -169,13 +174,8 @@ CollectionDriver.prototype.update = function(collectionName, docUpdates, docId, 
 
     if (collectionName == "cards") {
         updateObject = {
-            $set: docUpdates,
+            docUpdates,
             $currentDate: {'timeLastEdit': true}    // updates timeLastEdit with current time
-        };
-    }
-    else {
-        updateObject = {
-            $set: docUpdates
         };
     }
 
@@ -186,11 +186,11 @@ CollectionDriver.prototype.update = function(collectionName, docUpdates, docId, 
             collection.updateOne(
                 {'_id': ObjectID(docId)},
                 updateObject,
-                function(error, docUpdates) {
+                function(error, results) {
                     if (error)
                         callback(error);
                     else
-                        callback(null, docUpdates);
+                        callback(null, results);
                 }
             );
         }

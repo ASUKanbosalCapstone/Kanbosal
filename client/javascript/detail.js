@@ -335,8 +335,21 @@ $(function() {
       type: 'PUT',
       data: test,
       contentType: 'application/json',
-      sucess: function(result) {
-        $('#cardModals').append(modalTemplate(modalLink));
+      success: function(results) {
+        // update grant here with results object
+        var updateParams = {$inc: {cardCount: 1}, $addToSet: {"stages.0.toDo": results._id}} // Can update the specified index with the given user Permission index
+
+        $.ajax({
+          url: 'http://localhost:3000/grants/56f482f70fbb7aee0e113d10',
+          type: 'POST',
+          data: updateParams,
+          contentType: 'application/json',
+          success: function(results) {
+            var test = results;
+          }
+        });
+
+        $('#cardModals').append(modalTemplate(result));
       }
     });
   });
