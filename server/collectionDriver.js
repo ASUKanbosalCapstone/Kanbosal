@@ -43,7 +43,7 @@ CollectionDriver.prototype.get = function(collectionName, id, callback) {
 };
 
 /* Returns the user document with the provided email. */
-CollectionDriver.prototype.getEmail = function(email, body, callback) {
+CollectionDriver.prototype.getEmail = function(email, callback) {
     db.collection("users", function(error, collection) {
         if (error)
             callback(error);
@@ -52,11 +52,7 @@ CollectionDriver.prototype.getEmail = function(email, body, callback) {
                 if (error)
                     callback(error);
                 else {
-                    if (results)
-                        callback(null, results);
-                    else {
-                        save("users", body, callback);
-                    }
+                    callback(null, results);
                 }
             });
         }

@@ -150,7 +150,7 @@ app.post('/:collection/:id', function(req, res) {
         });
     }
     else {
-        var error = { "message" : "Cannot PUT a whole collection" };
+        var error = { "message" : "Cannot POST a whole collection" };
         res.status(400).send(error);
     }
 });
