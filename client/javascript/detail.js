@@ -81,6 +81,7 @@ var cardTemplate;
 var modalTemplate;
 var newCardTemplate;
 var cardGenInfo;
+var cardList;
 
 var progressBar = {
   progress: 0
@@ -139,13 +140,28 @@ var testCards = {
 };
 
 $.ajax({
+  url: 'http://localhost:3000/grants/56f33152fc88b4120a05a3e8/0/cards',
+  dataType: 'json',
+  method: 'GET',
+  async: false,
+  success: function (data) {
+    cardList = JSON.parse(data);
+  },
+  error: function (jqXHR, status, error) {
+    console.log(status);
+    if (globalVars.unloaded)
+      return;
+  }
+});
+
+$.ajax({
   url: 'templates/progressBar.html',
   dataType: 'html',
   method: 'GET',
   async: false,
   success: function(data) {
     cardTemplate = Handlebars.compile(data);
-    $('#progressBar').html(cardTemplate(calculateProgress(testCards)));
+    $('#progressBar').html(cardTemplate(calculateProgress(cardList)));
   }
 });
 
@@ -156,7 +172,7 @@ $.ajax({
   async: false,
   success: function(data) {
     cardTemplate = Handlebars.compile(data);
-    $('#columnList').html(cardTemplate(testCards));
+    $('#columnList').html(cardTemplate(cardList));
   }
 });
 
@@ -167,7 +183,7 @@ $.ajax({
   async: false,
   success: function(data) {
     modalTemplate = Handlebars.compile(data);
-    $('#cardModals').html(modalTemplate(testCards));
+    $('#cardModals').html(modalTemplate(cardList));
   }
 });
 
