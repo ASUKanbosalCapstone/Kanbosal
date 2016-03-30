@@ -81,6 +81,7 @@ var cardTemplate;
 var modalTemplate;
 var newCardTemplate;
 var cardGenInfo;
+var cardList;
 
 var progressBar = {
   progress: 0
@@ -139,37 +140,52 @@ var testCards = {
 };
 
 $.ajax({
-  url: 'templates/progressBar.html',
-  dataType: 'html',
+  url: 'http://localhost:3000/grants/56f33152fc88b4120a05a3e8/0/cards',
+  dataType: 'json',
   method: 'GET',
   async: false,
-  success: function(data) {
-    cardTemplate = Handlebars.compile(data);
-    $('#progressBar').html(cardTemplate(calculateProgress(testCards)));
+  success: function (cards) {
+    // Updates the progress bar
+    $.ajax({
+      url: 'templates/progressBar.html',
+      dataType: 'html',
+      method: 'GET',
+      async: false,
+      success: function(data) {
+        cardTemplate = Handlebars.compile(data);
+        $('#progressBar').html(cardTemplate(calculateProgress(cards)));
+      }
+    });
+    // Updates the whole board
+    $.ajax({
+      url: 'templates/detailBoard.html',
+      dataType: 'html',
+      method: 'GET',
+      async: false,
+      success: function(data) {
+        cardTemplate = Handlebars.compile(data);
+        $('#columnList').html(cardTemplate(cards));
+      }
+    });
+    // Updates the individual card modals
+    $.ajax({
+      url: 'templates/cardModal.html',
+      dataType: 'html',
+      method: 'GET',
+      async: false,
+      success: function(data) {
+        modalTemplate = Handlebars.compile(data);
+        $('#cardModals').html(modalTemplate(cards));
+      }
+    });
+  },
+  error: function (jqXHR, status, error) {
+    console.log(status);
+    if (globalVars.unloaded)
+      return;
   }
 });
 
-$.ajax({
-  url: 'templates/detailBoard.html',
-  dataType: 'html',
-  method: 'GET',
-  async: false,
-  success: function(data) {
-    cardTemplate = Handlebars.compile(data);
-    $('#columnList').html(cardTemplate(testCards));
-  }
-});
-
-$.ajax({
-  url: 'templates/cardModal.html',
-  dataType: 'html',
-  method: 'GET',
-  async: false,
-  success: function(data) {
-    modalTemplate = Handlebars.compile(data);
-    $('#cardModals').html(modalTemplate(testCards));
-  }
-});
 
 $.ajax({
   url : 'templates/newCard.html',
