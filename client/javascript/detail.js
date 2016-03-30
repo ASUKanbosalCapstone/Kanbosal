@@ -69,43 +69,45 @@ var testCards = {
 };
 
 $.ajax({
-  url: 'getDetail',
+  url: '/getDetail',
   type: 'GET',
-  dataType: 'html',
+  dataType: 'json',
   success: function (cards) {
     // Updates the progress bar
-    $.ajax({
-      url: 'templates/progressBar.html',
-      dataType: 'html',
-      method: 'GET',
-      async: false,
-      success: function(data) {
-        cardTemplate = Handlebars.compile(data);
-        $('#progressBar').html(cardTemplate(calculateProgress(cards)));
-      }
-    });
-    // Updates the whole board
-    $.ajax({
-      url: 'templates/detailBoard.html',
-      dataType: 'html',
-      method: 'GET',
-      async: false,
-      success: function(data) {
-        cardTemplate = Handlebars.compile(data);
-        $('#columnList').html(cardTemplate(cards));
-      }
-    });
-    // Updates the individual card modals
-    $.ajax({
-      url: 'templates/cardModal.html',
-      dataType: 'html',
-      method: 'GET',
-      async: false,
-      success: function(data) {
-        modalTemplate = Handlebars.compile(data);
-        $('#cardModals').html(modalTemplate(cards));
-      }
-    });
+    if (cards) {
+      $.ajax({
+        url: '/templates/progressBar.html',
+        dataType: 'html',
+        method: 'GET',
+        async: false,
+        success: function(data) {
+          cardTemplate = Handlebars.compile(data);
+          $('#progressBar').html(cardTemplate(calculateProgress(cards)));
+        }
+      });
+      // Updates the whole board
+      $.ajax({
+        url: '/templates/detailBoard.html',
+        dataType: 'html',
+        method: 'GET',
+        async: false,
+        success: function(data) {
+          cardTemplate = Handlebars.compile(data);
+          $('#columnList').html(cardTemplate(cards));
+        }
+      });
+      // Updates the individual card modals
+      $.ajax({
+        url: '/templates/cardModal.html',
+        dataType: 'html',
+        method: 'GET',
+        async: false,
+        success: function(data) {
+          modalTemplate = Handlebars.compile(data);
+          $('#cardModals').html(modalTemplate(cards));
+        }
+      });
+    }
   },
   error: function (data) {
     var test = data;
@@ -114,7 +116,7 @@ $.ajax({
 
 
 $.ajax({
-  url : 'templates/newCard.html',
+  url : '/templates/newCard.html',
   dataType: 'html',
   method: 'GET',
   success: function(data) {
@@ -160,26 +162,26 @@ $(function() {
     }
 
     $.ajax({
-      url: 'cards',
+      url: '/cards',
       type: 'PUT',
       data: JSON.stringify(testCard),
       contentType: 'application/json',
-      success: function(results) {
+      success: function(card) {
         // update grant here with result's _id parameter
         // might need to add progress bar updating here as well
-        var updateParams = {$inc: {cardCount: 1}, $addToSet: {"stages.0.toDo": results._id}} // Can update the specified index with the given user Permission index
+        var updateParams = {$inc: {cardCount: 1}, $addToSet: {"stages.0.toDo": card._id}};
 
         $.ajax({
-          url: 'grants/' + '56f482f70fbb7aee0e113d10',  // replace with passed grantid
+          url: '/updateGrant',
           type: 'POST',
-          data: updateParams,
+          data: JSON.stringify(updateParams),
           contentType: 'application/json',
           success: function(results) {
             var test = results;
           }
         });
 
-        $('#cardModals').append(modalTemplate(result));
+        $('#cardModals').append(modalTemplate(card));
       }
     });
   });

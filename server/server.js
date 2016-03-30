@@ -41,14 +41,22 @@ MongoClient.connect(url, function(error, db) {
       console.log("Connected correctly to mongodb server at database " + mongoDatabase + ".");
 
       collectionDriver = new CollectionDriver(db);
-      // db.close();
 });
 
+/* Checks if a user is in our session variable otherwise redirects to home page. */
+var authenticate = function(req, res, next) {
+    if (req.session.user)
+        next();
+    else
+        res.redirect('/');
+}
+
+/* Loads homepage. */
 app.get('/', function(req, res) {
     res.render('index.html');
 })
 
-/* GET: find a user by email or return all users. */
+/* GET: find a user by email and set session variable. */
 app.get('/login', function(req, res) {
     var email = req.query.email;
 
@@ -66,84 +74,59 @@ app.get('/login', function(req, res) {
         res.status(400).send({error: 'bad url', url: req.url});
 });
 
-/* GET: deletes the current session variable. */
+/* Deletes the current session variable and redirects to homepage. */
 app.get('/logout', function(req, res) {
     req.session.reset();
-    res.status(200).send(true);
+    res.redirect('/');
 });
 
-app.get('/overview', function(req, res) {
+/* Loads overview. */
+app.get('/overview', authenticate, function(req, res) {
     res.render('overview.html');
 });
 
 /* GET: returns the grants the user can see. */
 app.get('/getOverview', function(req, res) {
-    if (req.session) {
-        var userId = req.session.user._id;
-
-        if (userId) {
-            collectionDriver.getGrants(userId, function(error, results) {
-                if (error)
-                    res.status(400).send(error);
-                else{
-                    res.json(results);
-                }
-            });
-        }
-        else
-            res.status(400).send({error: 'bad user id'});
-    }
-    else
-        res.status(400).send({error: 'no user'});
-});
-
-app.get('/detail/:id', function(req, res) {
-    req.session.grantId = req.params.id;
-    console.log(req.session.grantId);
-    res.render('detail.html');
-});
-
-// app.get('/setGrant/:id', function(req, res) {
-//     req.session.grantId = req.params.id;
-//     console.log(req.session.grantId);
-//     res.status(200).send(true);
-// });
-
-/* GET: returns the cards belonging to the grant the user can see */
-app.get('/getDetail', function(req, res) {
-    if (req.session) {
-        var userPermissionId = req.session.user.permissions.stage;
-        var grantId = req.session.grantId;
-
-        if (userPermissionId && grantId) {
-            collectionDriver.getCards(grantId, userPermissionId, function(error, results) {
-                if (error)
-                    res.status(400).send(error);
-                else
-                    res.json(results);
-            });
-        }
-        else
-            res.status(400).send({error: 'bad grant id'});
-    }
-    else
-        res.status(400).send(null);
-});
-
-/* GET: returns grants belonging to the given user. */
-app.get('/users/:id/grants', function(req, res) {
-    var userId = req.params.id;
+    var userId = req.session.user._id;
 
     if (userId) {
         collectionDriver.getGrants(userId, function(error, results) {
             if (error)
                 res.status(400).send(error);
-            else
+            else{
                 res.json(results);
+            }
         });
     }
     else
         res.status(400).send({error: 'bad user id'});
+});
+
+/* Loads detail. */
+app.get('/detail', function(req, res) {
+    if (req.session.grantLoadId)
+        res.render('detail.html');
+    else
+        res.redirect('/');
+});
+
+/* Sets the grant to load in the session. */
+app.get('/detail/:id', authenticate, function(req, res) {
+    req.session.grantLoadId = req.params.id;
+    res.redirect('/detail');
+});
+
+/* GET: returns the cards belonging to the grant the user can see */
+app.get('/getDetail', function(req, res) {
+    var userPermissionId = req.session.user.permissions.stage;
+    var grantId = req.session.grantLoadId;
+
+    collectionDriver.getCards(grantId, userPermissionId, function(error, results) {
+        if (error)
+            res.status(400).send(error);
+        else
+            res.json(results);
+    });
 });
 
 /* GET: findAll of collection. */
@@ -187,6 +170,22 @@ app.put('/:collection', function(req, res) {
         else
             res.json(results);
      });
+});
+
+/* Updates the grant in session. */
+app.post('/updateGrant', function(req, res) {
+    var docUpdates = req.body;
+    console.log(docUpdates);
+    var grantId = req.session.grantLoadId;
+    console.log(grantId);
+
+
+    collectionDriver.update("grants", docUpdates, grantId, function(error, results) {
+        if (error)
+            res.status(400).send(error);
+        else
+            res.status(200).send("Updated grant " + grantId + " with " + results + ".");
+    });
 });
 
 /* POST: updates a document with id in the collection. */
