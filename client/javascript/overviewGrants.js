@@ -100,11 +100,11 @@ var input = {
   }]
 };
 
-$(function () {
+$(function() {
   $.ajax({
-    url : 'http://localhost:3000/users/' + '56f74e27bfc234c01809b0c7' + '/grants',
+    url: 'http://localhost:8080/getOverview',
+    type: 'GET',
     dataType: 'html',
-    method: 'GET',
     success: function(json) {
       var cardsArray = JSON.parse(json);
       var retrieved = {

@@ -140,10 +140,9 @@ var testCards = {
 };
 
 $.ajax({
-  url: 'http://localhost:3000/grants/56f33152fc88b4120a05a3e8/0/cards',
-  dataType: 'json',
-  method: 'GET',
-  async: false,
+  url: 'http://localhost:8080/getDetail',
+  type: 'GET',
+  dataType: 'html',
   success: function (cards) {
     // Updates the progress bar
     $.ajax({
@@ -179,10 +178,8 @@ $.ajax({
       }
     });
   },
-  error: function (jqXHR, status, error) {
-    console.log(status);
-    if (globalVars.unloaded)
-      return;
+  error: function (data) {
+    var test = data;
   }
 });
 
@@ -234,7 +231,7 @@ $(function() {
     }
 
     $.ajax({
-      url: 'http://localhost:3000/cards',
+      url: 'http://localhost:8080/cards',
       type: 'PUT',
       data: JSON.stringify(testCard),
       contentType: 'application/json',
@@ -244,7 +241,7 @@ $(function() {
         var updateParams = {$inc: {cardCount: 1}, $addToSet: {"stages.0.toDo": results._id}} // Can update the specified index with the given user Permission index
 
         $.ajax({
-          url: 'http://localhost:3000/grants/' + '56f482f70fbb7aee0e113d10',  // replace with passed grantid
+          url: 'http://localhost:8080/grants/' + '56f482f70fbb7aee0e113d10',  // replace with passed grantid
           type: 'POST',
           data: updateParams,
           contentType: 'application/json',

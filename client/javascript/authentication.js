@@ -4,7 +4,7 @@ function onSignIn(googleUser) {
   var profile = googleUser.getBasicProfile();
   var Storage = window.localStorage;
 
-  $.getJSON('http://localhost:3000/users', {
+  $.getJSON('http://localhost:8080/login', {
     email: profile.getEmail()
   }, function(data) {
     // on success, check if user exists. yes: check if confirmed, then redirect; no: make new user
@@ -16,11 +16,11 @@ function onSignIn(googleUser) {
 
         Storage.setItem('userData', JSON.stringify(data));  // temporary for access even without confirmation
         window.location.href = "overview";                  // temporary for access even without confirmation
-      
+
 
       } else {
         // check if local storage is supported, else notify user to update or use a different browser.
-        // if (storageAvailable('localStorage')) 
+        // if (storageAvailable('localStorage'))
         Storage.setItem('userData', JSON.stringify(data));
         window.location.href = "overview";
       }
@@ -38,7 +38,7 @@ function onSignIn(googleUser) {
       };
 
       $.ajax({
-        url: 'http://localhost:3000/users',
+        url: 'http://localhost:8080/users',
         type: 'PUT',
         contentType: 'application/json',
         data: JSON.stringify(newUser),

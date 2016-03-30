@@ -1,16 +1,39 @@
 // Requirements
 var http = require('http');
 var express = require('express');
+var ejs = require('ejs');
 var path = require('path');
 var MongoClient = require('mongodb').MongoClient;
 var assert = require('assert');
 var CollectionDriver = require('./collectionDriver').CollectionDriver;
 var bodyParser = require('body-parser');
 var cors = require('cors');
+var sessions = require('client-sessions');
+var app = express();
 
 // Express settings
-var app = express();
-app.set('port', process.env.PORT || 3000);
+app.set('port', process.env.PORT || 8080);
+app.use(express.static(path.join(__dirname, '../client')));
+app.use(bodyParser.json());
+app.set('views', __dirname + '/../client');
+app.engine('html', ejs.renderFile);
+app.set('view engine', 'html');
+
+// Sets up our session variable definitions
+app.use(sessions({
+  cookieName: 'session',
+  secret: 'random_string_goes_here',
+  duration: 30 * 60 * 1000, // 30 minutes
+  activeDuration: 5 * 60 * 1000 // 5 minutes
+}));
+
+// Might need to change based on localhost's port. Allows for the client to make ajax calls to the server.
+// app.use(cors({origin: 'http://localhost:8080'}));
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "http://localhost:8080");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});
 
 // Mongo settings
 var mongoHost = '127.0.0.1';
@@ -29,25 +52,103 @@ MongoClient.connect(url, function(error, db) {
       // db.close();
 });
 
-app.use(express.static(path.join(__dirname, 'public')));
-app.use(bodyParser.json());
-// Might need to change based on localhost's port. Allows for the client to make ajax calls to the server.
-app.use(cors({origin: 'http://localhost:8080'}));
+app.get('/', function(req, res) {
+    res.render('index.html');
+})
 
 /* GET: find a user by email or return all users. */
-app.get('/users', function(req, res) {
+app.get('/login', function(req, res) {
     var email = req.query.email;
 
     if (email) {
         collectionDriver.getEmail(email, function(error, results) {
             if (error)
                 res.status(400).send(error);
-            else
+            else {
+                req.session.user = results;
                 res.json(results);
+            }
         });
     }
-    else if (req.originalUrl == "/users" || req.originalUrl == "/users/") {
-        collectionDriver.findAll("users", function(error, results) {
+    else
+        res.status(400).send({error: 'bad url', url: req.url});
+});
+
+/* GET: deletes the current session variable. */
+app.get('/logout', function(req, res) {
+    req.session.reset();
+    res.status(200).send(true);
+});
+
+app.get('/currentUser', function(req, res) {
+    console.log("hi");
+    res.json(req.session.user);
+});
+
+app.get('/overview', function(req, res) {
+    res.render('overview.html');
+});
+
+/* GET: returns the grants the user can see. */
+app.get('/getOverview', function(req, res) {
+    if (req.session) {
+        var userId = req.session.user._id;
+
+        if (userId) {
+            collectionDriver.getGrants(userId, function(error, results) {
+                if (error)
+                    res.status(400).send(error);
+                else{
+                    res.json(results);
+                }
+            });
+        }
+        else
+            res.status(400).send({error: 'bad user id'});
+    }
+    else
+        res.status(400).send({error: 'no user'});
+});
+
+app.get('/detail/:id', function(req, res) {
+    req.session.grantId = req.params.id;
+    console.log(req.session.grantId);
+    res.render('detail.html');
+});
+
+// app.get('/setGrant/:id', function(req, res) {
+//     req.session.grantId = req.params.id;
+//     console.log(req.session.grantId);
+//     res.status(200).send(true);
+// });
+
+/* GET: returns the cards belonging to the grant the user can see */
+app.get('/getDetail', function(req, res) {
+    if (req.session) {
+        var userPermissionId = req.session.user.permissions.stage;
+        var grantId = req.session.grantId;
+
+        if (userPermissionId && grantId) {
+            collectionDriver.getCards(grantId, userPermissionId, function(error, results) {
+                if (error)
+                    res.status(400).send(error);
+                else
+                    res.json(results);
+            });
+        }
+        else
+            res.status(400).send({error: 'bad grant id'});
+    }
+    else
+        res.status(400).send(null);
+});
+
+/* GET: returns grants belonging to the given user. */
+app.get('/users/:id/grants', function(req, res) {
+    var userId = req.params.id;
+
+    if (userId) {
+        collectionDriver.getGrants(userId, function(error, results) {
             if (error)
                 res.status(400).send(error);
             else
@@ -55,7 +156,7 @@ app.get('/users', function(req, res) {
         });
     }
     else
-        res.status(400).send({error: 'bad url', url: req.url});
+        res.status(400).send({error: 'bad user id'});
 });
 
 /* GET: findAll of collection. */
@@ -86,40 +187,6 @@ app.get('/:collection/:id', function(req, res) {
     }
     else
         res.status(400).send({error: 'bad url', url: req.url});
-});
-
-/* GET: returns grants belonging to the given user. */
-app.get('/users/:id/grants', function(req, res) {
-    var userId = req.params.id;
-
-    if (userId) {
-        collectionDriver.getGrants(userId, function(error, results) {
-            if (error)
-                res.status(400).send(error);
-            else
-                res.json(results);
-        });
-    }
-    else
-        res.status(400).send({error: 'bad user id'});
-});
-
-
-/* GET: returns cards belonging to the user and grant. */
-app.get('/grants/:id/:userPerm/cards', function(req, res) {
-    var grantId = req.params.id;
-    var userPermissionId = req.params.userPerm;
-
-    if (grantId) {
-        collectionDriver.getCards(grantId, userPermissionId, function(error, results) {
-            if (error)
-                res.status(400).send(error);
-            else
-                res.json(results);
-        });
-    }
-    else
-        res.status(400).send({error: 'bad grant id'});
 });
 
 /* PUT: insert document in collection. */
