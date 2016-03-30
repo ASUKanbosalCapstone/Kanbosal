@@ -102,13 +102,25 @@ var input = {
 
 $(function () {
   $.ajax({
-    url : 'templates/overviewPanel.html',
+    url : 'http://localhost:3000/users/' + '56f74e27bfc234c01809b0c7' + '/grants',
     dataType: 'html',
     method: 'GET',
-    success: function(data) {
-      template = Handlebars.compile(data);
-      $("#overviewContent").append(template(input));
-      $('[data-toggle="tooltip"]').tooltip({container:'body'});
+    success: function(json) {
+      var cardsArray = JSON.parse(json);
+      var retrieved = {
+        "grant" : cardsArray
+      };
+
+      $.ajax({
+        url : 'templates/overviewPanel.html',
+        dataType: 'html',
+        method: 'GET',
+        success: function(data) {
+          template = Handlebars.compile(data);
+          $("#overviewContent").append(template(retrieved));
+          $('[data-toggle="tooltip"]').tooltip({container:'body'});
+        }
+      });
     }
   });
 

@@ -86,113 +86,8 @@ var progressBar = {
   progress: 0
 };
 
-// var jsonInfo = {
-//   "Grants": [{
-//     "Grant_Name": "NSF Career",
-//     "Grant_Columns": [{
-//       "Column_Name": "To Do",
-//       "Cards": [{
-//         "Card_Name": "Cover Sheet",
-//         "Modal_ID": "Cover_Sheet",
-//         "Modal_Body": "<h3>Required</h3><ul><li><b>Program Solicitation Number</b></li><li><b>NSF Unit of Consideration</b></li><li><b>Project Title</b></li><li><b>Co-PIs</b></li><li><b>PI eligibility information</b></li></ul>",
-//         "Document_Link": "http://www.github.com"
-//       }, {
-//         "Card_Name": "Project Description",
-//         "Modal_ID": "Project_Description",
-//         "Modal_Body": "<h3>Required</h3><ul><li><b>Program Solicitation Number</b></li><li><b>NSF Unit of Consideration</b></li><li><b>Project Title</b></li><li><b>Co-PIs</b></li><li><b>PI eligibility information</b></li></ul>",
-//         "Document_Link": "http://www.github.com"
-//       }, {
-//         "Card_Name": "Budget",
-//         "Modal_ID": "Budget",
-//         "Modal_Body": "<h3>Required</h3><ul><li><b>Program Solicitation Number</b></li><li><b>NSF Unit of Consideration</b></li><li><b>Project Title</b></li><li><b>Co-PIs</b></li><li><b>PI eligibility information</b></li></ul>",
-//         "Document_Link": "http://www.github.com"
-//       }, {
-//         "Card_Name": "Budget Justification",
-//         "Modal_ID": "Budget_Justification",
-//         "Modal_Body": "<h3>Required</h3><ul><li><b>Program Solicitation Number</b></li><li><b>NSF Unit of Consideration</b></li><li><b>Project Title</b></li><li><b>Co-PIs</b></li><li><b>PI eligibility information</b></li></ul>",
-//         "Document_Link": "http://www.github.com"
-//       }]
-//     }, {
-//       "Column_Name": "In Progress",
-//       "Cards": [{
-//         "Card_Name": "References Cited",
-//         "Modal_ID": "References_Cited",
-//         "Modal_Body": "<h3>Required</h3><ul><li><b>Program Solicitation Number</b></li><li><b>NSF Unit of Consideration</b></li><li><b>Project Title</b></li><li><b>Co-PIs</b></li><li><b>PI eligibility information</b></li></ul>",
-//         "Document_Link": "http://www.github.com",
-//         "Assigned_People": ["Waffles", "Waffles"]
-//       }, {
-//         "Card_Name": "Biosketch",
-//         "Modal_ID": "Biosketch",
-//         "Modal_Body": "<h3>Required</h3><ul><li><b>Program Solicitation Number</b></li><li><b>NSF Unit of Consideration</b></li><li><b>Project Title</b></li><li><b>Co-PIs</b></li><li><b>PI eligibility information</b></li></ul>",
-//         "Document_Link": "http://www.github.com",
-//         "Assigned_People": ["Waffles"]
-//       }]
-//     }, {
-//       "Column_Name": "Complete",
-//       "Cards": [{
-//         "Card_Name": "Departmental Letter",
-//         "Modal_ID": "Departmental_Letter",
-//         "Modal_Body": "<h3>Required</h3><ul><li><b>Program Solicitation Number</b></li><li><b>NSF Unit of Consideration</b></li><li><b>Project Title</b></li><li><b>Co-PIs</b></li><li><b>PI eligibility information</b></li></ul>",
-//         "Document_Link": "http://www.github.com",
-//         "Assigned_People": ["Waffles"],
-//         "Tag_List": ["Under Review", "Complete"]
-//       }]
-//     }]
-//   }, {
-//     "Grant_Name": "NSF Career Copy",
-//     "Grant_Columns": [{
-//       "Column_Name": "To Do",
-//       "Cards": [{
-//         "Card_Name": "Cover Sheet",
-//         "Modal_ID": "Cover_Sheet",
-//         "Modal_Body": "<h3>Required</h3><ul><li><b>Program Solicitation Number</b></li><li><b>NSF Unit of Consideration</b></li><li><b>Project Title</b></li><li><b>Co-PIs</b></li><li><b>PI eligibility information</b></li></ul>",
-//         "Document_Link": "http://www.github.com"
-//       }, {
-//         "Card_Name": "Project Description",
-//         "Modal_ID": "Project_Description",
-//         "Modal_Body": "<h3>Required</h3><ul><li><b>Program Solicitation Number</b></li><li><b>NSF Unit of Consideration</b></li><li><b>Project Title</b></li><li><b>Co-PIs</b></li><li><b>PI eligibility information</b></li></ul>",
-//         "Document_Link": "http://www.github.com"
-//       }, {
-//         "Card_Name": "Budget",
-//         "Modal_ID": "Budget",
-//         "Modal_Body": "<h3>Required</h3><ul><li><b>Program Solicitation Number</b></li><li><b>NSF Unit of Consideration</b></li><li><b>Project Title</b></li><li><b>Co-PIs</b></li><li><b>PI eligibility information</b></li></ul>",
-//         "Document_Link": "http://www.github.com"
-//       }, {
-//         "Card_Name": "Budget Justification",
-//         "Modal_ID": "Budget_Justification",
-//         "Modal_Body": "<h3>Required</h3><ul><li><b>Program Solicitation Number</b></li><li><b>NSF Unit of Consideration</b></li><li><b>Project Title</b></li><li><b>Co-PIs</b></li><li><b>PI eligibility information</b></li></ul>",
-//         "Document_Link": "http://www.github.com"
-//       }]
-//     }, {
-//       "Column_Name": "In Progress",
-//       "Cards": [{
-//         "Card_Name": "References Cited",
-//         "Modal_ID": "References_Cited",
-//         "Modal_Body": "<h3>Required</h3><ul><li><b>Program Solicitation Number</b></li><li><b>NSF Unit of Consideration</b></li><li><b>Project Title</b></li><li><b>Co-PIs</b></li><li><b>PI eligibility information</b></li></ul>",
-//         "Document_Link": "http://www.github.com",
-//         "Assigned_People": ["Waffles", "Waffles"]
-//       }, {
-//         "Card_Name": "Biosketch",
-//         "Modal_ID": "Biosketch",
-//         "Modal_Body": "<h3>Required</h3><ul><li><b>Program Solicitation Number</b></li><li><b>NSF Unit of Consideration</b></li><li><b>Project Title</b></li><li><b>Co-PIs</b></li><li><b>PI eligibility information</b></li></ul>",
-//         "Document_Link": "http://www.github.com",
-//         "Assigned_People": ["Waffles"]
-//       }]
-//     }, {
-//       "Column_Name": "Complete",
-//       "Cards": [{
-//         "Card_Name": "Departmental Letter",
-//         "Modal_ID": "Departmental_Letter",
-//         "Modal_Body": "<h3>Required</h3><ul><li><b>Program Solicitation Number</b></li><li><b>NSF Unit of Consideration</b></li><li><b>Project Title</b></li><li><b>Co-PIs</b></li><li><b>PI eligibility information</b></li></ul>",
-//         "Document_Link": "http://www.github.com",
-//         "Assigned_People": ["Waffles"],
-//         "Tag_List": ["Under Review", "Complete"]
-//       }]
-//     }]
-//   }]
-// };
-
-var cards = {
+// Will contain the list of gathered cards from the database
+var testCards = {
   "progress":80,
   "toDo": [{
     "_id":"56f330b1fc88b4120a05a3e6",
@@ -243,12 +138,6 @@ var cards = {
   }]
 };
 
-/*
-$.getJSON( "json/cards.json", {}, function( data ) {
-  jsonInfo = data.Grants[0];
-});
-*/
-
 $.ajax({
   url: 'templates/progressBar.html',
   dataType: 'html',
@@ -256,7 +145,7 @@ $.ajax({
   async: false,
   success: function(data) {
     cardTemplate = Handlebars.compile(data);
-    $('#progressBar').html(cardTemplate(calculateProgress(cards)));
+    $('#progressBar').html(cardTemplate(calculateProgress(testCards)));
   }
 });
 
@@ -267,7 +156,7 @@ $.ajax({
   async: false,
   success: function(data) {
     cardTemplate = Handlebars.compile(data);
-    $('#columnList').html(cardTemplate(cards));
+    $('#columnList').html(cardTemplate(testCards));
   }
 });
 
@@ -278,7 +167,7 @@ $.ajax({
   async: false,
   success: function(data) {
     modalTemplate = Handlebars.compile(data);
-    $('#cardModals').html(modalTemplate(cards));
+    $('#cardModals').html(modalTemplate(testCards));
   }
 });
 
@@ -328,15 +217,27 @@ $(function() {
       lock: [false, false, false, false]
     }
 
-    var test = JSON.stringify(testCard);
-
     $.ajax({
       url: 'http://localhost:3000/cards',
       type: 'PUT',
-      data: test,
+      data: JSON.stringify(testCard),
       contentType: 'application/json',
-      sucess: function(result) {
-        $('#cardModals').append(modalTemplate(modalLink));
+      success: function(results) {
+        // update grant here with result's _id parameter
+        // might need to add progress bar updating here as well
+        var updateParams = {$inc: {cardCount: 1}, $addToSet: {"stages.0.toDo": results._id}} // Can update the specified index with the given user Permission index
+
+        $.ajax({
+          url: 'http://localhost:3000/grants/' + '56f482f70fbb7aee0e113d10',  // replace with passed grantid
+          type: 'POST',
+          data: updateParams,
+          contentType: 'application/json',
+          success: function(results) {
+            var test = results;
+          }
+        });
+
+        $('#cardModals').append(modalTemplate(result));
       }
     });
   });

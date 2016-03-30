@@ -54,7 +54,7 @@ app.get('/users', function(req, res) {
                 res.json(results);
         });
     }
-    else 
+    else
         res.status(400).send({error: 'bad url', url: req.url});
 });
 
@@ -145,12 +145,12 @@ app.post('/:collection/:id', function(req, res) {
         collectionDriver.update(collection, docUpdates, id, function(error, results) {
             if (error)
                 res.status(400).send(error);
-            else 
+            else
                 res.status(200).send("Updated id " + id + " at collection " + collection + ".");
         });
     }
     else {
-        var error = { "message" : "Cannot PUT a whole collection" };
+        var error = { "message" : "Cannot POST a whole collection" };
         res.status(400).send(error);
     }
 });
