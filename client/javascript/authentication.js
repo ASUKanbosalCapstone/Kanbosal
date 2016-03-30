@@ -10,18 +10,20 @@ function onSignIn(googleUser) {
     // on success, check if user exists. yes: check if confirmed, then redirect; no: make new user
     if (data) {
       if (data.permissions.stage === -1) {
-        alert("Sorry, " + data.name + ", you have not yet been confirmed and assigned. Please contact your person of referral to receive confirmation.");
-        // signOut();  // uncomment after admin confirmation/assignment form is ready
+        // gapi.auth2.getAuthInstance().signOut();          // temporarily commented until confirmation is available
+        $('#alertDeactivated').hide();
+        $('#alertRegistered').hide();
+        $('#alertUnconfirmed').show("fast");
 
-
-        Storage.setItem('userData', JSON.stringify(data));  // temporary for access even without confirmation
         window.location.href = "overview";                  // temporary for access even without confirmation
-      
 
+      } else if (data.permissions.stage === -2) {
+        gapi.auth2.getAuthInstance().signOut();
+        $('#alertUnconfirmed').hide();
+        $('#alertRegistered').hide();
+        $('#alertDeactivated').show("fast");
       } else {
-        // check if local storage is supported, else notify user to update or use a different browser.
-        // if (storageAvailable('localStorage')) 
-        Storage.setItem('userData', JSON.stringify(data));
+        // Storage.setItem('userData', JSON.stringify(data));  // change to use express server to store session var
         window.location.href = "overview";
       }
     } else {
@@ -43,8 +45,10 @@ function onSignIn(googleUser) {
         contentType: 'application/json',
         data: JSON.stringify(newUser),
         success: function(data) {
-          alert("Welcome. Your new account will be ready soon. Contact your person of referral if you have not yet been confirmed.");
-          signOut();
+          $('#alertDeactivated').hide();
+          $('#alertUnconfirmed').hide();
+          $('#alertRegistered').show("fast");
+          gapi.auth2.getAuthInstance().signOut();
         }
       });
     }
