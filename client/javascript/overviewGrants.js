@@ -102,7 +102,7 @@ var input = {
 
 $(function() {
   $.ajax({
-    url: 'http://localhost:8080/getOverview',
+    url: 'getOverview',
     type: 'GET',
     dataType: 'html',
     success: function(json) {

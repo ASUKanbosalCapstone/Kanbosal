@@ -80,11 +80,6 @@ app.get('/logout', function(req, res) {
     res.status(200).send(true);
 });
 
-app.get('/currentUser', function(req, res) {
-    console.log("hi");
-    res.json(req.session.user);
-});
-
 app.get('/overview', function(req, res) {
     res.render('overview.html');
 });

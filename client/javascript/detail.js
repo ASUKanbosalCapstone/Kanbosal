@@ -140,7 +140,7 @@ var testCards = {
 };
 
 $.ajax({
-  url: 'http://localhost:8080/getDetail',
+  url: 'getDetail',
   type: 'GET',
   dataType: 'html',
   success: function (cards) {
@@ -231,7 +231,7 @@ $(function() {
     }
 
     $.ajax({
-      url: 'http://localhost:8080/cards',
+      url: 'cards',
       type: 'PUT',
       data: JSON.stringify(testCard),
       contentType: 'application/json',
@@ -241,7 +241,7 @@ $(function() {
         var updateParams = {$inc: {cardCount: 1}, $addToSet: {"stages.0.toDo": results._id}} // Can update the specified index with the given user Permission index
 
         $.ajax({
-          url: 'http://localhost:8080/grants/' + '56f482f70fbb7aee0e113d10',  // replace with passed grantid
+          url: 'grants/' + '56f482f70fbb7aee0e113d10',  // replace with passed grantid
           type: 'POST',
           data: updateParams,
           contentType: 'application/json',
