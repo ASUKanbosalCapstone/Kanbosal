@@ -144,8 +144,40 @@ $.ajax({
   dataType: 'json',
   method: 'GET',
   async: false,
-  success: function (data) {
-    cardList = JSON.parse(data);
+  success: function (cards) {
+    // Updates the progress bar
+    $.ajax({
+      url: 'templates/progressBar.html',
+      dataType: 'html',
+      method: 'GET',
+      async: false,
+      success: function(data) {
+        cardTemplate = Handlebars.compile(data);
+        $('#progressBar').html(cardTemplate(calculateProgress(cards)));
+      }
+    });
+    // Updates the whole board
+    $.ajax({
+      url: 'templates/detailBoard.html',
+      dataType: 'html',
+      method: 'GET',
+      async: false,
+      success: function(data) {
+        cardTemplate = Handlebars.compile(data);
+        $('#columnList').html(cardTemplate(cards));
+      }
+    });
+    // Updates the individual card modals
+    $.ajax({
+      url: 'templates/cardModal.html',
+      dataType: 'html',
+      method: 'GET',
+      async: false,
+      success: function(data) {
+        modalTemplate = Handlebars.compile(data);
+        $('#cardModals').html(modalTemplate(cards));
+      }
+    });
   },
   error: function (jqXHR, status, error) {
     console.log(status);
@@ -154,38 +186,6 @@ $.ajax({
   }
 });
 
-$.ajax({
-  url: 'templates/progressBar.html',
-  dataType: 'html',
-  method: 'GET',
-  async: false,
-  success: function(data) {
-    cardTemplate = Handlebars.compile(data);
-    $('#progressBar').html(cardTemplate(calculateProgress(cardList)));
-  }
-});
-
-$.ajax({
-  url: 'templates/detailBoard.html',
-  dataType: 'html',
-  method: 'GET',
-  async: false,
-  success: function(data) {
-    cardTemplate = Handlebars.compile(data);
-    $('#columnList').html(cardTemplate(cardList));
-  }
-});
-
-$.ajax({
-  url: 'templates/cardModal.html',
-  dataType: 'html',
-  method: 'GET',
-  async: false,
-  success: function(data) {
-    modalTemplate = Handlebars.compile(data);
-    $('#cardModals').html(modalTemplate(cardList));
-  }
-});
 
 $.ajax({
   url : 'templates/newCard.html',
