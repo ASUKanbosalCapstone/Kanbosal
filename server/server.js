@@ -7,7 +7,6 @@ var MongoClient = require('mongodb').MongoClient;
 var assert = require('assert');
 var CollectionDriver = require('./collectionDriver').CollectionDriver;
 var bodyParser = require('body-parser');
-var cors = require('cors');
 var sessions = require('client-sessions');
 var app = express();
 
@@ -24,16 +23,9 @@ app.use(sessions({
   cookieName: 'session',
   secret: 'random_string_goes_here',
   duration: 30 * 60 * 1000, // 30 minutes
-  activeDuration: 5 * 60 * 1000 // 5 minutes
+  activeDuration: 5 * 60 * 1000, // 5 minutes
+  ephemeral: true
 }));
-
-// Might need to change based on localhost's port. Allows for the client to make ajax calls to the server.
-// app.use(cors({origin: 'http://localhost:8080'}));
-app.use(function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", "http://localhost:8080");
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-  next();
-});
 
 // Mongo settings
 var mongoHost = '127.0.0.1';
