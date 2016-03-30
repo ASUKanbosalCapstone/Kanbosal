@@ -13,7 +13,8 @@ function onSignIn(googleUser) {
         // gapi.auth2.getAuthInstance().signOut();          // temporarily commented until confirmation is available
         $('#alertDeactivated').hide();
         $('#alertRegistered').hide();
-        $('#alertUnconfirmed').show("fast");
+        $('#alertProblem').hide();
+        $('#alertUnconfirmed').show('fast');
 
         window.location.href = "overview";                  // temporary for access even without confirmation
 
@@ -21,7 +22,8 @@ function onSignIn(googleUser) {
         gapi.auth2.getAuthInstance().signOut();
         $('#alertUnconfirmed').hide();
         $('#alertRegistered').hide();
-        $('#alertDeactivated').show("fast");
+        $('#alertProblem').hide();
+        $('#alertDeactivated').show('fast');
       } else {
         // Storage.setItem('userData', JSON.stringify(data));  // change to use express server to store session var
         window.location.href = "overview";
@@ -47,11 +49,18 @@ function onSignIn(googleUser) {
         success: function(data) {
           $('#alertDeactivated').hide();
           $('#alertUnconfirmed').hide();
-          $('#alertRegistered').show("fast");
+          $('#alertProblem').hide();
+          $('#alertRegistered').show('fast');
           gapi.auth2.getAuthInstance().signOut();
         }
       });
     }
+  }).error(function() {
+    gapi.auth2.getAuthInstance().signOut();
+    $('#alertDeactivated').hide();
+    $('#alertUnconfirmed').hide();
+    $('#alertRegistered').hide();
+    $('#alertProblem').show('fast');
   });
 }
 
