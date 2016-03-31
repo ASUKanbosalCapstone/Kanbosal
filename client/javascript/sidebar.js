@@ -110,7 +110,7 @@ var input = {
 };
 
 $.ajax({
-    url: 'templates/sidebar.html',
+    url: '/templates/sidebar.html',
     dataType: 'html',
     method: 'GET',
     async: false,

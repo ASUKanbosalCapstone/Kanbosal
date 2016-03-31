@@ -4,7 +4,7 @@ function onSignIn(googleUser) {
   var profile = googleUser.getBasicProfile();
   var Storage = window.localStorage;
 
-  $.getJSON('http://localhost:3000/users', {
+  $.getJSON('login', {
     email: profile.getEmail()
   }, function(data) {
     // on success, check if user exists. yes: check if confirmed, then redirect; no: make new user
@@ -42,7 +42,7 @@ function onSignIn(googleUser) {
       };
 
       $.ajax({
-        url: 'http://localhost:3000/users',
+        url: 'users',
         type: 'PUT',
         contentType: 'application/json',
         data: JSON.stringify(newUser),
@@ -67,8 +67,11 @@ function onSignIn(googleUser) {
 function signOut() {
   auth2 = gapi.auth2.getAuthInstance();
   auth2.signOut().then(function () {
-    console.log('User signed out.');
-    window.location.href = "/";
+    $.get('logout', function() {
+        console.log('User signed out.');
+        window.location.href = "/";
+      }
+    );
   });
 }
 

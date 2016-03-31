@@ -3,7 +3,7 @@ $(function() {
   var input = {};
 
   $.ajax({
-    url : "templates/navbar.html",
+    url : "/templates/navbar.html",
     dataType: "html",
     method: "GET",
     success: function(data) {
