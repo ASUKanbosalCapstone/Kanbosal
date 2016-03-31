@@ -1,12 +1,4 @@
-var totalCards = function(cards) {
-  return cards.toDo.length + cards.inProgress.length + cards.complete.length;
-}
-
-var calculateProgress = function(cards) {
-  progressBar.progress = (cards.complete.length + 0.5 * cards.inProgress.length) / totalCards(cards) * 100;
-  return progressBar
-}
-
+var progressBarTemplate;
 var cardTemplate;
 var modalTemplate;
 var newCardTemplate;
@@ -16,62 +8,20 @@ var progressBar = {
   progress: 0
 };
 
-// Will contain the list of gathered cards from the database
-var testCards = {
-  "progress":80,
-  "toDo": [{
-    "_id":"56f330b1fc88b4120a05a3e6",
-    "title":"TestCard1",
-    "notes":"<h3>Required</h3><ul><li><b>Program Solicitation Number</b></li><li><b>NSF Unit of Consideration</b></li><li><b>Project Title</b></li><li><b>Co-PIs</b></li><li><b>PI eligibility information</b></li></ul>",
-    "documentUrl":"testurl",
-    "status":"to_do",
-    "tags":[],
-    "userIds":[],
-    "lock":[false,false,false,false],
-    "timeCreated":"2016-03-24T00:11:29.590Z",
-    "timeLastEdit":"2016-03-24T00:11:29.590Z"
-  }, {
-    "_id":"56f330f3fc88b4120a05a3e7",
-    "title":"TestCard2",
-    "notes":[],
-    "documentUrl":"testurl",
-    "status":"to_do",
-    "tags":[],
-    "userIds":[],
-    "lock":[false,false,false,false],
-    "timeCreated":"2016-03-24T00:12:35.775Z",
-    "timeLastEdit":"2016-03-24T00:12:35.775Z"
-  }],
-  "inProgress": [{
-    "_id":"56f9c4b5dbbb88cd45208b75",
-    "title":"TestCard3",
-    "notes":[],
-    "documentUrl":"testurl",
-    "status":"to_do",
-    "tags":[],
-    "userIds":[],
-    "lock":[false,false,false,false],
-    "timeCreated":"2016-03-28T23:56:37.594Z",
-    "timeLastEdit":"2016-03-28T23:56:37.594Z"
-  }],
-  "complete": [{
-    "_id":"56f9c4f1dbbb88cd45208b76",
-    "title":"TestCard4",
-    "notes":[],
-    "documentUrl":"testurl",
-    "status":"to_do",
-    "tags":[],
-    "userIds":[],
-    "lock":[false,false,false,false],
-    "timeCreated":"2016-03-28T23:57:37.411Z",
-    "timeLastEdit":"2016-03-28T23:57:37.411Z"
-  }]
-};
+var totalCards = function(cards) {
+  return cards.toDo.length + cards.inProgress.length + cards.complete.length;
+}
+
+var calculateProgress = function(cards) {
+  progressBar.progress = (cards.complete.length + 0.5 * cards.inProgress.length) / totalCards(cards) * 100;
+  return progressBar
+}
 
 $.ajax({
   url: '/getDetail',
   type: 'GET',
   dataType: 'json',
+  async: false,
   success: function (cards) {
     // Updates the progress bar
     if (cards) {
@@ -81,8 +31,8 @@ $.ajax({
         method: 'GET',
         async: false,
         success: function(data) {
-          cardTemplate = Handlebars.compile(data);
-          $('#progressBar').html(cardTemplate(calculateProgress(cards)));
+          progressBarTemplate = Handlebars.compile(data);
+          $('#progressBar').html(progressBarTemplate(calculateProgress(cards)));
         }
       });
       // Updates the whole board
@@ -108,12 +58,8 @@ $.ajax({
         }
       });
     }
-  },
-  error: function (data) {
-    var test = data;
   }
 });
-
 
 $.ajax({
   url : '/templates/newCard.html',
@@ -126,6 +72,7 @@ $.ajax({
 
 $(function() {
   $('[data-toggle="tooltip"]').tooltip();
+
   $( "#cardGenCreate" ).click(function() {
     var title = $("#cardGenTitle").val();
     var body = $("#cardGenBody").html();
