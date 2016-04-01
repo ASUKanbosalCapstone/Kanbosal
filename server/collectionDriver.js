@@ -81,9 +81,7 @@ CollectionDriver.prototype.getGrants = function(userId, callback) {
 /* Returns a collection of cards matching the given grant ObjectID and userPermissionId. */
 CollectionDriver.prototype.getCards = function(grantId, userPermissionId, callback) {
     db.collection("grants").findOne({'_id': ObjectID(grantId)}, function(error, grant) {
-        if (error)
-            callback(error);
-        else {
+        if (grant) {
             var returnCards = {
                 progress: 0,
                 toDo: [],
@@ -124,6 +122,8 @@ CollectionDriver.prototype.getCards = function(grantId, userPermissionId, callba
                 }
             });
         }
+        else
+            callback(error);
     });
 }
 
@@ -174,6 +174,10 @@ CollectionDriver.prototype.update = function(collectionName, docUpdates, docId, 
             $currentDate: {'timeLastEdit': true}    // updates timeLastEdit with current time
         };
     }
+    else
+        updateObject = docUpdates;
+    
+    console.log(docUpdates);
 
     db.collection(collectionName, function(error, collection) {
         if (error)
