@@ -44,18 +44,21 @@ CollectionDriver.prototype.get = function(collectionName, id, callback) {
 
 /* Returns the user document with the provided email. */
 CollectionDriver.prototype.getEmail = function(email, callback) {
-    db.collection("users", function(error, collection) {
+    db.collection("users").findOne({'email': email}, function(error, results) {
         if (error)
             callback(error);
-        else {
-            collection.findOne({'email': email}, function(error, results) {
-                if (error)
-                    callback(error);
-                else {
-                    callback(null, results);
-                }
-            });
-        }
+        else
+            callback(null, results);
+    });
+};
+
+/* Returns users by their department*/
+CollectionDriver.prototype.getUsersByDept = function(data, callback){
+    db.collection("users").find(data).toArray(function (error, users) {
+        if (error)
+            callback(error);
+        else
+            callback(null, users);
     });
 };
 
