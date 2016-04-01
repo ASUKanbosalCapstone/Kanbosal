@@ -1,0 +1,13 @@
+<ul class="sidebar-nav">
+  {{#if Grants}}
+    {{#each Grants}}
+      <li>
+        <a href="#">{{Grant_Name}}</a>
+      </li>
+    {{/each}}
+  {{else}}
+    <li>
+      <a href="#">no grants</a>
+    </li>
+  {{/if}}
+</ul>

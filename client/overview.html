@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="google-signin-client_id" content="994369169298-85bcp2rukasedk61fu4rl6o4q4na71vq.apps.googleusercontent.com">
+  <title>Kanbosal</title>
+  
+  <!-- css libraries -->
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet" integrity="sha256-MfvZlkHCEqatNoGiOXveE8FIwMzZg4W85qfrfIFBfYc= sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ==" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-markdown/2.10.0/css/bootstrap-markdown.min.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+
+  <!-- local stylesheets -->
+  <link rel="stylesheet" type="text/css" href="css/styles.css">
+
+  <!-- js libraries -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js" integrity="sha512-K1qjQ+NcF2TYO/eI3M6v8EiNYZfA95pQumfvcVrTHtwQVDG+aHRqLi/ETn2uB+1JqwYqVG3LIvdm9lj6imS/pQ==" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-markdown/2.10.0/js/bootstrap-markdown.js"></script>
+  <script src="http://www.codingdrama.com/bootstrap-markdown/js/markdown.js"></script>
+  <script src="http://www.codingdrama.com/bootstrap-markdown/js/to-markdown.js"></script>
+  <script src="https://apis.google.com/js/platform.js?onload=onLoad" async defer></script>
+  <script src="javascript/authentication.js"></script>
+
+</head>
+<body>
+
+  <div class="modal fade" id="grantGen" tabindex="-1" role="dialog" aria-labelledby="detailModalLabel">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <div class="modal-title">
+            <h3>Add New Grant</h3>
+          </div>
+        </div>
+        <div class="modal-body">
+          <form class="form-horizontal">
+            <div class="form-group">
+              <label class="col-sm-3 control-label" for="grantName">Grant Name</label>
+              <div class="col-sm-9"><input type="text" class="form-control" id="grantName" placeholder="grant name"></div>
+            </div>
+            <div class="form-group">
+              <label class="col-sm-3 control-label" for="grantUrl">Official URL</label>
+              <div class="col-sm-9"><input type="text" class="form-control" id="grantUrl" placeholder="http:// (nsf.gov, usda.gov, grants.gov, etc.)"></div>
+            </div>
+            <div class="form-group">
+              <label class="col-sm-3 control-label">
+                <small><a tabindex="0" class="fa fa-fw fa-question-circle" role="button" data-toggle="popover" data-trigger="focus" data-placement="right" title="Need help with markdown text?" data-content="Refer to the <a href=&quot;https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet&quot; target=&quot;_blank&quot;>Markdown Cheatsheet</a>. Some syntax may differ. <small class=&quot;text-info&quot;>Tip: add a blank line between sections to appropriately render the markdown.</small>"></a></small>&nbsp; Description
+              </label>
+              <div class="col-sm-9">
+                <textarea id="grant-descr-editor" class="form-control" rows="5">### Test
+This is an example piece of markdown. To see a preview of the rendered markdown, start typing!
+
+- Lists
+- and
+- stuff</textarea>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-sm-3 control-label" for="grantTemplate">Template</label>
+              <div class="col-sm-9">
+                <select class="form-control" id="grantTemplate">
+                  <option>Template One</option>
+                  <option>Template Two</option>
+                  <option>Custom (blank)</option>
+                </select>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <a class="btn btn-primary" id="cardGenDismiss" data-dismiss="modal">Cancel</a>
+          <a class="btn btn-gold" id="cardGenCreate" data-dismiss="modal">Create</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="wrapper">
+    <nav class="navbar navbar-inverse navbar-fixed-top"></nav>
+
+    <div id="content">
+      <div id="contentview" class="container-fluid toggled">
+        <div class="container-fluid vert-panels">
+          <div class="panel-tabs">
+            <div class="col-xs-3">
+              <div class="tab-top">
+                <div>
+                  <h4>
+                    Research
+                    <a data-toggle="modal" data-target="#grantGen"><span class="fa fa-plus-square pull-right" data-toggle="tooltip" data-placement="left" title="Add Grant"></span></a>
+                  </h4>
+                </div>
+              </div>
+            </div>
+            <div class="col-xs-3">
+              <div class="tab-top">
+                <div><h4>Internal</h4></div>
+              </div>
+            </div>
+            <div class="col-xs-3">
+              <div class="tab-top">
+                <div><h4>ASU</h4></div>
+              </div>
+            </div>
+            <div class="col-xs-3">
+              <div class="tab-top">
+                <div><h4>Complete</h4></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div id="overviewContent" class="container-fluid"></div>
+      </div>
+    </div>
+
+    <footer></footer>
+  </div>
+
+  <!-- local scripts -->
+  <script src="javascript/handlebars-v4.0.4.js"></script>
+  <script src="javascript/helpers.js"></script>
+  <script src="javascript/overviewGrants.js"></script>
+  <script src="javascript/navbar.js"></script>
+  <script src="javascript/footer.js"></script>
+
+</body>
+</html>

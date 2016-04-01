@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet" integrity="sha256-MfvZlkHCEqatNoGiOXveE8FIwMzZg4W85qfrfIFBfYc= sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ==" crossorigin="anonymous">
+  <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js" integrity="sha512-K1qjQ+NcF2TYO/eI3M6v8EiNYZfA95pQumfvcVrTHtwQVDG+aHRqLi/ETn2uB+1JqwYqVG3LIvdm9lj6imS/pQ==" crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+  <script src="javascript/handlebars-v4.0.4.js"></script>
+  <link rel="stylesheet" type="text/css" href="css/styles.css">
+  <link rel="stylesheet" type="text/css" href="css/draggable.css">
+  <title>Kanbosal</title>
+
+</head>
+<body>
+  <div id="wrapper">
+    <!-- Navbar -->
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a id="brand" class="navbar-brand" href="#">Kanbosal</a>
+        </div>
+        <div id="navbar" class="collapse navbar-collapse">
+          <ul class="nav navbar-nav">
+            <li class="active"><a href="#"><span class="glyphicon glyphicon-home"></span></a></li>
+            <li><a href="/splash">Splash</a></li>
+            <li><a href="/overview">Overview</a></li>
+            <li><a href="#" id="new-card">New Card</a></li>
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <!-- end Navbar -->
+
+    <div id="content">
+      <!-- <div id="mainview"> -->
+      <!-- Sidebar -->
+      <div id="sidebar" class="toggled"></div>
+      <div><a id="menu-toggle" class="glyphicon glyphicon-menu-right large"></a></div>
+      <!-- end Sidebar -->
+
+      <!-- Main Page Content -->
+      <div id="contentview" class="container-fluid toggled">
+
+        <div class="column collapsed tab-top">
+          <h4>To Do</h4>
+          <div class="portlet panel panel-default">
+            <div class="portlet-header panel-heading"><h3 class="panel-title">Feeds</h3></div>
+            <div class="portlet-content panel-body">Lorem ipsum dolor sit amet, consectetuer adipiscing elit</div>
+          </div>
+          <div class="portlet panel panel-default">
+            <div class="portlet-header panel-heading"><h3 class="panel-title">News</h3></div>
+            <div class="portlet-content panel-body">Lorem ipsum dolor sit amet, consectetuer adipiscing elit</div>
+          </div>
+        </div>
+
+        <div class="column collapsed tab-top">
+          <h4>Doing</h4>
+          <div class="portlet panel panel-default">
+            <div class="portlet-header panel-heading"><h3 class="panel-title">Shopping</h3></div>
+            <div class="portlet-content panel-body">Lorem ipsum dolor sit amet, consectetuer adipiscing elit</div>
+          </div>
+        </div>
+
+        <div class="column collapsed tab-top">
+          <h4>Done</h4>
+          <div class="portlet panel panel-default">
+            <div class="portlet-header panel-heading"><h3 class="panel-title">Links</h3></div>
+            <div class="portlet-content panel-body">Lorem ipsum dolor sit amet, consectetuer adipiscing elit</div>
+          </div>
+          <div class="portlet panel panel-default">
+            <div class="portlet-header panel-heading"><h3 class="panel-title">Images</h3></div>
+            <div class="portlet-content panel-body">Lorem ipsum dolor sit amet, consectetuer adipiscing elit</div>
+          </div>
+        </div>
+
+      </div>
+      <!-- end Main Page Content -->
+
+    </div>
+    <footer></footer>
+  </div>
+
+  <script src="javascript/sortable.js"></script>
+  <script src="javascript/sidebar.js"></script>
+  <script src="javascript/newcard.js"></script>
+  <script src="javascript/footer.js"></script>
+
+</body>
+</html>
