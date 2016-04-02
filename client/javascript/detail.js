@@ -146,7 +146,29 @@ $(function() {
       type: "POST",
       data: JSON.stringify(updateParams),
       contentType: "application/json",
-      success: function(results) {
+      success: function() {
+        window.location.reload(true);
+      },
+      error: function(data) {
+        var test = data;
+      }
+    });
+  });
+
+  // Removes both modals if modalDelete gets hidden
+  $("#modalDelete").on("hidden.bs.modal", function() {
+    $(".currentCard").modal("hide");
+  });
+
+  // Deletes the current card after delete confirmation
+  $("#confirmDeleteButton").click(function() {
+    var cardId = $(".currentCard").attr("id");
+
+    $.ajax({
+      url: "/cards/" + cardId,
+      type: "DELETE",
+      contentType: "application/json",
+      success: function() {
         window.location.reload(true);
       },
       error: function(data) {

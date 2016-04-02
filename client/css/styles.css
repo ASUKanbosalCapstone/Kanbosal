@@ -299,6 +299,10 @@ footer h2 {
   color: #a30046;
 }
 
+.delete-buttons {
+  text-align: center;
+}
+
 .modal {
   padding-bottom: 5em;
   text-align: center;
