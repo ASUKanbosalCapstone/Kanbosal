@@ -123,12 +123,10 @@ $(function() {
           type: 'POST',
           data: JSON.stringify(updateParams),
           contentType: 'application/json',
-          success: function(results) {
-            var test = results;
+          success: function() {
+            window.location.reload(true);
           }
         });
-
-        $('#cardModals').append(modalTemplate(card));
       }
     });
   });
