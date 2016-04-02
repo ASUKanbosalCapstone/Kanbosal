@@ -118,6 +118,9 @@ app.get('/detail/:id', authenticate, function(req, res) {
 
 /* GET: returns the cards belonging to the grant the user can see */
 app.get('/getDetail', function(req, res) {
+    if (!req.session.grantLoadId)
+        res.redirect('/overview');
+
     var userPermissionId = req.session.user.permissions.stage;
     var grantId = req.session.grantLoadId;
 
@@ -175,12 +178,11 @@ app.put('/:collection', function(req, res) {
 /* Updates the grant in session. */
 app.post('/updateGrant', function(req, res) {
     var docUpdates = req.body;
-    console.log(docUpdates);
     var grantId = req.session.grantLoadId;
-    console.log(grantId);
+    var userId = req.session.user._id;
 
 
-    collectionDriver.update("grants", docUpdates, grantId, function(error, results) {
+    collectionDriver.update("grants", docUpdates, grantId, userId, function(error, results) {
         if (error)
             res.status(400).send(error);
         else
