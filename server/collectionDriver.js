@@ -165,19 +165,11 @@ CollectionDriver.prototype.save = function(collectionName, doc, callback) {
 };
 
 /* Updates the doc with the given docId in collectionName. */
-CollectionDriver.prototype.update = function(collectionName, docUpdates, docId, callback) {
-    var updateObject;
-
+CollectionDriver.prototype.update = function(collectionName, docUpdates, docId, userId, callback) {
     if (collectionName == "cards") {
-        updateObject = {
-            docUpdates,
-            $currentDate: {'timeLastEdit': true}    // updates timeLastEdit with current time
-        };
+        docUpdates.$addToSet = {userIds: userId};   // Adds the current user to the list of users in the card
+        docUpdates.$currentDate = {timeLastEdit: true}  // Updates the timeLastEdit to the current time
     }
-    else
-        updateObject = docUpdates;
-    
-    console.log(docUpdates);
 
     db.collection(collectionName, function(error, collection) {
         if (error)
@@ -185,7 +177,7 @@ CollectionDriver.prototype.update = function(collectionName, docUpdates, docId, 
         else {
             collection.updateOne(
                 {'_id': ObjectID(docId)},
-                updateObject,
+                docUpdates,
                 function(error, results) {
                     if (error)
                         callback(error);
