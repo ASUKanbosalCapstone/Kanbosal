@@ -304,6 +304,17 @@ footer h2 {
   text-align: center;
 }
 
+.modal-footer > div {
+  float: none;
+  overflow: hidden;
+  margin-right: 10px;
+}
+
+#cardGenCreate, .card-open-link, .card-delete {
+  float: right;
+  margin-left: 10px;
+}
+
 @media screen and (min-width: 768px) {
   .modal:before {
     display: inline-block;

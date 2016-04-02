@@ -189,13 +189,14 @@ app.post('/updateGrant', function(req, res) {
 });
 
 /* POST: updates a document with id in the collection. */
-app.post('/:collection/:id', function(req, res) {
+app.post('/:collection/:id', authenticate, function(req, res) {
+    var userId = req.session.user._id;
     var docUpdates = req.body;
     var id = req.params.id;
     var collection = req.params.collection;
 
     if (id) {
-        collectionDriver.update(collection, docUpdates, id, function(error, results) {
+        collectionDriver.update(collection, docUpdates, id, userId, function(error, results) {
             if (error)
                 res.status(400).send(error);
             else

@@ -132,6 +132,28 @@ $(function() {
       }
     });
   });
+
+  // Updates the card whenever the modal is closed
+  $(".currentCard").on("hidden.bs.modal", function () {
+    var cardId = $(this).attr("id");
+    var titleToUpdate = $(this).find(".card-title").val();
+    var notesToUpdate = $(this).find(".card-notes").html();
+    var urlToUpdate = $(this).find(".card-doc-link").val();
+    var updateParams = {$set: {title: titleToUpdate, notes: notesToUpdate, documentUrl: urlToUpdate}};
+
+    $.ajax({
+      url: "/cards/" + cardId,
+      type: "POST",
+      data: JSON.stringify(updateParams),
+      contentType: "application/json",
+      success: function(results) {
+        window.location.reload(true);
+      },
+      error: function(data) {
+        var test = data;
+      }
+    });
+  });
 });
 
 $('#cardGen').on('hidden.bs.modal', function () {
