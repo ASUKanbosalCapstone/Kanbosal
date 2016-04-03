@@ -4,19 +4,20 @@ function onSignIn(googleUser) {
   var profile = googleUser.getBasicProfile();
   var Storage = window.localStorage;
 
-  $.getJSON('login', {
+  $.getJSON('/login', {
     email: profile.getEmail()
   }, function(data) {
+    console.log('before: ' + data);
     // on success, check if user exists. yes: check if confirmed, then redirect; no: make new user
     if (data) {
       if (data.permissions.stage === -1) {
-        // gapi.auth2.getAuthInstance().signOut();          // temporarily commented until confirmation is available
+        gapi.auth2.getAuthInstance().signOut();          // temporarily commented until confirmation is available
         $('#alertDeactivated').hide();
         $('#alertRegistered').hide();
         $('#alertProblem').hide();
         $('#alertUnconfirmed').show('fast');
 
-        window.location.href = "overview";                  // temporary for access even without confirmation
+        // window.location.href = "overview";                  // temporary for access even without confirmation
 
       } else if (data.permissions.stage === -2) {
         gapi.auth2.getAuthInstance().signOut();
@@ -25,7 +26,11 @@ function onSignIn(googleUser) {
         $('#alertProblem').hide();
         $('#alertDeactivated').show('fast');
       } else {
-        // Storage.setItem('userData', JSON.stringify(data));  // change to use express server to store session var
+        data.imageUrl = profile.getImageUrl();
+
+        // update user image data in db
+
+        console.log('after: ' + data);
         window.location.href = "overview";
       }
     } else {
@@ -47,11 +52,11 @@ function onSignIn(googleUser) {
         contentType: 'application/json',
         data: JSON.stringify(newUser),
         success: function(data) {
+          gapi.auth2.getAuthInstance().signOut();
           $('#alertDeactivated').hide();
           $('#alertUnconfirmed').hide();
           $('#alertProblem').hide();
           $('#alertRegistered').show('fast');
-          gapi.auth2.getAuthInstance().signOut();
         }
       });
     }
@@ -68,10 +73,9 @@ function signOut() {
   auth2 = gapi.auth2.getAuthInstance();
   auth2.signOut().then(function () {
     $.get('logout', function() {
-        console.log('User signed out.');
-        window.location.href = "/";
-      }
-    );
+      console.log('User signed out.');
+      window.location.href = "/";
+    });
   });
 }
 
