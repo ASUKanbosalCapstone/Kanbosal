@@ -473,3 +473,22 @@ footer h2 {
 #hero * h2 {
     color: #8C1D40;
 }
+
+/* 
+ ------------------------------------------------------------------------------------------
+                                      Admin Page
+ ------------------------------------------------------------------------------------------
+ */
+
+/* single line styling to prevent wrap by adding ellipses */
+.overflow-ellipses {
+    display: inline-block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 100%;
+}
+
+#pendingUsers * img {
+    max-width: 50px;
+}

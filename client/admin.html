@@ -13,12 +13,13 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
 
   <!-- local stylesheets -->
-  <link rel="stylesheet" type="text/css" href="css/styles.css">
+  <link rel="stylesheet" type="text/css" href="/css/styles.css">
+  <link rel="stylesheet" type="text/css" href="/css/responsive-column.css">
 
   <!-- js libraries -->
   <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js" integrity="sha512-K1qjQ+NcF2TYO/eI3M6v8EiNYZfA95pQumfvcVrTHtwQVDG+aHRqLi/ETn2uB+1JqwYqVG3LIvdm9lj6imS/pQ==" crossorigin="anonymous"></script>
-  <script src="javascript/handlebars-v4.0.4.js"></script>
+  <script src="/javascript/handlebars-v4.0.4.js"></script>
 
 </head>
 <body>
@@ -30,16 +31,87 @@
       <div id="menu-toggle" class="glyphicon glyphicon-menu-right large"></div>
       <div id="contentview" class="container-fluid toggled">
         <div class="container-fluid">
-          <div class="well">
-            <h4>Pending User Confirmations</h4>
-            <div class="list-group">
-              <div class="list-group-item">
-                <span class="list-group-item-heading">List group item heading</span>
-                <span class="list-group-item-text">item content goes here</span>
+          <div class="row">
+            <div class="col-xs-12">
+              <div id="pendingUsers" class="panel panel-default">
+                <div class="panel-heading">
+                  <h4 class="panel-title overflow-ellipses">Pending User Confirmations</h4>
+                </div>
+                <div class="panel-body">
+                  <div class="alertEmpty" role="alert" hidden>
+                    <div class="alert-notify alert alert-info">
+                      <h4 class="overflow-ellipses"><i class="fa fa-user-times"></i> No pending users!</h4>
+                    </div>
+                  </div>
+                  <div class="row"></div>
+                </div>
               </div>
-              <div class="list-group-item">
-                <span class="list-group-item-heading">List group item heading</span>
-                <span class="list-group-item-text">item content goes here</span>
+            </div>
+          </div>
+          <div class="row">
+            <div class="row-height">
+              <div class="col-xs-4 col-xs-height">
+                <div id="researchUsers" class="panel panel-default inside-full-height">
+                  <div class="panel-heading">
+                    <h4 class="panel-title overflow-ellipses">Research Department</h4>
+                  </div>
+                  <div class="panel-body">
+                    <div>Some description or body of text here. Maybe instructions?</div>
+                    <div class="alertEmpty" role="alert" hidden>
+                      <div class="alert-notify alert alert-info">
+                        <h4 class="overflow-ellipses"><i class="fa fa-user-times"></i> No researchers.</h4>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="list-group"></div>
+                </div>
+              </div>
+              <div class="col-xs-4 col-xs-height">
+                <div id="internalUsers" class="panel panel-default inside-full-height">
+                  <div class="panel-heading">
+                    <h4 class="panel-title overflow-ellipses">Internal Review Department</h4>
+                  </div>
+                  <div class="panel-body" hidden>
+                    <div class="alertEmpty" role="alert">
+                      <div class="alert-notify alert alert-info">
+                        <h4 class="overflow-ellipses"><i class="fa fa-user-times"></i> No internal reviewers.</h4>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="list-group"></div>
+                </div>
+              </div>
+              <div class="col-xs-4 col-xs-height">
+                <div id="asuUsers" class="panel panel-default inside-full-height">
+                  <div class="panel-heading">
+                    <h4 class="panel-title overflow-ellipses">ASU Review Department</h4>
+                  </div>
+                  <div class="panel-body" hidden>
+                    <div class="alertEmpty" role="alert">
+                      <div class="alert-notify alert alert-info">
+                        <h4 class="overflow-ellipses"><i class="fa fa-user-times"></i> No asu reviewers.</h4>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="list-group"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-xs-12">
+              <div id="inactiveUsers" class="panel panel-default">
+                <div class="panel-heading">
+                  <h4 class="panel-title overflow-ellipses">Deactivated / Denied Users</h4>
+                </div>
+                <div class="panel-body">
+                  <div class="alertEmpty" role="alert">
+                    <div class="alert-notify alert alert-info">
+                      <h4 class="overflow-ellipses"><i class="fa fa-user-times"></i> No blacklisted users.</h4>
+                      <p>At the moment, this section is unavailable, and will be implemented soon. Thank you!</p>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -50,9 +122,10 @@
   </div>
 
   <!-- local scripts -->
-  <script src="javascript/sidebar.js"></script>
-  <script src="javascript/footer.js"></script>
-  <script src="javascript/navbar.js"></script>
+  <script src="/javascript/sidebar.js"></script>
+  <script src="/javascript/footer.js"></script>
+  <script src="/javascript/navbar.js"></script>
+  <script src="/javascript/administration.js"></script>
 
 </body>
 </html>
