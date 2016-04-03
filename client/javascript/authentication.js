@@ -11,13 +11,13 @@ function onSignIn(googleUser) {
     // on success, check if user exists. yes: check if confirmed, then redirect; no: make new user
     if (data) {
       if (data.permissions.stage === -1) {
-        gapi.auth2.getAuthInstance().signOut();          // temporarily commented until confirmation is available
+        // gapi.auth2.getAuthInstance().signOut();          // temporarily commented until confirmation is available
         $('#alertDeactivated').hide();
         $('#alertRegistered').hide();
         $('#alertProblem').hide();
         $('#alertUnconfirmed').show('fast');
 
-        // window.location.href = "overview";                  // temporary for access even without confirmation
+        window.location.href = "overview";                  // temporary for access even without confirmation
 
       } else if (data.permissions.stage === -2) {
         gapi.auth2.getAuthInstance().signOut();
