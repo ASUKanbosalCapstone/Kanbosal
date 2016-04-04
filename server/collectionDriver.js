@@ -44,18 +44,21 @@ CollectionDriver.prototype.get = function(collectionName, id, callback) {
 
 /* Returns the user document with the provided email. */
 CollectionDriver.prototype.getEmail = function(email, callback) {
-    db.collection("users", function(error, collection) {
+    db.collection("users").findOne({'email': email}, function(error, results) {
         if (error)
             callback(error);
-        else {
-            collection.findOne({'email': email}, function(error, results) {
-                if (error)
-                    callback(error);
-                else {
-                    callback(null, results);
-                }
-            });
-        }
+        else
+            callback(null, results);
+    });
+};
+
+/* Returns users by their department*/
+CollectionDriver.prototype.getUsersByDept = function(data, callback){
+    db.collection("users").find(data).toArray(function (error, users) {
+        if (error)
+            callback(error);
+        else
+            callback(null, users);
     });
 };
 
@@ -198,11 +201,36 @@ CollectionDriver.prototype.delete = function(collectionName, docId, callback) {
             collection.deleteOne({'_id': ObjectID(docId)}, function(error, doc) {
                 if (error)
                     callback(error);
-                else
-                    callback(null, doc);
+                //Remove the cardId from grants
+                else if (collectionName == "cards") {
+                    removeCardsFromGrant(docId, callback);
+                }
+                callback(null, doc);
             });
         }
     });
 };
+
+/* Removes the given cardId from all grants */
+var removeCardsFromGrant = function(cardId, callback) {
+    db.collection("grants", function(error, grants) {
+        if (error)
+            callback(error);
+        else {
+            grants.update({"stages.toDo": cardId}, {$pull: {"stages.$.toDo": cardId}}, {multi: true}, function(error, result) {
+                if (error)
+                    callback(error);
+            });
+            grants.update({"stages.inProgress": cardId}, {$pull: {"stages.$.inProgress": cardId}}, {multi: true}, function(error, result) {
+                if (error)
+                    callback(error);
+            });
+            grants.update({"stages.complete": cardId}, {$pull: {"stages.$.complete": cardId}}, {multi: true}, function(error, result) {
+                if (error)
+                    callback(error);
+            });
+        }
+    });
+}
 
 exports.CollectionDriver = CollectionDriver;

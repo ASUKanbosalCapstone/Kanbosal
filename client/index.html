@@ -32,20 +32,56 @@
     </nav>
 
     <div id="content">
-      <!-- <div class="container-fluid"> -->
-        <div id="hero" class="jumbotron" style="background-image: url('/resources/hero-bg/asu-coor.jpg'); background-size: cover;">
-          <div class="text-center">
-            <h1>Clean <span class="glyphicon glyphicon-menu-left small" aria-hidden="true"></span> Simple <span class="glyphicon glyphicon-menu-right small" aria-hidden="true"></span> Pure</h1>
-            <h3>grant proposal manager</h3>
-          </div>
+      <div id="hero" class="jumbotron" style="background-image: url('/resources/hero-bg/asu-coor.jpg'); background-size: cover;">
+        <div class="text-center">
+          <h1>Clean <span class="glyphicon glyphicon-menu-left small" aria-hidden="true"></span> Simple <span class="glyphicon glyphicon-menu-right small" aria-hidden="true"></span> Pure</h1>
+          <h3>grant proposal manager</h3>
         </div>
-      <!-- </div> -->
+      </div>
 
       <div class="container">
-        <div class="center-block text-center">
-          <h4>Login with your Google account.</h4>
-            <div class="g-signin2 center-block" style="width:120px;" data-onsuccess="onSignIn"></div>
+
+        <!-- login-alert-messages -->
+        <div class="row">
+          <div id="alertRegistered" class="col-xs-6 col-xs-offset-3 col-sm-8 col-sm-offset-2" role="alert" hidden>
+            <div class="alert-notify alert alert-success">
+              <h4><i class="fa fa-check-circle"></i> Welcome! Your new account will be ready soon.</h4>
+              <p>Contact your person of referral if you have not yet been confirmed within 24 hours.</p>
+            </div>
+          </div>
+          <div id="alertUnconfirmed" class="col-xs-6 col-xs-offset-3 col-sm-8 col-sm-offset-2" role="alert" hidden>
+            <div class="alert-notify alert alert-warning">
+              <h4><i class="fa fa-exclamation-circle"></i> Unconfirmed User</h4>
+              <p>Sorry, you have not yet been confirmed and assigned. Please contact your person of referral to receive confirmation.</p>
+            </div>
+          </div>
+          <div id="alertDeactivated" class="col-xs-6 col-xs-offset-3 col-sm-8 col-sm-offset-2" role="alert" hidden>
+            <div class="alert-notify alert alert-danger">
+              <h4><i class="fa fa-exclamation-triangle"></i> Deactivated Account</h4>
+              <p>If this was a mistake, please contact your person of referral to have this corrected within the system.</p>
+            </div>
+          </div>
+          <div id="alertProblem" class="col-xs-6 col-xs-offset-3 col-sm-8 col-sm-offset-2" role="alert" hidden>
+            <div class="alert-notify alert alert-danger">
+              <h4><i class="fa fa-exclamation-triangle"></i> An error has occurred.</h4>
+              <p>Please try again, or wait momentarily before making another attempt.</p>
+            </div>
+          </div>
         </div>
+        <!-- /login-alert-messages -->
+
+        <div class="row">
+          <div class="col-xs-6 col-xs-offset-3 col-sm-8 col-sm-offset-2">
+            <div class="panel panel-default text-center">
+              <div class="panel-heading"><h4>Login with your Google account.</h4></div>
+              <div class="panel-body">
+                Use your Google-sponsored corporate email, or create a new account with Google to sign in!
+                <div class="g-signin2 center-block" style="width:120px; padding:20px 0;" data-onsuccess="onSignIn"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
       </div>
     </div>
     
