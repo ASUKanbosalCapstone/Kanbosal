@@ -25,13 +25,21 @@ function onSignIn(googleUser) {
         $('#alertRegistered').hide();
         $('#alertProblem').hide();
         $('#alertDeactivated').show('fast');
-      } else {
-        data.imageUrl = profile.getImageUrl();
-
-        // update user image data in db
-
-        console.log('after: ' + data);
-        window.location.href = "overview";
+      } else {  // update user image data in db, then go to overview
+        $.ajax({
+          url: '/users/' + data._id,
+          type: 'POST',
+          contentType: "application/json",
+          data: JSON.stringify({
+            $set: { 'imageUrl': profile.getImageUrl() }
+          }),
+          success: function () {
+            window.location.href = "overview";
+          },
+          error: function () {
+            alert('There was a problem processing your request. Please try again later.');
+          }
+        });
       }
     } else {
       var newUser = {
