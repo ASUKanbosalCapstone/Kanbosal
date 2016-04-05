@@ -16,15 +16,23 @@ var denyUser = function (userId) {
 };
 
 var confirmUser = function (userId) {
+  var jsonObj = { grantIds:[] };
+  var formArray = $('#confirmUserForm').serializeArray();
+
+  for (i in formArray)
+    if (i < 2)
+      jsonObj[formArray[i].name] = parseInt(formArray[i].value, 10);
+    else
+      jsonObj[formArray[i].name].push(formArray[i].value);
+
   $.ajax({
     url: '/users/' + userId,
     type: 'POST',
     contentType: "application/json",
     data: JSON.stringify({
-      $set: {
-        'permissions.stage': 0
-      }
+      $set: jsonObj
     }),
+    async: false,
     success: function() {
       window.location.reload(true);
     },
@@ -41,7 +49,7 @@ var templatePend =
       <img class="img-responsive img-rounded pull-left" style="display:inline-block; margin-right:4px;" src="{{ imageUrl }}">\
       <a class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="Contact by email." href="mailto:{{ email }}"><i class="fa fa-fw fa-envelope"></i></a>\
       <span data-toggle="tooltip" data-placement="top" title="Deny user."><button class="btn btn-primary" data-toggle="modal" data-target="#denyUserModal" title="Deny user access." data-userid="{{ _id }}"><i class="fa fa-fw fa-times"></i></button></span>\
-      <span data-toggle="tooltip" data-placement="top" title="Confirm identity."><button class="btn btn-primary" data-toggle="modal" data-target="#confirmUserModal" title="Confirm identity."><i class="fa fa-fw fa-check"></i></button></span>\
+      <span data-toggle="tooltip" data-placement="top" title="Confirm identity."><button class="btn btn-primary" data-toggle="modal" data-target="#confirmUserModal" title="Confirm identity." data-userid="{{ _id }}"><i class="fa fa-fw fa-check"></i></button></span>\
       <br><strong><small>{{ name }}</small></strong>\
     </div>\
   </div>';
@@ -72,6 +80,10 @@ $(function () {
       $('#researchUsers > .panel-body').show('fast');
   }).then(function () {
     $('[data-toggle="tooltip"]').tooltip();
+    $('[data-toggle="popover"]').popover({
+      container:'body',
+      html : true
+    });
   });
 
   $.getJSON('/manageUsers', { 'permissions.stage': 1 }, function (users) {
@@ -101,10 +113,29 @@ $(function () {
       $('#inactiveUsers * .alertEmpty').show('fast');
   });
 
+  $.getJSON('/grants', function(json, textStatus) {
+    for (i in json)
+      $('select#select-grants').append('<option value="' + json[i]._id + '">' + json[i].title + '</option>');
+  });
+
   $('#denyUserModal').on('show.bs.modal', function (event) {
     var button = $(event.relatedTarget); // Button that triggered the modal
     var userid = button.data('userid'); // Extract info from data-* attributes
     var modal = $(this);
+
     modal.find('button.btn-gold').attr('onclick', 'denyUser(\'' + userid + '\')');
+  });
+
+  $('#confirmUserModal').on('show.bs.modal', function (event) {
+    var button = $(event.relatedTarget); // Button that triggered the modal
+    var userid = button.data('userid'); // Extract info from data-* attributes
+    var modal = $(this);
+    var form = modal.find('form#confirmUserForm').serializeArray();
+
+    $('#confirmUserForm').submit(function (event) {
+      event.preventDefault();
+      confirmUser(userid);
+      return false;
+    });
   });
 });
