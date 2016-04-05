@@ -25,8 +25,9 @@ var confirmUser = function (userId) {
         $set: jsonObj
       }),
       async: false,
-      success: function() {
-        window.location.reload(true);
+      success: function(data) {
+        console.log('success? ' + JSON.stringify(data));
+        // window.location.reload(true);
       },
       error: function () {
         alert('There was a problem processing your request. Please try again later.');
