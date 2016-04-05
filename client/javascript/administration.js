@@ -2,7 +2,7 @@ var denyUser = function (userId) {
   $.ajax({
     url: '/users/' + userId,
     type: 'POST',
-    contentType: "application/json",
+    contentType: 'application/json',
     data: JSON.stringify({
       $set: { 'permissions.stage': -2 }
     }),
@@ -28,7 +28,7 @@ var confirmUser = function (userId) {
   $.ajax({
     url: '/users/' + userId,
     type: 'POST',
-    contentType: "application/json",
+    contentType: 'application/json',
     data: JSON.stringify({
       $set: jsonObj
     }),
