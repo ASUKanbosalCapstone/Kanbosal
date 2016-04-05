@@ -7,7 +7,7 @@
       </h4>
       {{#each toDo}}
         <div class="portlet panel panel-default">
-          <div class="portlet-header panel-heading" data-toggle="modal" data-target="#{{_id}}">
+          <div class="portlet-header panel-heading" data-toggle="modal" data-target="#{{_id}}" id="detail-card">
             <h3 class="panel-title">{{title}}</h3>
           </div>
           <div class="portlet-content panel-body">
@@ -33,7 +33,7 @@
       </h4>
       {{#each inProgress}}
         <div class="portlet panel panel-default">
-          <div class="portlet-header panel-heading" data-toggle="modal" data-target="#{{_id}}">
+          <div class="portlet-header panel-heading" data-toggle="modal" data-target="#{{_id}}" id="detail-card">
             <h3 class="panel-title">{{title}}</h3>
           </div>
           <div class="portlet-content panel-body">
@@ -61,7 +61,7 @@
       </h4>
       {{#each complete}}
         <div class="portlet panel panel-default">
-          <div class="portlet-header panel-heading" data-toggle="modal" data-target="#{{_id}}">
+          <div class="portlet-header panel-heading" data-toggle="modal" data-target="#{{_id}}" id="detail-card">
             <h3 class="panel-title">{{title}}</h3>
           </div>
           <div class="portlet-content panel-body">
