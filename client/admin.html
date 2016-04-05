@@ -20,6 +20,8 @@
   <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js" integrity="sha512-K1qjQ+NcF2TYO/eI3M6v8EiNYZfA95pQumfvcVrTHtwQVDG+aHRqLi/ETn2uB+1JqwYqVG3LIvdm9lj6imS/pQ==" crossorigin="anonymous"></script>
   <script src="/javascript/handlebars-v4.0.4.js"></script>
+  <script src="https://apis.google.com/js/platform.js?onload=onLoad" async defer></script>
+  <script src="/javascript/authentication.js"></script>
 
 </head>
 <body>
@@ -31,18 +33,13 @@
       <div id="menu-toggle" class="glyphicon glyphicon-menu-right large"></div>
       <div id="contentview" class="container-fluid toggled">
         <div class="container-fluid">
-          <div class="row">
+          <div id="pendingUsersRow" class="row" hidden>
             <div class="col-xs-12">
               <div id="pendingUsers" class="panel panel-default">
                 <div class="panel-heading">
                   <h4 class="panel-title overflow-ellipses">Pending User Confirmations</h4>
                 </div>
                 <div class="panel-body">
-                  <div class="alertEmpty" role="alert" hidden>
-                    <div class="alert-notify alert alert-info">
-                      <h4 class="overflow-ellipses"><i class="fa fa-user-times"></i> No pending users!</h4>
-                    </div>
-                  </div>
                   <div class="row"></div>
                 </div>
               </div>
@@ -56,7 +53,7 @@
                     <h4 class="panel-title overflow-ellipses">Research Department</h4>
                   </div>
                   <div class="panel-body">
-                    <div>Some description or body of text here. Maybe instructions?</div>
+                    <div>Editing a user is currently non-functional, but will be implemented soon!</div>
                     <div class="alertEmpty" role="alert" hidden>
                       <div class="alert-notify alert alert-info">
                         <h4 class="overflow-ellipses"><i class="fa fa-user-times"></i> No researchers.</h4>
@@ -105,18 +102,51 @@
                   <h4 class="panel-title overflow-ellipses">Deactivated / Denied Users</h4>
                 </div>
                 <div class="panel-body">
-                  <div class="alertEmpty" role="alert">
+                  <div class="alertEmpty" role="alert" hidden>
                     <div class="alert-notify alert alert-info">
                       <h4 class="overflow-ellipses"><i class="fa fa-user-times"></i> No blacklisted users.</h4>
-                      <p>At the moment, this section is unavailable, and will be implemented soon. Thank you!</p>
+                      <p>There are no deactivated or denied users. These are accounts that are not allowed access to Kanbosal.</p>
                     </div>
                   </div>
+                  <div class="row"></div>
                 </div>
               </div>
             </div>
           </div>
         </div>
       </div>
+
+      <!-- begin : modals -->
+      <div id="denyUserModal" class="modal fade" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-sm" role="document">
+          <div class="modal-content">
+            <div class="modal-body">
+              Are you sure you want to deny this user from accessing Kanbosal?
+            </div>
+            <div class="modal-footer">
+              <div class="row" style="margin-right:-15px;">
+                <div class="col-xs-6"><button type="button" class="btn btn-block btn-primary" data-dismiss="modal" aria-label="Close">Cancel</button></div>
+                <div class="col-xs-6"><button type="button" class="btn btn-block btn-gold">Deny User</button></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="confirmUserModal" class="modal fade">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header"><h4>New User Confirmation</h4></div>
+            <div class="modal-body"></div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-primary" data-dismiss="modal" aria-label="Close">Cancel</button>
+              <button type="button" class="btn btn-gold">Confirm</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- end : modals -->
+
     </div>
     <footer></footer>
   </div>
