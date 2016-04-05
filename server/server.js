@@ -194,6 +194,26 @@ app.put('/:collection', function(req, res) {
      });
 });
 
+/* Moves the card given from curCol to newCol */
+app.post('/moveCard/:id', authenticate, function(req, res) {
+    var card = {
+        id: req.params.id,
+        curCol: req.query.curCol,
+        newCol: req.query.newCol
+    };
+    var grantId = req.session.grantLoadId;
+    var userPermissionId = req.session.user.permissions.stage;
+    // console.log(docUpdates);
+
+    collectionDriver.moveCard(grantId, card, userPermissionId, function(error, results) {
+        if (error)
+            res.status(400).send(error);
+        else
+            res.status(200).send(results);
+    });
+    // res.json(docUpdates);
+});
+
 /* Updates the grant in session. */
 app.post('/updateGrant', function(req, res) {
     var docUpdates = req.body;

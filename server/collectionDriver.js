@@ -192,6 +192,31 @@ CollectionDriver.prototype.update = function(collectionName, docUpdates, docId, 
     });
 };
 
+/* Moves cards through the columns of a single table of a grant */
+CollectionDriver.prototype.moveCard = function(grantId, card, userPermissionId, callback) {
+    var docUpdates = {
+        $pull: {},
+        $addToSet: {}
+    };
+    docUpdates.$pull['stages.' + userPermissionId + '.' + card.curCol] = card.id;
+    docUpdates.$addToSet['stages.' + userPermissionId + '.' + card.newCol] = card.id;
+    // callback(null, docUpdates);
+
+    db.collection('grants', function(error, collection) {
+        if (error)
+            callback(error);
+        else {
+            collection.update({'_id': ObjectID(grantId)}, docUpdates, function(error, results) {
+                if (error)
+                    callback(error);
+                else
+                    callback(null, results);
+            });
+            // callback(null, true);
+        }
+    });
+};
+
 /* Deletes the doc with the given docId in collectionName */
 CollectionDriver.prototype.delete = function(collectionName, docId, callback) {
     db.collection(collectionName, function(error, collection) {
