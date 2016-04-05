@@ -11,13 +11,13 @@ function onSignIn(googleUser) {
     // on success, check if user exists. yes: check if confirmed, then redirect; no: make new user
     if (data) {
       if (data.permissions.stage === -1) {
-        // gapi.auth2.getAuthInstance().signOut();          // temporarily commented until confirmation is available
+        gapi.auth2.getAuthInstance().signOut();          // temporarily commented until confirmation is available
         $('#alertDeactivated').hide();
         $('#alertRegistered').hide();
         $('#alertProblem').hide();
         $('#alertUnconfirmed').show('fast');
 
-        window.location.href = "overview";                  // temporary for access even without confirmation
+        // window.location.href = "overview";                  // temporary for access even without confirmation
 
       } else if (data.permissions.stage === -2) {
         gapi.auth2.getAuthInstance().signOut();
@@ -25,13 +25,21 @@ function onSignIn(googleUser) {
         $('#alertRegistered').hide();
         $('#alertProblem').hide();
         $('#alertDeactivated').show('fast');
-      } else {
-        data.imageUrl = profile.getImageUrl();
-
-        // update user image data in db
-
-        console.log('after: ' + data);
-        window.location.href = "overview";
+      } else {  // update user image data in db, then go to overview
+        $.ajax({
+          url: '/users/' + data._id,
+          type: 'POST',
+          contentType: "application/json",
+          data: JSON.stringify({
+            $set: { 'imageUrl': profile.getImageUrl() }
+          }),
+          success: function () {
+            window.location.href = "overview";
+          },
+          error: function () {
+            alert('There was a problem processing your request. Please try again later.');
+          }
+        });
       }
     } else {
       var newUser = {
