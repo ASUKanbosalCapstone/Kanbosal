@@ -16,6 +16,26 @@ var denyUser = function (userId) {
 };
 
 var confirmUser = function (userId) {
+  initConfirmUser(function (jsonObj) {
+    $.ajax({
+      url: '/users/' + userId,
+      type: 'POST',
+      contentType: 'application/json',
+      data: JSON.stringify({
+        $set: jsonObj
+      }),
+      async: false,
+      success: function() {
+        window.location.reload(true);
+      },
+      error: function () {
+        alert('There was a problem processing your request. Please try again later.');
+      }
+    });
+  });
+};
+
+var initConfirmUser = function (callback) {
   var jsonObj = { grantIds:[] };
   var formArray = $('#confirmUserForm').serializeArray();
 
@@ -25,21 +45,7 @@ var confirmUser = function (userId) {
     else
       jsonObj[formArray[i].name].push(formArray[i].value);
 
-  $.ajax({
-    url: '/users/' + userId,
-    type: 'POST',
-    contentType: 'application/json',
-    data: JSON.stringify({
-      $set: jsonObj
-    }),
-    async: false,
-    success: function() {
-      window.location.reload(true);
-    },
-    error: function () {
-      alert('There was a problem processing your request. Please try again later.');
-    }
-  });
+  callback(jsonObj);
 };
 
 var template;
