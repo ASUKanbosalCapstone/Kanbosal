@@ -93,7 +93,8 @@ h6 { font-size: 16px; font-style: italic; }
     border-bottom: 0;
 }
 
-a, a:hover {
+a, a:hover,
+button, button:hover {
     text-decoration: none;
     transition: all 0.25s ease-in-out 0s;
 }
