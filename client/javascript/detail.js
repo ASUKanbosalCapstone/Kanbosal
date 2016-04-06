@@ -3,6 +3,7 @@ var cardTemplate;
 var modalTemplate;
 var newCardTemplate;
 var cardGenInfo;
+var parser = new DOMParser();
 
 var progressBar = {
   progress: 0
@@ -181,3 +182,60 @@ $('#cardGen').on('hidden.bs.modal', function () {
   $("#cardGenBody").val("Enter card body here.");
   $("#cardGenDocLink").val("");
 })
+
+$( ".column" ).sortable({
+  //When a column receives a sortable
+  receive : function (event, ui)
+  {
+    var cardID, senderColumn, receivingColumn;
+
+    //Extract Card ID
+    var innerHTML = ui.item.context.innerHTML;
+    var xmlDOC = parser.parseFromString(innerHTML, "text/xml");
+    cardID = xmlDOC.getElementById("detail-card").getAttribute("data-target").substring(1);
+
+    //Get column name for receiving column.
+    receivingColumn = event.target.outerText.split(/\n/)[0];
+
+    //Get name of column it moved from
+    senderColumn = ui.sender.context.outerText.split(/\n/)[0];
+
+    //TODO insert in correct position
+    moveCard(cardID, senderColumn, receivingColumn, -1);
+
+    //console.log(event);
+  }
+});
+
+function moveCard(cardID, senderColumn, receivingColumn)
+{
+  var databaseSenderColumnName = displayToDatabaseColumnName(senderColumn);
+  var databaseReceivingColumnName = displayToDatabaseColumnName(receivingColumn);
+
+  $.ajax({
+    url: 'moveCard/'+ cardID +'?curCol='+ databaseSenderColumnName +'&newCol='+ databaseReceivingColumnName,
+    type: 'POST',
+    contentType: 'application/json',
+    success: function() {
+      window.location.reload(true);
+    }
+  });
+
+  //Diagnostics
+  console.log("CARD ID: " + cardID)
+  console.log("Moved from column: " + databaseSenderColumnName);
+  console.log("To column: " + databaseReceivingColumnName)
+}
+
+function displayToDatabaseColumnName(columnName)
+{
+  switch(columnName)
+  {
+    case "To Do":
+      return "toDo";
+    case "In Progress":
+      return "inProgress";
+    case "Complete":
+      return "complete";
+  }
+}
