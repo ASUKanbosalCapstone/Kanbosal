@@ -377,14 +377,32 @@ footer h2 {
 }
 
 .card-icons {
-    margin: 0 5px;
+  margin: 4px 5px 0 5px;
+}
+
+.card-tag-badge {
+  margin: 0 5px 0 5px;
+}
+
+.user-img-sml {
+  width: 18px;
+  height: 18px;
+  margin: 2px 5px 0 5px;
+}
+
+.card-tag {
+  margin-left: 5px;
 }
 
 .detail-card-placeholder {
-    border: 1px dotted black;
-    margin: 2px;
-    margin-bottom: 5px;
-    height: 100%;
+  border: 1px dotted black;
+  margin: 2px;
+  margin-bottom: 5px;
+  height: 100%;
+}
+
+.label-as-badge {
+  border-radius: 1em;
 }
 
 
