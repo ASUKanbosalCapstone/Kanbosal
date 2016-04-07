@@ -40,12 +40,17 @@ $.ajax({
   dataType: 'json',
   async: false,
   success: function (detailView) {
-    populateUsers(detailView.cards.toDo);
-    populateUsers(detailView.cards.inProgress);
-    populateUsers(detailView.cards.complete);
+    var user = detailView.user;
+    var cards = detailView.cards;
+
+    loadNavbar(user);
+
+    populateUsers(cards.toDo);
+    populateUsers(cards.inProgress);
+    populateUsers(cards.complete);
 
     // Updates the progress bar
-    if (detailView.cards) {
+    if (cards) {
       $.ajax({
         url: '/templates/progressBar.html',
         dataType: 'html',
@@ -53,7 +58,7 @@ $.ajax({
         async: false,
         success: function(data) {
           progressBarTemplate = Handlebars.compile(data);
-          $('#progressBar').html(progressBarTemplate(calculateProgress(detailView.cards)));
+          $('#progressBar').html(progressBarTemplate(calculateProgress(cards)));
         }
       });
       // Updates the whole board
@@ -64,7 +69,7 @@ $.ajax({
         async: false,
         success: function(data) {
           cardTemplate = Handlebars.compile(data);
-          $('#columnList').html(cardTemplate(detailView.cards));
+          $('#columnList').html(cardTemplate(cards));
         }
       });
       // Updates the individual card modals
@@ -75,7 +80,7 @@ $.ajax({
         async: false,
         success: function(data) {
           modalTemplate = Handlebars.compile(data);
-          $('#cardModals').html(modalTemplate(detailView.cards));
+          $('#cardModals').html(modalTemplate(cards));
         }
       });
     }
