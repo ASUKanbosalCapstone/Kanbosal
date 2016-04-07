@@ -1,4 +1,4 @@
-@import url(https://fonts.googleapis.com/css?family=Roboto:100,300,400,400italic,700,700italic,900);
+card-tag-badge@import url(https://fonts.googleapis.com/css?family=Roboto:100,300,400,400italic,700,700italic,900);
 
 html, body {
     margin: 0;
@@ -376,15 +376,16 @@ footer h2 {
   background-color: #67ed64;
 }
 
-.card-icons {
-  margin: 5px 5px 5px 5px;
-  /*vertical-align: middle;*/
+.card-icons, .card-tag-badge {
+  height: 16px;
+  margin: 0 5px 0 5px;
+  vertical-align: middle;
 }
 
 .user-img-sml {
-  float: right;
   width: 18px;
   height: 18px;
+  margin: 0 5px 0 5px;
 }
 
 .card-tag {
@@ -392,10 +393,14 @@ footer h2 {
 }
 
 .detail-card-placeholder {
-    border: 1px dotted black;
-    margin: 2px;
-    margin-bottom: 5px;
-    height: 100%;
+  border: 1px dotted black;
+  margin: 2px;
+  margin-bottom: 5px;
+  height: 100%;
+}
+
+.label-as-badge {
+  border-radius: 1em;
 }
 
 
