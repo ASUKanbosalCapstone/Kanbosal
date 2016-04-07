@@ -4,12 +4,8 @@ $(function() {
   $.ajax({
     url: 'getOverview',
     type: 'GET',
-    dataType: 'html',
-    success: function(json) {
-      var cardsArray = JSON.parse(json);
-      var retrieved = {
-        "grant" : cardsArray
-      };
+    dataType: 'json',
+    success: function(overview) {
 
       $.ajax({
         url : 'templates/overviewPanel.html',
@@ -17,7 +13,7 @@ $(function() {
         method: 'GET',
         success: function(data) {
           template = Handlebars.compile(data);
-          $("#overviewContent").append(template(retrieved));
+          $("#overviewContent").append(template(overview));
           $('[data-toggle="tooltip"]').tooltip({container:'body'});
         }
       });

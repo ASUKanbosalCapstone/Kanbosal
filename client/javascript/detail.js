@@ -23,9 +23,10 @@ $.ajax({
   type: 'GET',
   dataType: 'json',
   async: false,
-  success: function (cards) {
+  success: function (detailView) {
+
     // Updates the progress bar
-    if (cards) {
+    if (detailView.cards) {
       $.ajax({
         url: '/templates/progressBar.html',
         dataType: 'html',
@@ -33,7 +34,7 @@ $.ajax({
         async: false,
         success: function(data) {
           progressBarTemplate = Handlebars.compile(data);
-          $('#progressBar').html(progressBarTemplate(calculateProgress(cards)));
+          $('#progressBar').html(progressBarTemplate(calculateProgress(detailView.cards)));
         }
       });
       // Updates the whole board
@@ -44,7 +45,7 @@ $.ajax({
         async: false,
         success: function(data) {
           cardTemplate = Handlebars.compile(data);
-          $('#columnList').html(cardTemplate(cards));
+          $('#columnList').html(cardTemplate(detailView.cards));
         }
       });
       // Updates the individual card modals
@@ -55,7 +56,7 @@ $.ajax({
         async: false,
         success: function(data) {
           modalTemplate = Handlebars.compile(data);
-          $('#cardModals').html(modalTemplate(cards));
+          $('#cardModals').html(modalTemplate(detailView.cards));
         }
       });
     }
