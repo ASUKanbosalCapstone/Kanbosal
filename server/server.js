@@ -91,15 +91,20 @@ app.get('/overview', authenticate, function(req, res) {
 });
 
 /* GET: returns the grants the user can see. */
-app.get('/getOverview', function(req, res) {
+app.get('/getOverview', authenticate, function(req, res) {
     var userId = req.session.user._id;
 
     if (userId) {
         collectionDriver.getGrants(userId, function(error, results) {
             if (error)
                 res.status(400).send(error);
-            else
-                res.json(results);
+            else {
+                var overview = {
+                    user: req.session.user,
+                    grants: results
+                };
+                res.json(overview);
+            }
         });
     }
     else
@@ -107,7 +112,7 @@ app.get('/getOverview', function(req, res) {
 });
 
 /* Loads detail. */
-app.get('/detail', function(req, res) {
+app.get('/detail', authenticate, function(req, res) {
     if (req.session.grantLoadId)
         res.render('detail.html');
     else
@@ -121,7 +126,7 @@ app.get('/detail/:id', authenticate, function(req, res) {
 });
 
 /* GET: returns the cards belonging to the grant the user can see */
-app.get('/getDetail', function(req, res) {
+app.get('/getDetail', authenticate, function(req, res) {
     if (!req.session.grantLoadId)
         res.redirect('/overview');
 
@@ -131,8 +136,13 @@ app.get('/getDetail', function(req, res) {
     collectionDriver.getCards(grantId, userPermissionId, function(error, results) {
         if (error)
             res.status(400).send(error);
-        else
-            res.json(results);
+        else{
+            var detailView = {
+                user: req.session.user,
+                cards: results
+            };
+            res.json(detailView);
+        }
     });
 });
 
