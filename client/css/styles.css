@@ -377,7 +377,18 @@ footer h2 {
 }
 
 .card-icons {
-    margin: 0 5px;
+  margin: 5px 5px 5px 5px;
+  /*vertical-align: middle;*/
+}
+
+.user-img-sml {
+  float: right;
+  width: 18px;
+  height: 18px;
+}
+
+.card-tag {
+  margin-left: 5px;
 }
 
 .detail-card-placeholder {
