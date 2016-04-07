@@ -376,16 +376,18 @@ footer h2 {
   background-color: #67ed64;
 }
 
-.card-icons, .card-tag-badge {
-  height: 16px;
+.card-icons {
+  margin: 4px 5px 0 5px;
+}
+
+.card-tag-badge {
   margin: 0 5px 0 5px;
-  vertical-align: middle;
 }
 
 .user-img-sml {
   width: 18px;
   height: 18px;
-  margin: 0 5px 0 5px;
+  margin: 2px 5px 0 5px;
 }
 
 .card-tag {

@@ -80,6 +80,11 @@ app.get('/logout', function(req, res) {
     res.redirect('/');
 });
 
+/* Returns the current user stored in the session */
+app.get('/currentUser', authenticate, function(req, res) {
+    res.json(req.session.user);
+});
+
 /* Loads overview. */
 app.get('/overview', authenticate, function(req, res) {
     res.render('overview.html');
