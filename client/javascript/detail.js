@@ -18,12 +18,37 @@ var calculateProgress = function(cards) {
   return progressBar
 }
 
+var populateUsers = function(cards) {
+  for(var i = 0; i < cards.length; i++) {
+    for(var j = 0; j < cards[i].userIds.length; j++) {
+      $.ajax({
+        url: '/users/' + cards[i].userIds[j],
+        type: 'GET',
+        dataType: 'json',
+        async: false,
+        success: function(user) {
+          cards[i].userIds[j] = user;
+        }
+      });
+    }
+  }
+}
+
 $.ajax({
   url: '/getDetail',
   type: 'GET',
   dataType: 'json',
   async: false,
-  success: function (cards) {
+  success: function (detailView) {
+    var user = detailView.user;
+    var cards = detailView.cards;
+
+    loadNavbar(user);
+
+    populateUsers(cards.toDo);
+    populateUsers(cards.inProgress);
+    populateUsers(cards.complete);
+
     // Updates the progress bar
     if (cards) {
       $.ajax({
@@ -174,6 +199,11 @@ $(function() {
         var test = data;
       }
     });
+  });
+
+  $('[data-toggle="popover"]').popover({
+    container:'body',
+    html : true
   });
 });
 
