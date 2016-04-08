@@ -254,6 +254,7 @@ app.post('/moveCard/:id', authenticate, function(req, res) {
 
 /* Allows admins to move the card from the current stage to the next one */
 app.post('/moveCardStage/:id', authenticateAdmin, function(req, res) {
+    var back = req.query.back;
     var stage = req.session.user.permissions.stage;
     var card = {
         id: req.params.id,
@@ -263,6 +264,12 @@ app.post('/moveCardStage/:id', authenticateAdmin, function(req, res) {
         newCol: "toDo"
     };
     var grantId = req.session.grantLoadId;
+
+    if (back) {
+        card.curCol = "toDo";
+        card.newStage = stage - 1;
+        card.newCol = "complete";
+    }
 
     collectionDriver.moveCard(grantId, card, function(error, results) {
         if (error)
