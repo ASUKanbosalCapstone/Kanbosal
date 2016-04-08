@@ -167,54 +167,44 @@ CollectionDriver.prototype.save = function(collectionName, doc, callback) {
     });
 };
 
-/* Updates the doc with the given docId in collectionName. */
-CollectionDriver.prototype.update = function(collectionName, docUpdates, docId, userId, callback) {
-    if (collectionName == "cards") {
-        docUpdates.$addToSet = {userIds: userId};   // Adds the current user to the list of users in the card
-        docUpdates.$currentDate = {timeLastEdit: true}  // Updates the timeLastEdit to the current time
-    }
-
+/* Updates the found queryObject in collectionName with updateObject */
+var mongoUpdate = function(collectionName, queryObject, updateObject, callback) {
     db.collection(collectionName, function(error, collection) {
         if (error)
             callback(error);
         else {
-            collection.updateOne(
-                {'_id': ObjectID(docId)},
-                docUpdates,
-                function(error, results) {
-                    if (error)
-                        callback(error);
-                    else
-                        callback(null, results);
-                }
-            );
-        }
-    });
-};
-
-/* Moves cards through the columns of a single table of a grant */
-CollectionDriver.prototype.moveCard = function(grantId, card, userPermissionId, callback) {
-    var docUpdates = {
-        $pull: {},
-        $addToSet: {}
-    };
-    docUpdates.$pull['stages.' + userPermissionId + '.' + card.curCol] = card.id;
-    docUpdates.$addToSet['stages.' + userPermissionId + '.' + card.newCol] = card.id;
-    // callback(null, docUpdates);
-
-    db.collection('grants', function(error, collection) {
-        if (error)
-            callback(error);
-        else {
-            collection.update({'_id': ObjectID(grantId)}, docUpdates, function(error, results) {
+            collection.update(queryObject, updateObject, function(error, results) {
                 if (error)
                     callback(error);
                 else
                     callback(null, results);
             });
-            // callback(null, true);
         }
     });
+}
+
+/* Updates the doc with the given docId in collectionName. */
+CollectionDriver.prototype.update = function(collectionName, updateObject, docId, userId, callback) {
+    var queryObject = {_id: ObjectID(docId)};
+    if (collectionName == "cards") {
+        updateObject.$addToSet = {userIds: userId};   // Adds the current user to the list of users in the card
+        updateObject.$currentDate = {timeLastEdit: true}  // Updates the timeLastEdit to the current time
+    }
+
+    mongoUpdate(collectionName, queryObject, updateObject, callback);
+};
+
+/* Moves cards through the columns of a single table of a grant */
+CollectionDriver.prototype.moveCard = function(grantId, card, userPermissionId, callback) {
+    var queryObject = {_id: ObjectID(grantId)};
+    var updateObject = {
+        $pull: {},
+        $addToSet: {}
+    };
+    updateObject.$pull['stages.' + userPermissionId + '.' + card.curCol] = card.id;
+    updateObject.$addToSet['stages.' + userPermissionId + '.' + card.newCol] = card.id;
+
+    mongoUpdate("grants", queryObject, updateObject, callback);
 };
 
 /* Deletes the doc with the given docId in collectionName */
