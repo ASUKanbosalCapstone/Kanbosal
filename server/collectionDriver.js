@@ -168,12 +168,12 @@ CollectionDriver.prototype.save = function(collectionName, doc, callback) {
 };
 
 /* Updates the found queryObject in collectionName with updateObject */
-var mongoUpdate = function(collectionName, queryObject, updateObject, callback) {
+var mongoUpdate = function(collectionName, queryObj, updateObj, callback) {
     db.collection(collectionName, function(error, collection) {
         if (error)
             callback(error);
         else {
-            collection.update(queryObject, updateObject, function(error, results) {
+            collection.update(queryObj, updateObj, function(error, results) {
                 if (error)
                     callback(error);
                 else
@@ -183,28 +183,28 @@ var mongoUpdate = function(collectionName, queryObject, updateObject, callback) 
     });
 }
 
-/* Updates the doc with the given docId in collectionName. */
-CollectionDriver.prototype.update = function(collectionName, updateObject, docId, userId, callback) {
-    var queryObject = {_id: ObjectID(docId)};
+/* Updates the doc with the given docId in collectionName */
+CollectionDriver.prototype.update = function(collectionName, updateObj, docId, userId, callback) {
+    var queryObj = {_id: ObjectID(docId)};
     if (collectionName == "cards") {
-        updateObject.$addToSet = {userIds: userId};   // Adds the current user to the list of users in the card
-        updateObject.$currentDate = {timeLastEdit: true}  // Updates the timeLastEdit to the current time
+        updateObj.$addToSet = {userIds: userId};   // Adds the current user to the list of users in the card
+        updateObj.$currentDate = {timeLastEdit: true}  // Updates the timeLastEdit to the current time
     }
 
-    mongoUpdate(collectionName, queryObject, updateObject, callback);
+    mongoUpdate(collectionName, queryObj, updateObj, callback);
 };
 
 /* Moves cards through the columns of a single table of a grant */
-CollectionDriver.prototype.moveCard = function(grantId, card, userPermissionId, callback) {
-    var queryObject = {_id: ObjectID(grantId)};
-    var updateObject = {
+CollectionDriver.prototype.moveCard = function(grantId, card, callback) {
+    var queryObj = {_id: ObjectID(grantId)};
+    var updateObj = {
         $pull: {},
         $addToSet: {}
     };
-    updateObject.$pull['stages.' + userPermissionId + '.' + card.curCol] = card.id;
-    updateObject.$addToSet['stages.' + userPermissionId + '.' + card.newCol] = card.id;
+    updateObj.$pull['stages.' + card.curStage + '.' + card.curCol] = card.id;
+    updateObj.$addToSet['stages.' + card.newStage + '.' + card.newCol] = card.id;
 
-    mongoUpdate("grants", queryObject, updateObject, callback);
+    mongoUpdate("grants", queryObj, updateObj, callback);
 };
 
 /* Deletes the doc with the given docId in collectionName */
