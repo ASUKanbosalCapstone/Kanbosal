@@ -34,6 +34,23 @@ var populateUsers = function(cards) {
   }
 }
 
+var modifyCardMovement = function(user, cards)
+{
+  if(user.permissions.level == 1)
+  {
+    for(var i = 0; i < cards.length; i++)
+    {
+      cards[i].moveBack = user.permissions.stage - 1;
+      cards[i].moveForward = user.permissions.stage + 1;
+    }
+  }
+}
+
+var moveCardColumn = function(cardID, newColumnID)
+{
+  console.log("Moving Card " + cardID + " to column " + newColumnID);
+}
+
 $.ajax({
   url: '/getDetail',
   type: 'GET',
@@ -48,6 +65,8 @@ $.ajax({
     populateUsers(cards.toDo);
     populateUsers(cards.inProgress);
     populateUsers(cards.complete);
+
+    modifyCardMovement(user, cards.complete);
 
     // Updates the progress bar
     if (cards) {
@@ -70,6 +89,11 @@ $.ajax({
         success: function(data) {
           cardTemplate = Handlebars.compile(data);
           $('#columnList').html(cardTemplate(cards));
+
+          $("#preventPropagation").bind('click', function() {
+            console.log("stopping");
+            event.stopPropagation();
+          });
         }
       });
       // Updates the individual card modals
