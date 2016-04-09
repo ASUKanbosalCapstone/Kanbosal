@@ -53,8 +53,6 @@ var modifyCardMovement = function(user, cards)
       }
     }
   }
-  console.log(cards);
-  console.log(user);
 }
 
 var moveCardColumn = function(cardID, isMovingForward)
