@@ -51,6 +51,18 @@ var authenticate = function(req, res, next) {
         res.redirect('/');
 }
 
+/* Checks if the user in session is an admin */
+var authenticateAdmin = function(req, res, next) {
+    if (req.session.user) {
+        if (req.session.user.permissions.level == 1)
+            next();
+        else
+            res.redirect('/');
+    }
+    else
+        res.redirect('/');
+}
+
 /* Loads homepage. */
 app.get('/', function(req, res) {
     res.render('index.html');
@@ -209,24 +221,62 @@ app.put('/:collection', function(req, res) {
      });
 });
 
+/* Sets the stage of an admin to the desired stage they want to view */
+app.post('/setAdminStage', authenticateAdmin, function(req, res) {
+    var newStage = req.query.stage;
+
+    if (newStage) {
+        req.session.user.permissions.stage = newStage;
+        res.status(200).send(true);
+    }
+    else
+        res.status(400).send({error: 'bad query'})
+});
+
 /* Moves the card given from curCol to newCol */
 app.post('/moveCard/:id', authenticate, function(req, res) {
     var card = {
         id: req.params.id,
+        curStage: req.session.user.permissions.stage,
         curCol: req.query.curCol,
+        newStage: req.session.user.permissions.stage,
         newCol: req.query.newCol
     };
     var grantId = req.session.grantLoadId;
-    var userPermissionId = req.session.user.permissions.stage;
-    // console.log(docUpdates);
 
-    collectionDriver.moveCard(grantId, card, userPermissionId, function(error, results) {
+    collectionDriver.moveCard(grantId, card, function(error, results) {
         if (error)
             res.status(400).send(error);
         else
             res.status(200).send(results);
     });
-    // res.json(docUpdates);
+});
+
+/* Allows admins to move the card from the current stage to the next one */
+app.post('/moveCardStage/:id', authenticateAdmin, function(req, res) {
+    var back = req.query.back;
+    var stage = req.session.user.permissions.stage;
+    var card = {
+        id: req.params.id,
+        curStage: stage,
+        curCol: "complete",
+        newStage: stage + 1,
+        newCol: "toDo"
+    };
+    var grantId = req.session.grantLoadId;
+
+    if (back) {
+        card.curCol = "toDo";
+        card.newStage = stage - 1;
+        card.newCol = "complete";
+    }
+
+    collectionDriver.moveCard(grantId, card, function(error, results) {
+        if (error)
+            res.status(400).send(error);
+        else
+            res.status(200).send(results);
+    });
 });
 
 /* Updates the grant in session. */
