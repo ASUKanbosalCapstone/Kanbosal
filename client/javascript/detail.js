@@ -38,17 +38,54 @@ var modifyCardMovement = function(user, cards)
 {
   if(user.permissions.level == 1)
   {
-    for(var i = 0; i < cards.length; i++)
+    if(user.permissions.stage > 0)
     {
-      cards[i].moveBack = user.permissions.stage - 1;
-      cards[i].moveForward = user.permissions.stage + 1;
+      for(var i = 0; i < cards.toDo.length; i++)
+      {
+        cards.toDo[i].moveBack = "holder";
+      }
+    }
+    if(user.permissions.stage < 3)
+    {
+      for(var i = 0; i < cards.complete.length; i++)
+      {
+        cards.complete[i].moveForward = "holder";
+      }
     }
   }
+  console.log(cards);
+  console.log(user);
 }
 
-var moveCardColumn = function(cardID, newColumnID)
+var moveCardColumn = function(cardID, isMovingForward)
 {
-  console.log("Moving Card " + cardID + " to column " + newColumnID);
+  var isCallable = true;
+  var query = '/moveCardStage/';
+
+  if(isMovingForward == 'true')
+  {
+    query += cardID;
+  }
+  else if(isMovingForward == 'false')
+  {
+    query += cardID + '?back=true';
+  }
+  else
+  {
+    isCallable = false;
+  }
+
+  if(isCallable)
+  {
+    $.ajax({
+      url: query,
+      type: 'POST',
+      contentType: 'application/json',
+      success: function() {
+        window.location.reload(true);
+      }
+    });
+  }
 }
 
 $.ajax({
@@ -66,7 +103,8 @@ $.ajax({
     populateUsers(cards.inProgress);
     populateUsers(cards.complete);
 
-    modifyCardMovement(user, cards.complete);
+    modifyCardMovement(user, cards);
+
 
     // Updates the progress bar
     if (cards) {
@@ -91,7 +129,6 @@ $.ajax({
           $('#columnList').html(cardTemplate(cards));
 
           $("#preventPropagation").bind('click', function() {
-            console.log("stopping");
             event.stopPropagation();
           });
         }
