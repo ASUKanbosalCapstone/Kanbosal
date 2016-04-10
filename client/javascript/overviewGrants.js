@@ -6,6 +6,7 @@ $(function() {
     type: 'GET',
     dataType: 'json',
     success: function(overview) {
+      loadNavbar(overview.user);
 
       $.ajax({
         url : 'templates/overviewPanel.html',

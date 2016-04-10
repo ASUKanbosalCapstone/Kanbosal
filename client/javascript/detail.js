@@ -18,15 +18,94 @@ var calculateProgress = function(cards) {
   return progressBar
 }
 
+var populateUsers = function(cards) {
+  for(var i = 0; i < cards.length; i++) {
+    for(var j = 0; j < cards[i].userIds.length; j++) {
+      $.ajax({
+        url: '/users/' + cards[i].userIds[j],
+        type: 'GET',
+        dataType: 'json',
+        async: false,
+        success: function(user) {
+          cards[i].userIds[j] = user;
+        }
+      });
+    }
+  }
+}
+
+var modifyCardMovement = function(user, cards)
+{
+  if(user.permissions.level == 1)
+  {
+    if(user.permissions.stage > 0)
+    {
+      for(var i = 0; i < cards.toDo.length; i++)
+      {
+        cards.toDo[i].moveBack = "holder";
+      }
+    }
+    if(user.permissions.stage < 3)
+    {
+      for(var i = 0; i < cards.complete.length; i++)
+      {
+        cards.complete[i].moveForward = "holder";
+      }
+    }
+  }
+}
+
+var moveCardColumn = function(cardID, isMovingForward)
+{
+  var isCallable = true;
+  var query = '/moveCardStage/';
+
+  if(isMovingForward == 'true')
+  {
+    query += cardID;
+  }
+  else if(isMovingForward == 'false')
+  {
+    query += cardID + '?back=true';
+  }
+  else
+  {
+    isCallable = false;
+  }
+
+  if(isCallable)
+  {
+    $.ajax({
+      url: query,
+      type: 'POST',
+      contentType: 'application/json',
+      success: function() {
+        window.location.reload(true);
+      }
+    });
+  }
+}
+
 $.ajax({
   url: '/getDetail',
   type: 'GET',
   dataType: 'json',
   async: false,
   success: function (detailView) {
+    var user = detailView.user;
+    var cards = detailView.cards;
+
+    loadNavbar(user);
+
+    populateUsers(cards.toDo);
+    populateUsers(cards.inProgress);
+    populateUsers(cards.complete);
+
+    modifyCardMovement(user, cards);
+
 
     // Updates the progress bar
-    if (detailView.cards) {
+    if (cards) {
       $.ajax({
         url: '/templates/progressBar.html',
         dataType: 'html',
@@ -34,7 +113,7 @@ $.ajax({
         async: false,
         success: function(data) {
           progressBarTemplate = Handlebars.compile(data);
-          $('#progressBar').html(progressBarTemplate(calculateProgress(detailView.cards)));
+          $('#progressBar').html(progressBarTemplate(calculateProgress(cards)));
         }
       });
       // Updates the whole board
@@ -45,7 +124,11 @@ $.ajax({
         async: false,
         success: function(data) {
           cardTemplate = Handlebars.compile(data);
-          $('#columnList').html(cardTemplate(detailView.cards));
+          $('#columnList').html(cardTemplate(cards));
+
+          $("#preventPropagation").bind('click', function() {
+            event.stopPropagation();
+          });
         }
       });
       // Updates the individual card modals
@@ -56,7 +139,7 @@ $.ajax({
         async: false,
         success: function(data) {
           modalTemplate = Handlebars.compile(data);
-          $('#cardModals').html(modalTemplate(detailView.cards));
+          $('#cardModals').html(modalTemplate(cards));
         }
       });
     }
@@ -175,6 +258,11 @@ $(function() {
         var test = data;
       }
     });
+  });
+
+  $('[data-toggle="popover"]').popover({
+    container:'body',
+    html : true
   });
 });
 
