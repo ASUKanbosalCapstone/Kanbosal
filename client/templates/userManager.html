@@ -1,0 +1,96 @@
+<div class="container-fluid">
+  {{#if pendingUsers }}
+  <div id="pendingUsersRow" class="row">
+    <div class="col-xs-12">
+      <div id="pendingUsers" class="panel panel-default">
+        <div class="panel-heading">
+          <h4 class="panel-title overflow-ellipses">Pending User Confirmations</h4>
+        </div>
+        <div class="panel-body">
+          <div class="row">
+            {{#each pendingUsers }}
+            <div class="col-xs-4 col-md-3">
+              <div class="well well-sm">
+                <img class="img-responsive img-rounded pull-left" style="display:inline-block; margin-right:4px;" src="{{ imageUrl }}">
+                <a class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="Contact by email." href="mailto:{{ email }}"><i class="fa fa-fw fa-envelope"></i></a>
+                <span data-toggle="tooltip" data-placement="top" title="Deny user."><button class="btn btn-primary" data-toggle="modal" data-target="#denyUserModal" title="Deny user access." data-userid="{{ _id }}"><i class="fa fa-fw fa-times"></i></button></span>
+                <span data-toggle="tooltip" data-placement="top" title="Confirm identity."><button class="btn btn-primary" data-toggle="modal" data-target="#confirmUserModal" title="Confirm identity." data-userid="{{ _id }}"><i class="fa fa-fw fa-check"></i></button></span>
+                <br><strong><small>{{ name }}</small></strong>
+              </div>
+            </div>
+            {{/each}}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  {{/if}}
+  <div class="row">
+    <div class="row-height">
+      {{#each departments }}
+      <div class="col-xs-4 col-xs-height">
+        <div id="{{ userDeptId }}" class="panel panel-default inside-full-height">
+          <div class="panel-heading">
+            <h4 class="panel-title overflow-ellipses">{{ dept }} Department</h4>
+          </div>
+          <div class="panel-body">
+            <div><small>{{ description }} The <span class="fa fa-rotate-90"><i class="fa fa-flip-vertical fa-key"></i></span> symbol denotes a principle level member.</small></div>
+            <div class="alertEmpty" role="alert" hidden>
+              <div class="alert-notify alert alert-info">
+                <h4 class="overflow-ellipses"><i class="fa fa-user-times"></i> No users assigned.</h4>
+              </div>
+            </div>
+          </div>
+          <div class="list-group">
+            {{#each users}}
+            <div class="list-group-item" style="white-space:nowrap;">
+              <img class="img-responsive img-rounded" style="max-width:22px; display:inline-block;" src="{{ imageUrl }}">
+              <h5 class="overflow-ellipses" style="width:calc(100% - 110px)!important; vertical-align:bottom; margin:0; line-height:22px;">{{ name }} <small>{{ title }}</small></h5>
+              <div class="btn-group pull-right">
+                <a class="btn btn-xs btn-primary" href="mailto:{{ email }}" title="Send {{ name }} an email."><i class="fa fa-fw fa-envelope"></i></a>
+                <a class="btn btn-xs btn-primary" href="#"><i class="fa fa-fw fa-pencil"></i></a>
+              </div>
+              {{#compare permissions.level "===" 0}}
+              <div class="btn btn-xs btn-default pull-right"><span class="fa fa-rotate-90"><i class="fa fa-flip-vertical fa-key"></i></span></div>
+              {{/compare}}
+            </div>
+            {{/each}}
+          </div>
+        </div>
+      </div>
+      {{/each}}
+    </div>
+  </div>
+  {{#if inactiveUsers }}
+  <div class="row">
+    <div class="col-xs-12">
+      <div id="inactiveUsers" class="panel panel-default">
+        <div class="panel-heading">
+          <h4 class="panel-title overflow-ellipses">Deactivated / Denied Users</h4>
+        </div>
+        <div class="panel-body">
+          <div class="alertEmpty" role="alert" hidden>
+            <div class="alert-notify alert alert-info">
+              <h4 class="overflow-ellipses"><i class="fa fa-user-times"></i> No blacklisted users.</h4>
+              <p>There are no deactivated or denied users. These are accounts that are not allowed access to Kanbosal.</p>
+            </div>
+          </div>
+          <div class="row">
+            {{#each inactiveUsers }}
+            <div class="col-xs-4 col-md-3">
+              <div class="well well-sm">
+                <img class="img-responsive img-rounded pull-left" style="display:inline-block; margin-right:4px;" src="{{ imageUrl }}">
+                <a class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="Contact by email." href="mailto:{{ email }}"><i class="fa fa-fw fa-envelope"></i></a>
+                <span data-toggle="tooltip" data-placement="top" title="Deny user."><button class="btn btn-primary" data-toggle="modal" data-target="#denyUserModal" title="Deny user access." data-userid="{{ _id }}"><i class="fa fa-fw fa-times"></i></button></span>
+                <span data-toggle="tooltip" data-placement="top" title="Confirm identity."><button class="btn btn-primary" data-toggle="modal" data-target="#confirmUserModal" title="Confirm identity." data-userid="{{ _id }}"><i class="fa fa-fw fa-check"></i></button></span>
+                <br><strong><small>{{ name }}</small></strong>
+              </div>
+            </div>
+            {{/each}}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  {{/if}}
+</div>

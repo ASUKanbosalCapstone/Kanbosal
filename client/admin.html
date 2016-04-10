@@ -19,7 +19,6 @@
   <!-- js libraries -->
   <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js" integrity="sha512-K1qjQ+NcF2TYO/eI3M6v8EiNYZfA95pQumfvcVrTHtwQVDG+aHRqLi/ETn2uB+1JqwYqVG3LIvdm9lj6imS/pQ==" crossorigin="anonymous"></script>
-  <script src="/javascript/handlebars-v4.0.4.js"></script>
   <script src="https://apis.google.com/js/platform.js?onload=onLoad" async defer></script>
   <!-- <script src="/javascript/authentication.js"></script> -->
 
@@ -32,88 +31,6 @@
       <div id="sidebar" class="toggled"></div>
       <div id="menu-toggle" class="glyphicon glyphicon-menu-right large"></div>
       <div id="contentview" class="container-fluid toggled">
-        <div class="container-fluid">
-          <div id="pendingUsersRow" class="row" hidden>
-            <div class="col-xs-12">
-              <div id="pendingUsers" class="panel panel-default">
-                <div class="panel-heading">
-                  <h4 class="panel-title overflow-ellipses">Pending User Confirmations</h4>
-                </div>
-                <div class="panel-body">
-                  <div class="row"></div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="row-height">
-              <div class="col-xs-4 col-xs-height">
-                <div id="researchUsers" class="panel panel-default inside-full-height">
-                  <div class="panel-heading">
-                    <h4 class="panel-title overflow-ellipses">Research Department</h4>
-                  </div>
-                  <div class="panel-body">
-                    <div>Editing a user is currently non-functional, but will be implemented soon!</div>
-                    <div class="alertEmpty" role="alert" hidden>
-                      <div class="alert-notify alert alert-info">
-                        <h4 class="overflow-ellipses"><i class="fa fa-user-times"></i> No researchers.</h4>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="list-group"></div>
-                </div>
-              </div>
-              <div class="col-xs-4 col-xs-height">
-                <div id="internalUsers" class="panel panel-default inside-full-height">
-                  <div class="panel-heading">
-                    <h4 class="panel-title overflow-ellipses">Internal Review Department</h4>
-                  </div>
-                  <div class="panel-body" hidden>
-                    <div class="alertEmpty" role="alert">
-                      <div class="alert-notify alert alert-info">
-                        <h4 class="overflow-ellipses"><i class="fa fa-user-times"></i> No internal reviewers.</h4>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="list-group"></div>
-                </div>
-              </div>
-              <div class="col-xs-4 col-xs-height">
-                <div id="asuUsers" class="panel panel-default inside-full-height">
-                  <div class="panel-heading">
-                    <h4 class="panel-title overflow-ellipses">ASU Review Department</h4>
-                  </div>
-                  <div class="panel-body" hidden>
-                    <div class="alertEmpty" role="alert">
-                      <div class="alert-notify alert alert-info">
-                        <h4 class="overflow-ellipses"><i class="fa fa-user-times"></i> No asu reviewers.</h4>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="list-group"></div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-xs-12">
-              <div id="inactiveUsers" class="panel panel-default">
-                <div class="panel-heading">
-                  <h4 class="panel-title overflow-ellipses">Deactivated / Denied Users</h4>
-                </div>
-                <div class="panel-body">
-                  <div class="alertEmpty" role="alert" hidden>
-                    <div class="alert-notify alert alert-info">
-                      <h4 class="overflow-ellipses"><i class="fa fa-user-times"></i> No blacklisted users.</h4>
-                      <p>There are no deactivated or denied users. These are accounts that are not allowed access to Kanbosal.</p>
-                    </div>
-                  </div>
-                  <div class="row"></div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
       </div>
 
       <!-- begin : modals -->
@@ -187,6 +104,8 @@
   </div>
 
   <!-- local scripts -->
+  <script src="/javascript/handlebars-v4.0.4.js"></script>
+  <script src="/javascript/helpers.js"></script>
   <script src="/javascript/sidebar.js"></script>
   <script src="/javascript/footer.js"></script>
   <script src="/javascript/navbar.js"></script>

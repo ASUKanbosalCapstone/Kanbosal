@@ -33,24 +33,14 @@ h6 { font-size: 16px; font-style: italic; }
 }
 
 /* bootstrap style mods begin */
-.btn-primary {
-    background-color: #a30046;
-    border: 1px solid transparent;
-}
+.btn-primary { background-color: #a30046; }
+.btn-primary:hover, .btn-primary:active { background-color: #d13252; }
 
-.btn-primary:hover {
-    background-color: #d13252;
-    border: 1px solid transparent;
-}
+.btn-gold { color: #2a2a2a; background-color: #ffc425; }
+.btn-gold:hover, .btn-gold:active { background-color: #ffcf54; }
 
-.btn-gold {
-    color: #2a2a2a;
-    background-color: #ffc425;
-}
-
-.btn-gold:hover {
-    background-color: #ffcf54;
-}
+.btn-blue { background-color: #009cdb; }
+.btn-blue:hover, .btn-blue:active { background-color: #379AF7; }
 
 /* asu secondary color */
 .progress-bar-success { background-color: #78be20; }
@@ -90,7 +80,7 @@ h6 { font-size: 16px; font-style: italic; }
 .navbar * a, #sidebar * a, .btn,
 .navbar * a:hover, #sidebar * a:hover, .btn:hover,
 .fa, .glyphicon, .fa:hover, .glyphicon:hover {
-    border-bottom: 0;
+    border: 1px solid transparent;
 }
 
 a, a:hover,
