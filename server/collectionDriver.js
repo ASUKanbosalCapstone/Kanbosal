@@ -11,7 +11,7 @@ CollectionDriver.prototype.findAll = function(collectionName, callback) {
         if (error)
             callback(error);
         else if (collectionName === 'grants')
-            collection.find({sort: 'title'}).toArray(function(error, results) {
+            collection.find({}, {sort: 'title'}).toArray(function(error, results) {
                 if (error) callback(error);
                 else callback(null, results);
             });

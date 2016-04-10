@@ -166,15 +166,15 @@ app.get('/getAdmin', authenticate, function (req, res) {
             pendingUsers: [],
             departments: [{
                 dept: 'Research',
-                description: 'some description 1',
+                description: 'The <span class="fa fa-rotate-90"><i class="fa fa-flip-vertical fa-key"></i></span> symbol denotes a principle level member.',
                 users: []
             }, {
                 dept: 'Internal Review',
-                description: 'some description 2',
+                description: '',
                 users: []
             }, {
                 dept: 'ASU Review',
-                description: 'some description 3',
+                description: '',
                 users: []
             }],
             inactiveUsers: []
