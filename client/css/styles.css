@@ -516,15 +516,3 @@ footer h2 {
 #pendingUsers * img, #inactiveUsers * img {
     max-width: 50px;
 }
-
-@media (min-width: 990px) {
-  #pendingUsers * img, #inactiveUsers * img {
-      max-width: 33px;
-  }
-}
-
-@media (min-width: 1100px) {
-  #pendingUsers * img, #inactiveUsers * img {
-      max-width: 50px;
-  }
-}
