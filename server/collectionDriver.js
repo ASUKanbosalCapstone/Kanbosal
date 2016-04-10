@@ -10,12 +10,15 @@ CollectionDriver.prototype.findAll = function(collectionName, callback) {
     db.collection(collectionName, function(error, collection) {
         if (error)
             callback(error);
+        else if (collectionName === 'grants')
+            collection.find({sort: 'title'}).toArray(function(error, results) {
+                if (error) callback(error);
+                else callback(null, results);
+            });
         else
             collection.find().toArray(function(error, results) {
-                if (error)
-                    callback(error);
-                else
-                    callback(null, results);
+                if (error) callback(error);
+                else callback(null, results);
             });
     });
 };
@@ -33,7 +36,7 @@ CollectionDriver.prototype.findSome = function(collectionName, query, callback) 
                 else callback(null, results);
             });
         else if (collectionName === 'users')        // sort users by name
-            collection.find(query, { 'sort': 'name' }).toArray(function(error, results) {
+            collection.find(query, { sort: 'name' }).toArray(function(error, results) {
                 if (error) callback(error);
                 else callback(null, results);
             });
