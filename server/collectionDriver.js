@@ -32,6 +32,11 @@ CollectionDriver.prototype.findSome = function(collectionName, query, callback) 
                 if (error) callback(error);
                 else callback(null, results);
             });
+        else if (collectionName === 'users')        // sort users by name
+            collection.find(query, { 'sort': 'name' }).toArray(function(error, results) {
+                if (error) callback(error);
+                else callback(null, results);
+            });
         else                                        // query for sets
             collection.find(query).toArray(function(error, results) {
                 if (error) callback(error);
