@@ -150,21 +150,23 @@ app.get('/admin', function(req, res) {
 app.get('/getAdmin', authenticate, function (req, res) {
     var resultData = {
         user: req.session.user,
-        pendingUsers: [],
-        departments: [{
-            dept: 'Research',
-            description: 'some description 1',
-            users: []
-        }, {
-            dept: 'Internal Review',
-            description: 'some description 2',
-            users: []
-        }, {
-            dept: 'ASU Review',
-            description: 'some description 3',
-            users: []
-        }],
-        inactiveUsers: []
+        pageData: {
+            pendingUsers: [],
+            departments: [{
+                dept: 'Research',
+                description: 'some description 1',
+                users: []
+            }, {
+                dept: 'Internal Review',
+                description: 'some description 2',
+                users: []
+            }, {
+                dept: 'ASU Review',
+                description: 'some description 3',
+                users: []
+            }],
+            inactiveUsers: []
+        }
     };
     
     collectionDriver.findSome('users', { 'permissions.stage': -1 }, setPending);
@@ -172,35 +174,35 @@ app.get('/getAdmin', authenticate, function (req, res) {
     function setPending(error, results) {
         if (error) res.status(400).send(error);
         else {
-            resultData.pendingUsers = results;
+            resultData.pageData.pendingUsers = results;
             collectionDriver.findSome('users', { 'permissions.stage': 0 }, getResearch);
         }
     };
     function getResearch(error, results) {
         if (error) res.status(400).send(error);
         else {
-            resultData.departments[0].users = results;
+            resultData.pageData.departments[0].users = results;
             collectionDriver.findSome('users', { 'permissions.stage': 1 }, getInternal);
         }
     };
     function getInternal(error, results) {
         if (error) res.status(400).send(error);
         else {
-            resultData.departments[1].users = results;
+            resultData.pageData.departments[1].users = results;
             collectionDriver.findSome('users', { 'permissions.stage': 2 }, getASU);
         }
     };
     function getASU(error, results) {
         if (error) res.status(400).send(error);
         else {
-            resultData.departments[2].users = results;
+            resultData.pageData.departments[2].users = results;
             collectionDriver.findSome('users', { 'permissions.stage': -2 }, getInactive);
         }
     };
     function getInactive(error, results) {
         if (error) res.status(400).send(error);
         else {
-            resultData.inactiveUsers = results;
+            resultData.pageData.inactiveUsers = results;
             res.status(200).send(resultData);
         }
     };
