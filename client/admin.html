@@ -50,6 +50,22 @@
         </div>
       </div>
 
+      <div id="deactivateUserModal" class="modal fade" tabindex="-1" role="dialog" style="z-index:9999999;">
+        <div class="modal-dialog modal-sm" role="document">
+          <div class="modal-content">
+            <div class="modal-body">
+              Are you sure you want to deactivate this user? They will be locked out of Kanbosal.
+            </div>
+            <div class="modal-footer">
+              <div class="row" style="margin-right:-15px;">
+                <div class="col-xs-6"><button type="button" class="btn btn-block btn-primary" data-dismiss="modal" aria-label="Close">Cancel</button></div>
+                <div class="col-xs-6"><button type="button" class="btn btn-block btn-gold">Deactivate</button></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <div id="confirmUserModal" class="modal fade">
         <div class="modal-dialog" role="document">
           <div class="modal-content">
@@ -142,6 +158,7 @@
                 </div>
               </div>
               <div class="modal-footer">
+                <button type="button" id="editDeactivateBtn" class="btn btn-primary pull-left" data-toggle="modal" data-target="#deactivateUserModal" title="Deactivate user."><i class="fa fa-user-times"></i></button>
                 <button type="button" onclick="cancel('#editUserForm')" class="btn btn-primary" data-dismiss="modal" aria-label="Close">Cancel</button>
                 <button type="submit" onclick="selectAllGrants()" class="btn btn-gold">Confirm Changes</button>
               </div>

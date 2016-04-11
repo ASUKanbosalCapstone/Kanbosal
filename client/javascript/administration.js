@@ -70,8 +70,12 @@ var addGrant = function () {
 
 var removeGrant = function () {
   var toRemove = $('#selectedGrantsEdit').serializeArray();
+
   for (i in toRemove)
     $('#selectedGrantsEdit option[value="' + toRemove[i].value + '"]').remove();
+
+  // fix for bug (when testing in chrome) removing grants will not detect remaining options
+  $('#selectedGrantsEdit').html($('#selectedGrantsEdit').html());
 };
 
 var cancel = function (modalId) {
@@ -115,6 +119,14 @@ $(function () {
     modal.find('button.btn-gold').attr('onclick', 'denyUser(\'' + userid + '\')');
   });
 
+  $('#deactivateUserModal').on('show.bs.modal', function (event) {
+    var button = $(event.relatedTarget); // Button that triggered the modal
+    var userid = button.data('userid'); // Extract info from data-* attributes
+    var modal = $(this);
+
+    modal.find('button.btn-gold').attr('onclick', 'denyUser(\'' + userid + '\')');
+  });
+
   $('#confirmUserModal').on('show.bs.modal', function (event) {
     var button = $(event.relatedTarget); // Button that triggered the modal
     var userid = button.data('userid'); // Extract info from data-* attributes
@@ -127,13 +139,13 @@ $(function () {
     });
   });
 
+  // update modal with user
   $('#editUserModal').on('show.bs.modal', function (event) {
     var button = $(event.relatedTarget); // Button that triggered the modal
     var userid = button.data('userid'); // Extract info from data-* attributes
     var modal = $(this);
     var populateGrants = "";
 
-    // populate modal with current user info
     $.ajax({
       url: '/users/' + userid,
       type: 'GET',
@@ -142,6 +154,7 @@ $(function () {
       modal.find('#editModalName').html(data.name);
       modal.find('#stageInputEdit').val(data.permissions.stage);
       modal.find('#levelInputEdit').val(data.permissions.level);
+      modal.find('#editDeactivateBtn').attr('data-userid', userid);
       modal.find('#selectedGrantsEdit').empty();
     }).then(function (data) {
       for (i in grants)
