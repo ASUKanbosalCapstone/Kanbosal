@@ -391,6 +391,7 @@ footer h2 {
 }
 
 .card-tag {
+  display: inline-block;
   margin-left: 5px;
 }
 

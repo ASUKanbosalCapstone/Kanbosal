@@ -20,14 +20,14 @@
                 <span class="label label-success card-icons card-tag">{{this}}</span>
               {{/each}}
             {{else}}
-              <small class="pull-left card-tag-badge"><a tabindex="0" role="button" data-toggle="popover" data-trigger="focus" data-placement="right" data-content="{{#each tags}}<span class=&quot;label label-primary card-icons card-tag&quot;>{{this}}</span></br>{{/each}}"><span class="label label-success label-as-badge">{{tags.length}} Tags</span></a></small>
+              <small class="pull-left card-tag-badge"><a tabindex="0" role="button" data-toggle="popover" data-trigger="focus" data-placement="right" data-content="{{#each tags}}<span class=&quot;label label-primary card-icons card-tag&quot;>{{this}}</span>{{/each}}"><span class="label label-success label-as-badge">{{tags.length}} Tags</span></a></small>
             {{/compare}}
             {{#compare userIds.length "<" 3}}
               {{#each userIds}}
                 <img class="pull-right card-icons user-img-sml img-circle" data-toggle="tooltip" title="{{name}}" src="{{imageUrl}}">
               {{/each}}
             {{else}}
-              <small class="pull-right card-tag-badge"><a tabindex="0" role="button" data-toggle="popover" data-trigger="focus" data-placement="right" data-content="{{#each userIds}}<img class=&quot;pull-left card-icons user-img-sml img-circle&quot; src=&quot;{{imageUrl}}&quot;>{{name}}{{/each}}"><span class="label label-primary label-as-badge">{{userIds.length}} Users</span></a></small>
+              <small class="pull-right card-tag-badge"><a tabindex="0" role="button" data-toggle="popover" data-trigger="focus" data-placement="left" data-content="{{#each userIds}}<img class=&quot;pull-left card-icons user-img-sml img-circle&quot; src=&quot;{{imageUrl}}&quot;>{{name}}</br>{{/each}}"><span class="label label-primary label-as-badge">{{userIds.length}} Users</span></a></small>
             {{/compare}}
           </div>
         </div>
@@ -61,7 +61,7 @@
                 <img class="pull-right card-icons user-img-sml img-circle" data-toggle="tooltip" title="{{name}}" src="{{imageUrl}}">
               {{/each}}
             {{else}}
-              <small class="pull-right card-tag-badge"><a tabindex="0" role="button" data-toggle="popover" data-trigger="focus" data-placement="right" data-content="{{#each userIds}}<img class=&quot;pull-left card-icons user-img-sml img-circle&quot; src=&quot;{{imageUrl}}&quot;>{{name}}{{/each}}"><span class="label label-primary label-as-badge">{{userIds.length}} Users</span></a></small>
+              <small class="pull-right card-tag-badge"><a tabindex="0" role="button" data-toggle="popover" data-trigger="focus" data-placement="left" data-content="{{#each userIds}}<img class=&quot;pull-left card-icons user-img-sml img-circle&quot; src=&quot;{{imageUrl}}&quot;>{{name}}</br>{{/each}}"><span class="label label-primary label-as-badge">{{userIds.length}} Users</span></a></small>
             {{/compare}}
           </div>
         </div>
@@ -98,7 +98,7 @@
                 <img class="pull-right card-icons user-img-sml img-circle" data-toggle="tooltip" title="{{name}}" src="{{imageUrl}}">
               {{/each}}
             {{else}}
-              <small class="pull-right card-tag-badge"><a tabindex="0" role="button" data-toggle="popover" data-trigger="focus" data-placement="left" data-content="{{#each userIds}}<img class=&quot;pull-left card-icons user-img-sml img-circle&quot; src=&quot;{{imageUrl}}&quot;>{{name}}{{/each}}"><span class="label label-primary label-as-badge">{{userIds.length}} Users</span></a></small>
+              <small class="pull-right card-tag-badge"><a tabindex="0" role="button" data-toggle="popover" data-trigger="focus" data-placement="left" data-content="{{#each userIds}}<img class=&quot;pull-left card-icons user-img-sml img-circle&quot; src=&quot;{{imageUrl}}&quot;>{{name}}</br>{{/each}}"><span class="label label-primary label-as-badge">{{userIds.length}} Users</span></a></small>
             {{/compare}}
           </div>
         </div>
