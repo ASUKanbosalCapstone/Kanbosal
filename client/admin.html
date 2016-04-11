@@ -79,7 +79,7 @@
                   <label class="col-xs-4 control-label" for="stageInput">Department</label>
                   <div class="col-xs-8">
                     <select id="stageInput" class="form-control" name="permissions.stage" required>
-                      <option>Select a department.</option>
+                      <option></option>
                       <option value="0">Research</option>
                       <option value="1">Internal Review</option>
                       <option value="2">ASU Review</option>
@@ -90,7 +90,7 @@
                   <label class="col-xs-4 control-label" for="levelInput">Permission Level</label>
                   <div class="col-xs-8">
                     <select id="levelInput" class="form-control" name="permissions.level" required>
-                      <option>Select a permission level.</option>
+                      <option></option>
                       <option value="0">Principle User</option>
                       <option value="1">Regular User</option>
                     </select>
@@ -98,16 +98,25 @@
                 </div>
                 <div class="form-group">
                   <label class="col-xs-4 control-label">
-                    <small><a tabindex="0" class="fa fa-fw fa-question-circle" role="button" data-toggle="popover" data-trigger="focus" data-placement="bottom" title="Need some help selecting?" data-content="<small>To select multiple grants, hold down ctrl (win) or cmd (mac) and click on the grants, or simply hold down the left mouse button on one grant, and drag across the desired set.</small>"></a></small>&nbsp; Grant(s)
+                    <a tabindex="0" class="fa fa-fw fa-info-circle" role="button" data-toggle="popover" data-trigger="focus" data-placement="bottom" title="Need some help?" data-content="<small>Assign a grant to the user by selecting from the dropdown, and clicking the <i class=&quot;fa fa-plus&quot;></i> button. Unassign a grant by highlighting a one or more in the list, and click the <i class=&quot;fa fa-minus&quot;></i> button.</small>"></a> Grant(s)
                   </label>
                   <div class="col-xs-8">
-                    <select multiple class="form-control" id="select-grants" name="grantIds" required></select>
+                    <select class="form-control" id="selectGrantsConfirm" name="grantIds">
+                      <option></option>
+                    </select>
+                    <button type="button" class="btn btn-secondary pull-right" onclick="addGrant('Confirm')"><i class="fa fa-plus"></i></button>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <div class="col-xs-8 col-xs-offset-4">
+                    <select multiple class="form-control" id="selectedGrantsConfirm" name="grantIds" required></select>
+                    <button type="button" class="btn btn-secondary pull-right" onclick="removeGrant('Confirm')" style="height:82px;"><i class="fa fa-minus"></i></button>
                   </div>
                 </div>
               </div>
               <div class="modal-footer">
                 <button type="button" onclick="cancel('#confirmUserForm')" class="btn btn-primary" data-dismiss="modal" aria-label="Close">Cancel</button>
-                <button type="submit" class="btn btn-gold">Confirm</button>
+                <button type="submit" onclick="selectAllGrants('Confirm')" class="btn btn-gold">Confirm</button>
               </div>
             </form>
           </div>
@@ -141,26 +150,26 @@
                 </div>
                 <div class="form-group">
                   <label class="col-xs-4 control-label">
-                    <a tabindex="0" class="fa fa-fw fa-info-circle" role="button" data-toggle="popover" data-trigger="focus" data-placement="bottom" title="Need some help?" data-content="<small>Assign a grant to the user by selecting from the dropdown, and clicking the <i class=&quot;fa fa-plus&quot;></i> button. Unassign a grant by selecting a one or more in the list, and click the <i class=&quot;fa fa-minus&quot;></i> button.</small>"></a> Grant(s)
+                    <a tabindex="0" class="fa fa-fw fa-info-circle" role="button" data-toggle="popover" data-trigger="focus" data-placement="bottom" title="Need some help?" data-content="<small>Assign a grant to the user by selecting from the dropdown, and clicking the <i class=&quot;fa fa-plus&quot;></i> button. Unassign a grant by highlighting a one or more in the list, and click the <i class=&quot;fa fa-minus&quot;></i> button.</small>"></a> Grant(s)
                   </label>
                   <div class="col-xs-8">
                     <select class="form-control" id="selectGrantsEdit" name="grantIds">
                       <option></option>
                     </select>
-                    <button type="button" class="btn btn-secondary pull-right" onclick="addGrant()"><i class="fa fa-plus"></i></button>
+                    <button type="button" class="btn btn-secondary pull-right" onclick="addGrant('Edit')"><i class="fa fa-plus"></i></button>
                   </div>
                 </div>
                 <div class="form-group">
                   <div class="col-xs-8 col-xs-offset-4">
                     <select multiple class="form-control" id="selectedGrantsEdit" name="grantIds" required></select>
-                    <button type="button" class="btn btn-secondary pull-right" onclick="removeGrant()" style="height:82px;"><i class="fa fa-minus"></i></button>
+                    <button type="button" class="btn btn-secondary pull-right" onclick="removeGrant('Edit')" style="height:82px;"><i class="fa fa-minus"></i></button>
                   </div>
                 </div>
               </div>
               <div class="modal-footer">
                 <button type="button" id="editDeactivateBtn" class="btn btn-primary pull-left" data-toggle="modal" data-target="#deactivateUserModal" title="Deactivate user."><i class="fa fa-user-times"></i></button>
                 <button type="button" onclick="cancel('#editUserForm')" class="btn btn-primary" data-dismiss="modal" aria-label="Close">Cancel</button>
-                <button type="submit" onclick="selectAllGrants()" class="btn btn-gold">Confirm Changes</button>
+                <button type="submit" onclick="selectAllGrants('Edit')" class="btn btn-gold">Confirm Changes</button>
               </div>
             </form>
           </div>

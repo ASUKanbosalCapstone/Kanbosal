@@ -31,7 +31,7 @@
     <div class="row-height">
       {{#each departments }}
       <div class="col-xs-4 col-xs-height">
-        <div id="{{ userDeptId }}" class="panel panel-default inside-full-height">
+        <div id="{{ userDeptId }}" class="panel panel-default inside-full-height dept-users">
           <div class="panel-heading">
             <h4 class="panel-title overflow-ellipses">{{ dept }} Department</h4>
           </div>
@@ -53,8 +53,8 @@
             {{/compare}}
             {{#each users}}
             <div class="list-group-item">
-              <img class="img-responsive img-rounded" style="max-width:22px; display:inline-block;" src="{{ imageUrl }}">
-              <h5 class="overflow-ellipses" style="width:calc(100% - 110px)!important; vertical-align:bottom; margin:0; line-height:22px;">{{ name }} <small>{{ title }}</small></h5>
+              <img class="img-responsive img-rounded" src="{{ imageUrl }}">
+              <h5 class="overflow-ellipses" style="width:calc(100% - 112px)!important; vertical-align:bottom; margin:0; line-height:22px;">{{ name }} <small>{{ title }}</small></h5>
               <div class="btn-group pull-right">
                 <a class="btn btn-xs btn-primary" href="mailto:{{ email }}" title="Send {{ name }} an email."><i class="fa fa-fw fa-envelope"></i></a>
                 <a class="btn btn-xs btn-primary" href="#" title="Make changes to {{ name }}'s account." data-toggle="modal" data-target="#editUserModal" data-userid="{{ _id }}"><i class="fa fa-fw fa-pencil"></i></a>
@@ -82,11 +82,9 @@
             {{#each inactiveUsers }}
             <div class="col-xs-4 col-md-3">
               <div class="well well-sm">
-                <img class="img-responsive img-rounded pull-left" style="display:inline-block; margin-right:4px;" src="{{ imageUrl }}">
-                <a class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="Contact by email." href="mailto:{{ email }}"><i class="fa fa-fw fa-envelope"></i></a>
-                <span data-toggle="tooltip" data-placement="top" title="Deny user."><a class="btn btn-primary" data-toggle="modal" data-target="#denyUserModal" title="Deny user access." data-userid="{{ _id }}"><i class="fa fa-fw fa-times"></i></a></span>
-                <span data-toggle="tooltip" data-placement="top" title="Confirm identity."><a class="btn btn-primary" data-toggle="modal" data-target="#confirmUserModal" title="Confirm identity." data-userid="{{ _id }}"><i class="fa fa-fw fa-check"></i></a></span>
-                <br><strong><small>{{ name }}</small></strong>
+                <img class="img-responsive img-rounded pull-left" src="{{ imageUrl }}">
+                <a class="btn btn-xs btn-primary pull-right" data-toggle="modal" data-target="#confirmUserModal" title="Reactivate user." data-userid="{{ _id }}"><i class="fa fa-fw fa-user-plus"></i></a>
+                <h5 class="overflow-ellipses" style="width:calc(100% - 55px)!important; vertical-align:bottom; margin:0; line-height:22px;">{{ name }}</h5>
               </div>
             </div>
             {{/each}}

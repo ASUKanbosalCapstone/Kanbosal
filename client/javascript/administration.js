@@ -46,36 +46,36 @@ var initEditUser = function (userId, callback) {
   callback(userId, jsonObj);
 };
 
-var selectAllGrants = function () {
-  $('#selectedGrantsEdit option').attr('selected', 'selected');
+var selectAllGrants = function (action) {
+  $('#selectedGrants' + action + ' option').attr('selected', 'selected');
   console.log('it tried');
 };
 
-var addGrant = function () {
-  var toAdd = $('#selectGrantsEdit').serializeArray();
+var addGrant = function (action) {
+  var toAdd = $('#selectGrants' + action).serializeArray();
   var grantIndex = function (id) {
     for (i in grants)
       if (grants[i]._id === id)
         return i;
   };
   
-  if ($('#selectedGrantsEdit').find('option[value="' + toAdd[0].value + '"]').length === 0)
+  if ($('#selectedGrants' + action).find('option[value="' + toAdd[0].value + '"]').length === 0)
     $('<option/>', {
       value: grants[grantIndex(toAdd[0].value)]._id,
       text: grants[grantIndex(toAdd[0].value)].title
-    }).appendTo('#selectedGrantsEdit');
+    }).appendTo('#selectedGrants' + action);
 
-  $('#selectGrantsEdit').val('');
+  $('#selectGrants' + action).val('');
 };
 
-var removeGrant = function () {
-  var toRemove = $('#selectedGrantsEdit').serializeArray();
+var removeGrant = function (action) {
+  var toRemove = $('#selectedGrants' + action).serializeArray();
 
   for (i in toRemove)
-    $('#selectedGrantsEdit option[value="' + toRemove[i].value + '"]').remove();
+    $('#selectedGrants' + action + ' option[value="' + toRemove[i].value + '"]').remove();
 
   // fix for bug (when testing in chrome) removing grants will not detect remaining options
-  $('#selectedGrantsEdit').html($('#selectedGrantsEdit').html());
+  $('#selectedGrants' + action).html($('#selectedGrants' + action).html());
 };
 
 var cancel = function (modalId) {
@@ -131,6 +131,14 @@ $(function () {
     var button = $(event.relatedTarget); // Button that triggered the modal
     var userid = button.data('userid'); // Extract info from data-* attributes
     var modal = $(this);
+
+    $.ajax({
+      url: '/users/' + userid,
+      type: 'GET',
+      dataType: 'json'
+    }).done(function(data) {
+      modal.find('#confirmModalName').html(data.name);
+    });
 
     $('#confirmUserForm').submit(function (event) {
       event.preventDefault();

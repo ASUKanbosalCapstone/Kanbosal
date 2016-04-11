@@ -549,11 +549,18 @@ footer h2 {
     width: 100%;
 }
 
-#pendingUsers * img, #inactiveUsers * img {
+#pendingUsers * img {
     max-width: 50px;
 }
 
-#selectGrantsEdit, #selectedGrantsEdit {
+#inactiveUsers * img, .dept-users * img {
+    max-width: 22px;
+    display: inline-block;
+    margin-right: 4px;
+}
+
+#selectGrantsEdit, #selectedGrantsEdit,
+#selectGrantsConfirm, #selectedGrantsConfirm {
   display: inline-block!important;
   width: calc(100% - 44px)!important;
   width: -moz-calc(100% - 44px)!important;
