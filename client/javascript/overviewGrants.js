@@ -21,20 +21,6 @@ $(function() {
     }
   });
 
-  $('#grant-descr-editor').markdown({
-    resize: 'vertical',
-    iconlibrary: 'fa',
-    hiddenButtons: ['cmdPreview'],
-    fullscreen: {
-      enable: false
-    },
-    footer: '<small><div id="grant-descr-editor-ftr"></div></small>',
-    onChange: function(e) {
-      var content = e.parseContent();
-      $('#grant-descr-editor-ftr').show().html(content);
-    }
-  });
-
   $('#grantGen * [data-toggle="popover"]').popover({
     container:'body',
     html : true
