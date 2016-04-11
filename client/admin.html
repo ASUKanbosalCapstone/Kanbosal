@@ -53,7 +53,7 @@
       <div id="confirmUserModal" class="modal fade">
         <div class="modal-dialog" role="document">
           <div class="modal-content">
-            <div class="modal-header"><h4>New User Confirmation</h4></div>
+            <div class="modal-header"><h4>New User Confirmation for <span id="confirmModalName"></span></h4></div>
             <form id="confirmUserForm">
               <div class="modal-body form-horizontal">
                 <div class="form-group">
@@ -63,7 +63,7 @@
                   <label class="col-xs-4 control-label" for="stageInput">Department</label>
                   <div class="col-xs-8">
                     <select id="stageInput" class="form-control" name="permissions.stage" required>
-                      <option></option>
+                      <option>Select a department.</option>
                       <option value="0">Research</option>
                       <option value="1">Internal Review</option>
                       <option value="2">ASU Review</option>
@@ -74,7 +74,7 @@
                   <label class="col-xs-4 control-label" for="levelInput">Permission Level</label>
                   <div class="col-xs-8">
                     <select id="levelInput" class="form-control" name="permissions.level" required>
-                      <option></option>
+                      <option>Select a permission level.</option>
                       <option value="0">Principle User</option>
                       <option value="1">Regular User</option>
                     </select>
@@ -90,7 +90,7 @@
                 </div>
               </div>
               <div class="modal-footer">
-                <button type="button" class="btn btn-primary" data-dismiss="modal" aria-label="Close">Cancel</button>
+                <button type="button" onclick="cancel('#confirmUserForm')" class="btn btn-primary" data-dismiss="modal" aria-label="Close">Cancel</button>
                 <button type="submit" class="btn btn-gold">Confirm</button>
               </div>
             </form>
@@ -101,14 +101,13 @@
       <div id="editUserModal" class="modal fade">
         <div class="modal-dialog" role="document">
           <div class="modal-content">
-            <div class="modal-header"><h4>Edit User Settings</h4></div>
-            <form id="confirmUserForm">
+            <div class="modal-header"><h4>Edit User Settings for <span id="editModalName"></span></h4></div>
+            <form id="editUserForm">
               <div class="modal-body form-horizontal">
                 <div class="form-group">
                   <label class="col-xs-4 control-label" for="stageInput">Department</label>
                   <div class="col-xs-8">
-                    <select id="stageInput" class="form-control" name="permissions.stage" required>
-                      <option></option>
+                    <select id="stageInputEdit" class="form-control" name="permissions.stage" required>
                       <option value="0">Research</option>
                       <option value="1">Internal Review</option>
                       <option value="2">ASU Review</option>
@@ -118,8 +117,7 @@
                 <div class="form-group">
                   <label class="col-xs-4 control-label" for="levelInput">Permission Level</label>
                   <div class="col-xs-8">
-                    <select id="levelInput" class="form-control" name="permissions.level" required>
-                      <option></option>
+                    <select id="levelInputEdit" class="form-control" name="permissions.level" required>
                       <option value="0">Principle User</option>
                       <option value="1">Regular User</option>
                     </select>
@@ -127,16 +125,25 @@
                 </div>
                 <div class="form-group">
                   <label class="col-xs-4 control-label">
-                    <small><a tabindex="0" class="fa fa-fw fa-question-circle" role="button" data-toggle="popover" data-trigger="focus" data-placement="bottom" title="Need some help selecting?" data-content="<small>To select multiple grants, hold down ctrl (win) or cmd (mac) and click on the grants, or simply hold down the left mouse button on one grant, and drag across the desired set.</small>"></a></small>&nbsp; Grant(s)
+                    <a tabindex="0" class="fa fa-fw fa-info-circle" role="button" data-toggle="popover" data-trigger="focus" data-placement="bottom" title="Need some help?" data-content="<small>Assign a grant to the user by selecting from the dropdown, and clicking the <i class=&quot;fa fa-plus&quot;></i> button. Unassign a grant by selecting a one or more in the list, and click the <i class=&quot;fa fa-minus&quot;></i> button.</small>"></a> Grant(s)
                   </label>
                   <div class="col-xs-8">
-                    <select class="form-control" id="select-grants" name="grantIds" required></select>
+                    <select class="form-control" id="selectGrantsEdit" name="grantIds">
+                      <option></option>
+                    </select>
+                    <button type="button" class="btn btn-secondary pull-right" onclick="addGrant()"><i class="fa fa-plus"></i></button>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <div class="col-xs-8 col-xs-offset-4">
+                    <select multiple class="form-control" id="selectedGrantsEdit" name="grantIds" required></select>
+                    <button type="button" class="btn btn-secondary pull-right" onclick="removeGrant()" style="height:82px;"><i class="fa fa-minus"></i></button>
                   </div>
                 </div>
               </div>
               <div class="modal-footer">
-                <button type="button" class="btn btn-primary" data-dismiss="modal" aria-label="Close">Cancel</button>
-                <button type="submit" class="btn btn-gold">Confirm</button>
+                <button type="button" onclick="cancel('#editUserForm')" class="btn btn-primary" data-dismiss="modal" aria-label="Close">Cancel</button>
+                <button type="submit" onclick="selectAllGrants()" class="btn btn-gold">Confirm Changes</button>
               </div>
             </form>
           </div>
