@@ -1,0 +1,97 @@
+<div class="container-fluid">
+  {{#if pendingUsers }}
+  <div id="pendingUsersRow" class="row">
+    <div class="col-xs-12">
+      <div id="pendingUsers" class="panel panel-default">
+        <div class="panel-heading">
+          <h4 class="panel-title overflow-ellipses">Pending User Confirmations</h4>
+        </div>
+        <div class="panel-body">
+          <div class="row">
+            {{#each pendingUsers }}
+            <div class="col-xs-4 col-md-3">
+              <div class="well well-sm clearfix">
+                <img class="img-responsive img-rounded pull-left" style="display:inline-block; margin-right:5px;" src="{{ imageUrl }}">
+                <div class="pull-right" style="height:50px; display:block;">
+                  <a class="btn btn-xs btn-block btn-primary" data-toggle="modal" data-target="#denyUserModal" title="Deny user access." data-userid="{{ _id }}"><i class="fa fa-fw fa-times"></i></a></span>
+                  <a class="btn btn-xs btn-block btn-primary" data-toggle="modal" data-target="#confirmUserModal" title="Confirm identity." data-userid="{{ _id }}"><i class="fa fa-fw fa-check"></i></a></span>
+                </div>
+                <h5 class="overflow-ellipses" style="margin:0; vertical-align:bottom; width:calc(100% - 90px)!important;">{{ name }}</h5>
+                <h5 class="overflow-ellipses" style="margin:0; vertical-align:bottom; width:calc(100% - 90px)!important;"><small><a title="Contact by email if further verification is required." href="mailto:{{ email }}"><i class="fa fa-fw fa-envelope"></i> {{ email }}</a></small></h5>
+              </div>
+            </div>
+            {{/each}}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  {{/if}}
+  <div class="row">
+    <div class="row-height">
+      {{#each departments }}
+      <div class="col-xs-4 col-xs-height">
+        <div id="{{ userDeptId }}" class="panel panel-default inside-full-height dept-users">
+          <div class="panel-heading">
+            <h4 class="panel-title overflow-ellipses">{{ dept }} Department</h4>
+          </div>
+          {{#if description }}
+          {{!-- description is hard-coded in the server endpoint --}}
+          <div class="panel-body">
+            <div><small>{{{ description }}}</small></div>
+          </div>
+          {{/if}}
+          <div class="list-group">
+            {{#compare users.length "===" 0 }}
+            <div class="list-group-item">
+              <div class="alertEmpty" role="alert">
+                <div class="alert-notify alert alert-info">
+                  <h5 class="overflow-ellipses"><i class="fa fa-user-times"></i> No users assigned.</h5>
+                </div>
+              </div>
+            </div>
+            {{/compare}}
+            {{#each users}}
+            <div class="list-group-item">
+              <img class="img-responsive img-rounded" src="{{ imageUrl }}">
+              <h5 class="overflow-ellipses" style="width:calc(100% - 112px)!important; vertical-align:bottom; margin:0; line-height:22px;">{{ name }} <small>{{ title }}</small></h5>
+              <div class="btn-group pull-right">
+                <a class="btn btn-xs btn-primary" href="mailto:{{ email }}" title="Send {{ name }} an email."><i class="fa fa-fw fa-envelope"></i></a>
+                <a class="btn btn-xs btn-primary" href="#" title="Make changes to {{ name }}'s account." data-toggle="modal" data-target="#editUserModal" data-userid="{{ _id }}"><i class="fa fa-fw fa-pencil"></i></a>
+              </div>
+              {{#compare permissions.level "===" 1}}
+              <div class="btn btn-xs btn-default pull-right" title="{{ name }} is an administrator."><span class="fa fa-rotate-90"><i class="fa fa-flip-vertical fa-key"></i></span></div>
+              {{/compare}}
+            </div>
+            {{/each}}
+          </div>
+        </div>
+      </div>
+      {{/each}}
+    </div>
+  </div>
+  {{#if inactiveUsers }}
+  <div class="row">
+    <div class="col-xs-12">
+      <div id="inactiveUsers" class="panel panel-default">
+        <div class="panel-heading">
+          <h4 class="panel-title overflow-ellipses">Deactivated / Denied Users</h4>
+        </div>
+        <div class="panel-body">
+          <div class="row">
+            {{#each inactiveUsers }}
+            <div class="col-xs-4 col-md-3">
+              <div class="well well-sm">
+                <img class="img-responsive img-rounded pull-left" src="{{ imageUrl }}">
+                <a class="btn btn-xs btn-primary pull-right" data-toggle="modal" data-target="#confirmUserModal" title="Reactivate user." data-userid="{{ _id }}"><i class="fa fa-fw fa-user-plus"></i></a>
+                <h5 class="overflow-ellipses" style="width:calc(100% - 55px)!important; vertical-align:bottom; margin:0; line-height:22px;">{{ name }}</h5>
+              </div>
+            </div>
+            {{/each}}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  {{/if}}
+</div>

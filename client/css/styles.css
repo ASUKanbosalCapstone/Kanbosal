@@ -33,23 +33,49 @@ h6 { font-size: 16px; font-style: italic; }
 }
 
 /* bootstrap style mods begin */
-.btn-primary {
-    background-color: #a30046;
-    border: 1px solid transparent;
+.btn:focus, .btn:active:focus {
+    outline: 0 none!important;
+}
+.btn:hover, .btn:focus {
+    border: 1px solid transparent!important;
+    color: #505050;
+    text-decoration: none!important;
 }
 
-.btn-primary:hover {
-    background-color: #d13252;
-    border: 1px solid transparent;
+.btn-primary { 
+    color: #ffffff;
+    background-color: #a30046!important;
+}
+.btn-primary:hover, .btn-primary:focus, .btn-primary:active { 
+    color: #ffffff;
+    background-color: #d13252!important;
 }
 
-.btn-gold {
+.btn-gold { 
     color: #2a2a2a;
-    background-color: #ffc425;
+    background-color: #ffc425!important;
+}
+.btn-gold:hover, .btn-gold:focus, .btn-gold:active { 
+    color: #2a2a2a;
+    background-color: #ffcf54!important;
 }
 
-.btn-gold:hover {
-    background-color: #ffcf54;
+.btn-blue { 
+    color: #ffffff;
+    background-color: #009cdb!important;
+}
+.btn-blue:hover, .btn-blue:focus, .btn-blue:active { 
+    color: #ffffff;
+    background-color: #0aa9fc!important;
+}
+
+.btn-secondary { 
+    color: #2a2a2a;
+    background-color: #dbdbdb!important;
+}
+.btn-secondary:hover, .btn-secondary:focus, .btn-secondary:active { 
+    color: #2a2a2a;
+    background-color: #f2f2f2!important;
 }
 
 /* asu secondary color */
@@ -90,7 +116,7 @@ h6 { font-size: 16px; font-style: italic; }
 .navbar * a, #sidebar * a, .btn,
 .navbar * a:hover, #sidebar * a:hover, .btn:hover,
 .fa, .glyphicon, .fa:hover, .glyphicon:hover {
-    border-bottom: 0;
+    border: 1px solid transparent;
 }
 
 a, a:hover,
@@ -524,18 +550,20 @@ footer h2 {
     width: 100%;
 }
 
-#pendingUsers * img, #inactiveUsers * img {
+#pendingUsers * img {
     max-width: 50px;
 }
 
-@media (min-width: 990px) {
-  #pendingUsers * img, #inactiveUsers * img {
-      max-width: 33px;
-  }
+#inactiveUsers * img, .dept-users * img {
+    max-width: 22px;
+    display: inline-block;
+    margin-right: 4px;
 }
 
-@media (min-width: 1100px) {
-  #pendingUsers * img, #inactiveUsers * img {
-      max-width: 50px;
-  }
+#selectGrantsEdit, #selectedGrantsEdit,
+#selectGrantsConfirm, #selectedGrantsConfirm {
+  display: inline-block!important;
+  width: calc(100% - 44px)!important;
+  width: -moz-calc(100% - 44px)!important;
+  width: -webkit-calc(100% - 44px)!important;
 }

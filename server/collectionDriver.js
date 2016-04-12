@@ -10,12 +10,40 @@ CollectionDriver.prototype.findAll = function(collectionName, callback) {
     db.collection(collectionName, function(error, collection) {
         if (error)
             callback(error);
+        else if (collectionName === 'grants')
+            collection.find({}, {sort: 'title'}).toArray(function(error, results) {
+                if (error) callback(error);
+                else callback(null, results);
+            });
         else
             collection.find().toArray(function(error, results) {
-                if (error)
-                    callback(error);
-                else
-                    callback(null, results);
+                if (error) callback(error);
+                else callback(null, results);
+            });
+    });
+};
+
+/* Returns all documents in the collectionName in results. */
+CollectionDriver.prototype.findSome = function(collectionName, query, callback) {
+    db.collection(collectionName, function(error, collection) {
+        if (query.hasOwnProperty('permissions.stage'))  // uri only reads string values
+            query['permissions.stage'] = parseInt(query['permissions.stage'], 10);
+
+        if (error) callback(error);
+        else if (query.hasOwnProperty('email'))     // unique queries, add 'or' op if needed
+            collection.findOne(query, function (error, results) {
+                if (error) callback(error);
+                else callback(null, results);
+            });
+        else if (collectionName === 'users')        // sort users by name
+            collection.find(query, { sort: 'name' }).toArray(function(error, results) {
+                if (error) callback(error);
+                else callback(null, results);
+            });
+        else                                        // query for sets
+            collection.find(query).toArray(function(error, results) {
+                if (error) callback(error);
+                else callback(null, results);
             });
     });
 };
@@ -39,26 +67,6 @@ CollectionDriver.prototype.get = function(collectionName, id, callback) {
                 });
             }
         }
-    });
-};
-
-/* Returns the user document with the provided email. */
-CollectionDriver.prototype.getEmail = function(email, callback) {
-    db.collection("users").findOne({'email': email}, function(error, results) {
-        if (error)
-            callback(error);
-        else
-            callback(null, results);
-    });
-};
-
-/* Returns users by their department*/
-CollectionDriver.prototype.getUsersByDept = function(data, callback){
-    db.collection("users").find(data).toArray(function (error, users) {
-        if (error)
-            callback(error);
-        else
-            callback(null, users);
     });
 };
 
