@@ -59,7 +59,7 @@
                 <a class="btn btn-xs btn-primary" href="mailto:{{ email }}" title="Send {{ name }} an email."><i class="fa fa-fw fa-envelope"></i></a>
                 <a class="btn btn-xs btn-primary" href="#" title="Make changes to {{ name }}'s account." data-toggle="modal" data-target="#editUserModal" data-userid="{{ _id }}"><i class="fa fa-fw fa-pencil"></i></a>
               </div>
-              {{#compare permissions.level "===" 0}}
+              {{#compare permissions.level "===" 1}}
               <div class="btn btn-xs btn-default pull-right" title="{{ name }} is an administrator."><span class="fa fa-rotate-90"><i class="fa fa-flip-vertical fa-key"></i></span></div>
               {{/compare}}
             </div>
