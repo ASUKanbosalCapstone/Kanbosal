@@ -11,7 +11,7 @@ function onSignIn(googleUser) {
       txtsize: 63,
       bg: '000000'.replace(/0/g,function(){return (~~(Math.random()*16)).toString(16);}),  // generate random colors 
       txtclr: 'ffffff',
-      txt: data.name.substring(0, 1),
+      txt: profile.getName().substring(0, 1),
       w: 96,
       h: 96,
     };
