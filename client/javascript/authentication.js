@@ -7,7 +7,15 @@ function onSignIn(googleUser) {
   $.getJSON('/login', {
     email: profile.getEmail()
   }, function(data) {
-    console.log('before: ' + data);
+    var imageGenParams = {
+      txtsize: 63,
+      bg: '000000'.replace(/0/g,function(){return (~~(Math.random()*16)).toString(16);}),  // generate random colors 
+      txtclr: 'ffffff',
+      txt: data.name.substring(0, 1),
+      w: 96,
+      h: 96,
+    };
+
     // on success, check if user exists. yes: check if confirmed, then redirect; no: make new user
     if (data) {
       if (data.permissions.stage === -1) {
@@ -31,7 +39,7 @@ function onSignIn(googleUser) {
           type: 'POST',
           contentType: "application/json",
           data: JSON.stringify({
-            $set: { 'imageUrl': profile.getImageUrl() }
+            $set: { 'imageUrl': profile.getImageUrl() || 'https://placeholdit.imgix.net/~text?' + $.param(imageGenParams) }
           }),
           success: function () {
             window.location.href = "overview";
@@ -45,7 +53,7 @@ function onSignIn(googleUser) {
       var newUser = {
         "name" : profile.getName(),
         "email" : profile.getEmail(),
-        "imageUrl" : profile.getImageUrl(),
+        "imageUrl" : profile.getImageUrl() || 'https://placeholdit.imgix.net/~text?' + $.param(imageGenParams),
         "title" : "",
         "permissions" : {
           "level" : -1,
