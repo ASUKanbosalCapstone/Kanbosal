@@ -3,6 +3,7 @@ var cardTemplate;
 var modalTemplate;
 var newCardTemplate;
 var cardGenInfo;
+var currentCard = {};
 var parser = new DOMParser();
 
 var progressBar = {
@@ -15,9 +16,29 @@ var totalCards = function(cards) {
 
 var calculateProgress = function(cards) {
   progressBar.progress = (cards.complete.length + 0.5 * cards.inProgress.length) / totalCards(cards) * 100;
-  return progressBar
+  return progressBar;
 }
 
+/* Sets up the cards returned upon page load */
+var setupCards = function(cards) {
+  convertDates(cards.toDo);
+  convertDates(cards.inProgress);
+  convertDates(cards.complete);
+
+  populateUsers(cards.toDo);
+  populateUsers(cards.inProgress);
+  populateUsers(cards.complete);
+}
+
+/* Converts card's timeLastEdit to equivalent local time */
+var convertDates = function(cards) {
+  for (var i = 0; i < cards.length; i++) {
+    var date = new Date(cards[i].timeLastEdit);
+    cards[i].timeLastEdit = date.toLocaleString();
+  } 
+}
+
+/* Populates the cards with user images and names */
 var populateUsers = function(cards) {
   for(var i = 0; i < cards.length; i++) {
     for(var j = 0; j < cards[i].userIds.length; j++) {
@@ -32,6 +53,17 @@ var populateUsers = function(cards) {
       });
     }
   }
+}
+
+/* Checks to see if any changes have occured in the card displayed in the modal */
+var isCardChanged = function(card) {
+  if (card.title != currentCard.title)
+    return true;
+  if (card.notes != currentCard.notes)
+    return true;
+  if (card.documentUrl != currentCard.documentUrl)
+    return true;
+  return false;
 }
 
 var modifyCardMovement = function(user, cards)
@@ -95,14 +127,10 @@ $.ajax({
     var user = detailView.user;
     var cards = detailView.cards;
 
+    setupCards(cards);
     loadNavbar(user);
 
-    populateUsers(cards.toDo);
-    populateUsers(cards.inProgress);
-    populateUsers(cards.complete);
-
     modifyCardMovement(user, cards);
-
 
     // Updates the progress bar
     if (cards) {
@@ -216,26 +244,35 @@ $(function() {
     });
   });
 
-  // Updates the card whenever the modal is closed
-  $(".currentCard").on("hidden.bs.modal", function () {
-    var cardId = $(this).attr("id");
-    var titleToUpdate = $(this).find(".card-title").val();
-    var notesToUpdate = $(this).find(".card-notes").html();
-    var urlToUpdate = $(this).find(".card-doc-link").val();
-    var updateParams = {$set: {title: titleToUpdate, notes: notesToUpdate, documentUrl: urlToUpdate}};
+  // Stores card info to check for changes against
+  $('.currentCard').on('shown.bs.modal', function() {
+    currentCard.title = $(this).find('.card-title').val();
+    currentCard.notes = $(this).find('.card-notes').summernote('code');
+    currentCard.documentUrl = $(this).find('.card-doc-link').val();
+  });
 
-    $.ajax({
-      url: "/cards/" + cardId,
-      type: "POST",
-      data: JSON.stringify(updateParams),
-      contentType: "application/json",
-      success: function() {
-        window.location.reload(true);
-      },
-      error: function(data) {
-        var test = data;
-      }
-    });
+  // Updates the card whenever the modal is closed
+  $('.currentCard').on('hidden.bs.modal', function () {
+    var card = {
+      id: $(this).attr('id'),
+      title: $(this).find('.card-title').val(),
+      notes: $(this).find('.card-notes').summernote('code'),
+      documentUrl: $(this).find('.card-doc-link').val()
+    };
+
+    if (isCardChanged(card)) {
+      var updateParams = {$set: {title: card.title, notes: card.notes, documentUrl: card.documentUrl}};
+
+      $.ajax({
+        url: '/cards/' + card.id,
+        type: 'POST',
+        data: JSON.stringify(updateParams),
+        contentType: 'application/json',
+        success: function() {
+          window.location.reload(true);
+        }
+      });
+    }
   });
 
   // Removes both modals if modalDelete gets hidden
