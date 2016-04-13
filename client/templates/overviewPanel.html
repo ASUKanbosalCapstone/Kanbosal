@@ -41,7 +41,7 @@
           </div>
           {{#if ../../departmentNames}}
             {{#compare @index '==' ../../currentDepartment}}
-              <a href="/detail/{{../_id}}"><strong>Jump To {{lookup ../../departmentNames @index}}</strong></a>
+              <a onclick="loadDepartment('{{../_id}}', '{{@index}}')"><strong>Jump To {{lookup ../../departmentNames @index}}</strong></a>
             {{/compare}}
             {{#compare @index '<=' 3}}
               {{#compare @index '!=' ../../currentDepartment}}
