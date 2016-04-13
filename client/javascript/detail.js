@@ -132,6 +132,15 @@ $.ajax({
 
     modifyCardMovement(user, cards);
 
+    var departmentName = getCurrentDepartmentName(user);
+
+    var detailGrant = '<h4>' + departmentName + '</h4>';
+    var detailDepartment = '<p> Grant Name </p>';
+
+    $('#detail-grant').html(detailGrant);
+    $('#detail-department').html(detailDepartment);
+
+
     // Updates the progress bar
     if (cards) {
       $.ajax({
@@ -363,5 +372,20 @@ function displayToDatabaseColumnName(columnName)
       return "inProgress";
     case "Complete":
       return "complete";
+  }
+}
+
+function getCurrentDepartmentName(user)
+{
+  switch(user.permissions.stage)
+  {
+    case 0:
+      return "Research";
+    case 1:
+      return "Internal";
+    case 2:
+      return "ASU";
+    case 3:
+      return "Complete";
   }
 }

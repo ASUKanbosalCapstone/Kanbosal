@@ -32,6 +32,12 @@ h6 { font-size: 16px; font-style: italic; }
     background-color: #353535;
 }
 
+.flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 /* bootstrap style mods begin */
 .btn:focus, .btn:active:focus {
     outline: 0 none!important;
