@@ -1,8 +1,8 @@
 <ul class="sidebar-nav">
-  {{#if Grants}}
-    {{#each Grants}}
+  {{#if grants}}
+    {{#each grants}}
       <li>
-        <a href="#">{{Grant_Name}}</a>
+        <a href="detail/{{_id}}">{{title}}</a>
       </li>
     {{/each}}
   {{else}}
