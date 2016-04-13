@@ -27,7 +27,7 @@ var initConfirmUser = function (userId, callback) {
   for (i in formArray)
     if (i < 2)
       jsonObj[formArray[i].name] = parseInt(formArray[i].value, 10);
-    else
+    else if (i > 2)
       jsonObj[formArray[i].name].push(formArray[i].value);
 
   callback(userId, jsonObj);
