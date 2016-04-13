@@ -180,7 +180,7 @@ app.get('/getAdmin', authenticateAdmin, function (req, res) {
             inactiveUsers: []
         }
     };
-    
+
     collectionDriver.findSome('users', { 'permissions.stage': -1 }, setPending);
 
     function setPending(error, results) {
@@ -315,6 +315,10 @@ app.post('/moveCardStage/:id', authenticateAdmin, function(req, res) {
         card.curCol = "toDo";
         card.newStage = stage - 1;
         card.newCol = "complete";
+    }
+
+    if (card.newStage == 3) {
+        card.newCol = "cards"
     }
 
     collectionDriver.moveCard(grantId, card, function(error, results) {
