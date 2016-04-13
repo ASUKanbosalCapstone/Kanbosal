@@ -19,9 +19,8 @@
   <!-- js libraries -->
   <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js" integrity="sha512-K1qjQ+NcF2TYO/eI3M6v8EiNYZfA95pQumfvcVrTHtwQVDG+aHRqLi/ETn2uB+1JqwYqVG3LIvdm9lj6imS/pQ==" crossorigin="anonymous"></script>
-  <script src="/javascript/handlebars-v4.0.4.js"></script>
   <script src="https://apis.google.com/js/platform.js?onload=onLoad" async defer></script>
-  <!-- <script src="/javascript/authentication.js"></script> -->
+  <script src="/javascript/authentication.js"></script>
 
 </head>
 <body>
@@ -32,88 +31,6 @@
       <div id="sidebar" class="toggled"></div>
       <div id="menu-toggle" class="glyphicon glyphicon-menu-right large"></div>
       <div id="contentview" class="container-fluid toggled">
-        <div class="container-fluid">
-          <div id="pendingUsersRow" class="row" hidden>
-            <div class="col-xs-12">
-              <div id="pendingUsers" class="panel panel-default">
-                <div class="panel-heading">
-                  <h4 class="panel-title overflow-ellipses">Pending User Confirmations</h4>
-                </div>
-                <div class="panel-body">
-                  <div class="row"></div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="row-height">
-              <div class="col-xs-4 col-xs-height">
-                <div id="researchUsers" class="panel panel-default inside-full-height">
-                  <div class="panel-heading">
-                    <h4 class="panel-title overflow-ellipses">Research Department</h4>
-                  </div>
-                  <div class="panel-body">
-                    <div>Editing a user is currently non-functional, but will be implemented soon!</div>
-                    <div class="alertEmpty" role="alert" hidden>
-                      <div class="alert-notify alert alert-info">
-                        <h4 class="overflow-ellipses"><i class="fa fa-user-times"></i> No researchers.</h4>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="list-group"></div>
-                </div>
-              </div>
-              <div class="col-xs-4 col-xs-height">
-                <div id="internalUsers" class="panel panel-default inside-full-height">
-                  <div class="panel-heading">
-                    <h4 class="panel-title overflow-ellipses">Internal Review Department</h4>
-                  </div>
-                  <div class="panel-body" hidden>
-                    <div class="alertEmpty" role="alert">
-                      <div class="alert-notify alert alert-info">
-                        <h4 class="overflow-ellipses"><i class="fa fa-user-times"></i> No internal reviewers.</h4>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="list-group"></div>
-                </div>
-              </div>
-              <div class="col-xs-4 col-xs-height">
-                <div id="asuUsers" class="panel panel-default inside-full-height">
-                  <div class="panel-heading">
-                    <h4 class="panel-title overflow-ellipses">ASU Review Department</h4>
-                  </div>
-                  <div class="panel-body" hidden>
-                    <div class="alertEmpty" role="alert">
-                      <div class="alert-notify alert alert-info">
-                        <h4 class="overflow-ellipses"><i class="fa fa-user-times"></i> No asu reviewers.</h4>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="list-group"></div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-xs-12">
-              <div id="inactiveUsers" class="panel panel-default">
-                <div class="panel-heading">
-                  <h4 class="panel-title overflow-ellipses">Deactivated / Denied Users</h4>
-                </div>
-                <div class="panel-body">
-                  <div class="alertEmpty" role="alert" hidden>
-                    <div class="alert-notify alert alert-info">
-                      <h4 class="overflow-ellipses"><i class="fa fa-user-times"></i> No blacklisted users.</h4>
-                      <p>There are no deactivated or denied users. These are accounts that are not allowed access to Kanbosal.</p>
-                    </div>
-                  </div>
-                  <div class="row"></div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
       </div>
 
       <!-- begin : modals -->
@@ -133,10 +50,26 @@
         </div>
       </div>
 
+      <div id="deactivateUserModal" class="modal fade" tabindex="-1" role="dialog" style="z-index:9999999;">
+        <div class="modal-dialog modal-sm" role="document">
+          <div class="modal-content">
+            <div class="modal-body">
+              Are you sure you want to deactivate this user? They will be locked out of Kanbosal.
+            </div>
+            <div class="modal-footer">
+              <div class="row" style="margin-right:-15px;">
+                <div class="col-xs-6"><button type="button" class="btn btn-block btn-primary" data-dismiss="modal" aria-label="Close">Cancel</button></div>
+                <div class="col-xs-6"><button type="button" class="btn btn-block btn-gold">Deactivate</button></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <div id="confirmUserModal" class="modal fade">
         <div class="modal-dialog" role="document">
           <div class="modal-content">
-            <div class="modal-header"><h4>New User Confirmation</h4></div>
+            <div class="modal-header"><h4>New User Confirmation for <span id="confirmModalName"></span></h4></div>
             <form id="confirmUserForm">
               <div class="modal-body form-horizontal">
                 <div class="form-group">
@@ -158,23 +91,85 @@
                   <div class="col-xs-8">
                     <select id="levelInput" class="form-control" name="permissions.level" required>
                       <option></option>
-                      <option value="0">Principle User</option>
-                      <option value="1">Regular User</option>
+                      <option value="0">Regular User</option>
+                      <option value="1">Principle User</option>
                     </select>
                   </div>
                 </div>
                 <div class="form-group">
                   <label class="col-xs-4 control-label">
-                    <small><a tabindex="0" class="fa fa-fw fa-question-circle" role="button" data-toggle="popover" data-trigger="focus" data-placement="bottom" title="Need some help selecting?" data-content="<small>To select multiple grants, hold down ctrl (win) or cmd (mac) and click on the grants, or simply hold down the left mouse button on one grant, and drag across the desired set.</small>"></a></small>&nbsp; Grant(s)
+                    <a tabindex="0" class="fa fa-fw fa-info-circle" role="button" data-toggle="popover" data-trigger="focus" data-placement="bottom" title="Need some help?" data-content="<small>Assign a grant to the user by selecting from the dropdown, and clicking the <i class=&quot;fa fa-plus&quot;></i> button. Unassign a grant by highlighting a one or more in the list, and click the <i class=&quot;fa fa-minus&quot;></i> button.</small>"></a> Grant(s)
                   </label>
                   <div class="col-xs-8">
-                    <select multiple class="form-control" id="select-grants" name="grantIds" required></select>
+                    <select class="form-control" id="selectGrantsConfirm" name="grantIds">
+                      <option></option>
+                    </select>
+                    <button type="button" class="btn btn-secondary pull-right" onclick="addGrant('Confirm')"><i class="fa fa-plus"></i></button>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <div class="col-xs-8 col-xs-offset-4">
+                    <select multiple class="form-control" id="selectedGrantsConfirm" name="grantIds" required></select>
+                    <button type="button" class="btn btn-secondary pull-right" onclick="removeGrant('Confirm')" style="height:82px;"><i class="fa fa-minus"></i></button>
                   </div>
                 </div>
               </div>
               <div class="modal-footer">
-                <button type="button" class="btn btn-primary" data-dismiss="modal" aria-label="Close">Cancel</button>
-                <button type="submit" class="btn btn-gold">Confirm</button>
+                <button type="button" onclick="cancel('#confirmUserForm')" class="btn btn-primary" data-dismiss="modal" aria-label="Close">Cancel</button>
+                <button type="submit" onclick="selectAllGrants('Confirm')" class="btn btn-gold">Confirm</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <div id="editUserModal" class="modal fade">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header"><h4>Edit User Settings for <span id="editModalName"></span></h4></div>
+            <form id="editUserForm">
+              <div class="modal-body form-horizontal">
+                <div class="form-group">
+                  <label class="col-xs-4 control-label" for="stageInput">Department</label>
+                  <div class="col-xs-8">
+                    <select id="stageInputEdit" class="form-control" name="permissions.stage" required>
+                      <option value="0">Research</option>
+                      <option value="1">Internal Review</option>
+                      <option value="2">ASU Review</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-xs-4 control-label" for="levelInput">Permission Level</label>
+                  <div class="col-xs-8">
+                    <select id="levelInputEdit" class="form-control" name="permissions.level" required>
+                      <option value="0">Regular User</option>
+                      <option value="1">Principle User</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-xs-4 control-label">
+                    <a tabindex="0" class="fa fa-fw fa-info-circle" role="button" data-toggle="popover" data-trigger="focus" data-placement="bottom" title="Need some help?" data-content="<small>Assign a grant to the user by selecting from the dropdown, and clicking the <i class=&quot;fa fa-plus&quot;></i> button. Unassign a grant by highlighting a one or more in the list, and click the <i class=&quot;fa fa-minus&quot;></i> button.</small>"></a> Grant(s)
+                  </label>
+                  <div class="col-xs-8">
+                    <select class="form-control" id="selectGrantsEdit" name="grantIds">
+                      <option></option>
+                    </select>
+                    <button type="button" class="btn btn-secondary pull-right" onclick="addGrant('Edit')"><i class="fa fa-plus"></i></button>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <div class="col-xs-8 col-xs-offset-4">
+                    <select multiple class="form-control" id="selectedGrantsEdit" name="grantIds" required></select>
+                    <button type="button" class="btn btn-secondary pull-right" onclick="removeGrant('Edit')" style="height:82px;"><i class="fa fa-minus"></i></button>
+                  </div>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" id="editDeactivateBtn" class="btn btn-primary pull-left" data-toggle="modal" data-target="#deactivateUserModal" title="Deactivate user."><i class="fa fa-user-times"></i></button>
+                <button type="button" onclick="cancel('#editUserForm')" class="btn btn-primary" data-dismiss="modal" aria-label="Close">Cancel</button>
+                <button type="submit" onclick="selectAllGrants('Edit')" class="btn btn-gold">Confirm Changes</button>
               </div>
             </form>
           </div>
@@ -187,6 +182,8 @@
   </div>
 
   <!-- local scripts -->
+  <script src="/javascript/handlebars-v4.0.4.js"></script>
+  <script src="/javascript/helpers.js"></script>
   <script src="/javascript/sidebar.js"></script>
   <script src="/javascript/footer.js"></script>
   <script src="/javascript/navbar.js"></script>

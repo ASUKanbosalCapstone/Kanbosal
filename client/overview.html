@@ -10,8 +10,8 @@
 
   <!-- css libraries -->
   <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet" integrity="sha256-MfvZlkHCEqatNoGiOXveE8FIwMzZg4W85qfrfIFBfYc= sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ==" crossorigin="anonymous">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-markdown/2.10.0/css/bootstrap-markdown.min.css">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+  <link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.1/summernote.css" rel="stylesheet">
 
   <!-- local stylesheets -->
   <link rel="stylesheet" type="text/css" href="css/styles.css">
@@ -19,9 +19,7 @@
   <!-- js libraries -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js" integrity="sha512-K1qjQ+NcF2TYO/eI3M6v8EiNYZfA95pQumfvcVrTHtwQVDG+aHRqLi/ETn2uB+1JqwYqVG3LIvdm9lj6imS/pQ==" crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-markdown/2.10.0/js/bootstrap-markdown.js"></script>
-  <script src="http://www.codingdrama.com/bootstrap-markdown/js/markdown.js"></script>
-  <script src="http://www.codingdrama.com/bootstrap-markdown/js/to-markdown.js"></script>
+  <script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.1/summernote.js"></script>
   <script src="https://apis.google.com/js/platform.js?onload=onLoad" async defer></script>
   <script src="javascript/authentication.js"></script>
 
@@ -52,22 +50,7 @@
                 <small><a tabindex="0" class="fa fa-fw fa-question-circle" role="button" data-toggle="popover" data-trigger="focus" data-placement="right" title="Need help with markdown text?" data-content="Refer to the <a href=&quot;https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet&quot; target=&quot;_blank&quot;>Markdown Cheatsheet</a>. Some syntax may differ. <small class=&quot;text-info&quot;>Tip: add a blank line between sections to appropriately render the markdown.</small>"></a></small>&nbsp; Description
               </label>
               <div class="col-sm-9">
-                <textarea id="grant-descr-editor" class="form-control" rows="5">### Test
-This is an example piece of markdown. To see a preview of the rendered markdown, start typing!
-
-- Lists
-- and
-- stuff</textarea>
-              </div>
-            </div>
-            <div class="form-group">
-              <label class="col-sm-3 control-label" for="grantTemplate">Template</label>
-              <div class="col-sm-9">
-                <select class="form-control" id="grantTemplate">
-                  <option>Template One</option>
-                  <option>Template Two</option>
-                  <option>Custom (blank)</option>
-                </select>
+                <div class="editable"></div>
               </div>
             </div>
           </form>
@@ -127,6 +110,7 @@ This is an example piece of markdown. To see a preview of the rendered markdown,
   <script src="javascript/overviewGrants.js"></script>
   <script src="javascript/navbar.js"></script>
   <script src="javascript/footer.js"></script>
+  <script src="/javascript/summernoteMods.js"></script>
 
 </body>
 </html>

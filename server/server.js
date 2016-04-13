@@ -70,20 +70,15 @@ app.get('/', function(req, res) {
 
 /* GET: find a user by email and set session variable. */
 app.get('/login', function(req, res) {
-    var email = req.query.email;
-
-    if (email) {
-        collectionDriver.getEmail(email, function(error, results) {
-            if (error)
-                res.status(400).send(error);
-            else {
-                req.session.user = results;
-                res.json(results);
-            }
-        });
-    }
-    else
-        res.status(400).send({error: 'bad url', url: req.url});
+    var queryData = req.query;
+    if (!queryData.hasOwnProperty('email')) res.status(400).send({error: 'no email specified'});
+    else collectionDriver.findSome('users', queryData, function(error, results) {
+        if (error) res.status(400).send(error);
+        else {
+            req.session.user = results;
+            res.json(results);
+        }
+    });
 });
 
 /* Deletes the current session variable and redirects to homepage. */
@@ -159,36 +154,87 @@ app.get('/getDetail', authenticate, function(req, res) {
 });
 
 /* Loads admin */
-app.get('/admin', function(req, res) {
+app.get('/admin', authenticateAdmin, function(req, res) {
     res.render('admin.html');
 });
 
-/* GET: returns users with specified stage permissions */
-app.get('/manageUsers', function(req, res) {
-    var query = req.query;
+/* GET: returns users separated by stage */
+app.get('/getAdmin', authenticateAdmin, function (req, res) {
+    var resultData = {
+        user: req.session.user,
+        pageData: {
+            pendingUsers: [],
+            departments: [{
+                dept: 'Research',
+                description: 'The <span class="fa fa-rotate-90"><i class="fa fa-flip-vertical fa-key"></i></span> symbol denotes a principle level member.',
+                users: []
+            }, {
+                dept: 'Internal Review',
+                description: '',
+                users: []
+            }, {
+                dept: 'ASU Review',
+                description: '',
+                users: []
+            }],
+            inactiveUsers: []
+        }
+    };
+    
+    collectionDriver.findSome('users', { 'permissions.stage': -1 }, setPending);
 
-    if (query.hasOwnProperty('permissions.stage'))  // uri only reads string values
-        query['permissions.stage'] = parseInt(query['permissions.stage'], 10);
-
-    collectionDriver.getUsersByDept(query, function(error, results) {
-        if (error)
-            res.status(400).send(error);
-        else
-            res.status(200).send(results);
-    });
+    function setPending(error, results) {
+        if (error) res.status(400).send(error);
+        else {
+            resultData.pageData.pendingUsers = results;
+            collectionDriver.findSome('users', { 'permissions.stage': 0 }, getResearch);
+        }
+    };
+    function getResearch(error, results) {
+        if (error) res.status(400).send(error);
+        else {
+            resultData.pageData.departments[0].users = results;
+            collectionDriver.findSome('users', { 'permissions.stage': 1 }, getInternal);
+        }
+    };
+    function getInternal(error, results) {
+        if (error) res.status(400).send(error);
+        else {
+            resultData.pageData.departments[1].users = results;
+            collectionDriver.findSome('users', { 'permissions.stage': 2 }, getASU);
+        }
+    };
+    function getASU(error, results) {
+        if (error) res.status(400).send(error);
+        else {
+            resultData.pageData.departments[2].users = results;
+            collectionDriver.findSome('users', { 'permissions.stage': -2 }, getInactive);
+        }
+    };
+    function getInactive(error, results) {
+        if (error) res.status(400).send(error);
+        else {
+            resultData.pageData.inactiveUsers = results;
+            res.status(200).send(resultData);
+        }
+    };
 });
 
 /* GET: findAll of collection. or enter query to narrow down list*/
 app.get('/:collection', function(req, res) {
     var collectionName = req.params.collection;
+    var queryData = req.query;
 
-    collectionDriver.findAll(collectionName, function(error, results) {
-        if (error)
-            res.status(400).send(error);
-        else {
-            res.status(200).send(results);
-        }
-    });
+    if (Object.keys(queryData).length === 0 && JSON.stringify(queryData) === JSON.stringify({}))
+        collectionDriver.findAll(collectionName, function (error, results) {
+            if (error)res.status(400).send(error);
+            else res.status(200).send(results);
+        });
+    else
+        collectionDriver.findSome(collectionName, queryData, function (error, results) {
+            if (error)res.status(400).send(error);
+            else res.status(200).send(results);
+        });
 });
 
 /* GET: find id in collection. */
