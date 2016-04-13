@@ -25,7 +25,7 @@ function onSignIn(googleUser) {
         $('#alertProblem').hide();
         $('#alertUnconfirmed').show('fast');
 
-        // window.location.href = "overview";                  // temporary for access even without confirmation
+        //window.location.href = "overview";                  // temporary for access even without confirmation
 
       } else if (data.permissions.stage === -2) {
         gapi.auth2.getAuthInstance().signOut();
@@ -33,6 +33,7 @@ function onSignIn(googleUser) {
         $('#alertRegistered').hide();
         $('#alertProblem').hide();
         $('#alertDeactivated').show('fast');
+
       } else {  // update user image data in db, then go to overview
         $.ajax({
           url: '/users/' + data._id,
