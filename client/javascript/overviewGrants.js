@@ -44,54 +44,47 @@ $(function() {
   });
 });
 
+
 $(function () {
     $("#cardGenCreate").click(function () {
-        var description = $("#grant-descr-editor").html();
+        var grantDescription = $("#grant-descr-editor").html();
         var grantName = $("#grantName").val();
         var grantUrl = $("#grantUrl").val();
-		/* var grantTemplate = $.ajax({
-			url : '/templates/overviewPanel.html',
-			dataType: 'html',
-			method: 'GET',
-			success: function(data) {
-				newGrantTemplate = Handlebars.compile(data);
-			}
-		}); */
 		
         var myGrant = {
-            Grant_Name : grantName,
-            Description : description,
-            Url : grantUrl,
-            Users : [],
-            Card_Count : 0,
-            Grant_Columns: [
+            title : grantName,
+            description : grantDescription,
+            url : grantUrl,
+            users : [],
+            cardCountCount : 0,
+            stages: [
                 {
-                    Progress: 0.0,
-                    To_Do: [],
-                    In_Progress: [],
-                    Complete: []
+                    progress: 0.0,
+                    toDo: [],
+                    inProgress: [],
+                    complete: []
                 },
                 {
-                    Progress: 0.0,
-                    To_Do: [],
-                    In_Progress: [],
-                    Complete: []
+                    progress: 0.0,
+                    toDo: [],
+                    inProgress: [],
+                    complete: []
                 },
                 {
-                    Progress: 0.0,
-                    Cards: []
+                    progress: 0.0,
+                    cards: []
                 },
                 {
-                    Progress: 0.0,
-                    To_Do: [],
-                    In_Progress: [],
-                    Complete: []
+                    progress: 0.0,
+                    toDo: [],
+                    inProgress: [],
+                    complete: []
                 }
             ]
         };
 		
         $.ajax({
-            url: 'http://localhost:3000/grants',
+            url: 'http://localhost:8080/grants',
             type: 'PUT',
             data: JSON.stringify(myGrant),
             contentType: 'application/json'			
