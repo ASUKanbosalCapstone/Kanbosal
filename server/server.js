@@ -154,12 +154,12 @@ app.get('/getDetail', authenticate, function(req, res) {
 });
 
 /* Loads admin */
-app.get('/admin', function(req, res) {
+app.get('/admin', authenticateAdmin, function(req, res) {
     res.render('admin.html');
 });
 
 /* GET: returns users separated by stage */
-app.get('/getAdmin', authenticate, function (req, res) {
+app.get('/getAdmin', authenticateAdmin, function (req, res) {
     var resultData = {
         user: req.session.user,
         pageData: {
