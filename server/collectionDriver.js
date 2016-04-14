@@ -86,8 +86,8 @@ CollectionDriver.prototype.getGrants = function(userId, callback) {
                     callback(null, grants);
             });
         }
-    })
-}
+    });
+};
 
 /* Returns a collection of cards matching the given grant ObjectID and userPermissionId. */
 CollectionDriver.prototype.getCards = function(grantId, userPermissionId, callback) {
@@ -136,7 +136,7 @@ CollectionDriver.prototype.getCards = function(grantId, userPermissionId, callba
         else
             callback(error);
     });
-}
+};
 
 /* Inserts the doc in the collection with collectionName. */
 CollectionDriver.prototype.save = function(collectionName, doc, callback) {
@@ -189,7 +189,7 @@ var mongoUpdate = function(collectionName, queryObj, updateObj, callback) {
             });
         }
     });
-}
+};
 
 /* Updates the doc with the given docId in collectionName */
 CollectionDriver.prototype.update = function(collectionName, updateObj, docId, userId, callback) {
@@ -213,6 +213,34 @@ CollectionDriver.prototype.moveCard = function(grantId, card, callback) {
     updateObj.$addToSet['stages.' + card.newStage + '.' + card.newCol] = card.id;
 
     mongoUpdate("grants", queryObj, updateObj, callback);
+};
+
+CollectionDriver.prototype.moveCardStage = function(grantId, card, callback) {
+    // Update grant
+    var queryObj = {_id: ObjectID(grantId)};
+    var updateObj = {
+        $addToSet: {}
+    };
+    updateObj.$addToSet['stages.' + card.newStage + '.' + card.newCol] = card.id;
+
+    mongoUpdate("grants", queryObj, updateObj, function(error, results) {
+        if (error)
+            callback(error);
+    });
+
+    // Update card lock
+    var queryObj = {_id: ObjectID(card.id)};
+    var updateObj = {
+        $set: {}
+    };
+    updateObj.$set['lock.' + card.curStage] = true;
+
+    mongoUpdate("cards", queryObj, updateObj, function(error, results) {
+        if (error)
+            callback(error);
+        else
+            callback(null, results);
+    });
 };
 
 /* Deletes the doc with the given docId in collectionName */
@@ -254,6 +282,6 @@ var removeCardsFromGrant = function(cardId, callback) {
             });
         }
     });
-}
+};
 
 exports.CollectionDriver = CollectionDriver;
