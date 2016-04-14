@@ -311,8 +311,6 @@ app.post('/moveCardStage/:id', authenticateAdmin, function(req, res) {
     };
     var grantId = req.session.grantLoadId;
 
-    console.log("Server Stage MoveCardStage Card: " + card);
-
     if (back) {
         card.curCol = "toDo";
         card.newStage = stage - 1;
