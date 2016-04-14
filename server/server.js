@@ -304,9 +304,9 @@ app.post('/moveCardStage/:id', authenticateAdmin, function(req, res) {
     var stage = req.session.user.permissions.stage;
     var card = {
         id: req.params.id,
-        curStage: stage,
+        curStage: parseInt(stage),
         curCol: "complete",
-        newStage: stage + 1,
+        newStage: parseInt(stage) + 1,
         newCol: "toDo"
     };
     var grantId = req.session.grantLoadId;
