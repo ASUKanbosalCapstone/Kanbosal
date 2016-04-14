@@ -8,8 +8,8 @@
       {{#each toDo}}
         <div class="portlet panel panel-default">
           <div class="portlet-header panel-heading" data-toggle="modal" data-target="#{{_id}}" id="detail-card">
-            {{#if moveBack}}
-              <a id="preventPropagation" onclick="moveCardColumn('{{_id}}', 'false')"><span class="fa fa-backward pull-left" data-toggle="tooltip" data-placement="left" title="Needs Work"></span></a>
+            {{#if done}}
+              <a><span class="fa fa-check pull-right" data-toggle="tooltip" data-placement="left" title="Done"></span></a>
             {{/if}}
             <h3 class="panel-title">{{title}}</h3>
           </div>
@@ -45,6 +45,9 @@
       {{#each inProgress}}
         <div class="portlet panel panel-default">
           <div class="portlet-header panel-heading" data-toggle="modal" data-target="#{{_id}}" id="detail-card">
+            {{#if done}}
+              <a><span class="fa fa-check pull-right" data-toggle="tooltip" data-placement="left" title="Done"></span></a>
+            {{/if}}
             <h3 class="panel-title">{{title}}</h3>
           </div>
           <div class="portlet-content panel-body">
@@ -79,8 +82,12 @@
       {{#each complete}}
         <div class="portlet panel panel-default">
           <div class="portlet-header panel-heading" data-toggle="modal" data-target="#{{_id}}" id="detail-card">
-            {{#if moveForward}}
-              <a id="preventPropagation" onclick="moveCardColumn('{{_id}}', 'true')"><span class="fa fa-forward pull-right" data-toggle="tooltip" data-placement="left" title="Approve"></span></a>
+            {{#if done}}
+              <a><span class="fa fa-check pull-right" data-toggle="tooltip" data-placement="left" title="Done"></span></a>
+            {{else}}
+              {{#if moveForward}}
+                <a id="preventPropagation" onclick="moveCardColumn('{{_id}}', 'true')"><span class="fa fa-forward pull-right" data-toggle="tooltip" data-placement="left" title="Approve"></span></a>
+              {{/if}}
             {{/if}}
             <h3 class="panel-title">{{title}}</h3>
           </div>
