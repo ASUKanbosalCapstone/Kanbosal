@@ -302,12 +302,21 @@ app.post('/moveCard/:id', authenticate, function(req, res) {
 app.post('/moveCardStage/:id', authenticateAdmin, function(req, res) {
     var back = req.query.back;
     var stage = req.session.user.permissions.stage;
+    var columnDestination;
+
+    if(parseInt(stage) + 1 != 3) {
+      columnDestination = "toDo";
+    }
+    else {
+      columnDestination = "cards";
+    }
+
     var card = {
         id: req.params.id,
         curStage: parseInt(stage),
         curCol: "complete",
         newStage: parseInt(stage) + 1,
-        newCol: "toDo"
+        newCol: columnDestination
     };
     var grantId = req.session.grantLoadId;
 
