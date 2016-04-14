@@ -135,7 +135,7 @@ $.ajax({
     var departmentName = getCurrentDepartmentName(user);
 
     var detailGrant = '<h4>' + departmentName + '</h4>';
-    var detailDepartment = '<p> Grant Name </p>';
+    var detailDepartment = '<p>' + detailView.cards.grantTitle + '</p>';
 
     $('#detail-grant').html(detailGrant);
     $('#detail-department').html(detailDepartment);
