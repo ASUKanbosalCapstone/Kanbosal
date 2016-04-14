@@ -62,9 +62,12 @@ var populateUsers = function(cards) {
 /* Updates the card's lock attribute for just the current displayed stage */
 var updateLocks = function(user, cards) {
   for (var i = 0; i < cards.length; i++) {
-    if (cards[i].lock[user.permissions.stage] == true)
+    // card has been approved all stages
+    if (cards[i].lock[2] == true)
       cards[i].done = true;
-    // cards[i].done = cards[i].lock[user.permissions.stage];
+    // card has been approved for current stage
+    else if (cards[i].lock[user.permissions.stage] == true)
+      cards[i].stageDone = true;
   }
 }
 
@@ -139,6 +142,7 @@ $.ajax({
   success: function (detailView) {
     var user = detailView.user;
     var cards = detailView.cards;
+    cards.currentStage = user.permissions.stage;
 
     setupCards(user, cards);
     loadNavbar(user);
