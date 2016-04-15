@@ -302,6 +302,7 @@ app.post('/moveCard/:id', authenticate, function(req, res) {
 app.post('/moveCardStage/:id', authenticateAdmin, function(req, res) {
     var back = req.query.back;
     var stage = req.session.user.permissions.stage;
+    var grantId = req.session.grantLoadId;
     var columnDestination;
 
     if(parseInt(stage) + 1 != 3) {
@@ -318,16 +319,11 @@ app.post('/moveCardStage/:id', authenticateAdmin, function(req, res) {
         newStage: parseInt(stage) + 1,
         newCol: columnDestination
     };
-    var grantId = req.session.grantLoadId;
 
     if (back) {
         card.curCol = "toDo";
-        card.newStage = stage - 1;
+        card.newStage = parseInt(stage) - 1;
         card.newCol = "complete";
-    }
-
-    if (card.newStage == 3) {
-        card.newCol = "cards"
     }
 
     collectionDriver.moveCardStage(grantId, card, back, function(error, results) {
