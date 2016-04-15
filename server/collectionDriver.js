@@ -215,27 +215,41 @@ CollectionDriver.prototype.moveCard = function(grantId, card, callback) {
     mongoUpdate("grants", queryObj, updateObj, callback);
 };
 
-CollectionDriver.prototype.moveCardStage = function(grantId, card, callback) {
-    // Update grant
-    var queryObj = {_id: ObjectID(grantId)};
-    var updateObj = {
-        $addToSet: {}
+CollectionDriver.prototype.moveCardStage = function(grantId, card, back, callback) {
+    var grantQueryObj = {_id: ObjectID(grantId)};
+    var cardQueryObj = {_id: ObjectID(card.id)};
+    var grantUpdateObj;
+    var cardUpdateObj = {
+        $set: {}
     };
-    updateObj.$addToSet['stages.' + card.newStage + '.' + card.newCol] = card.id;
 
-    mongoUpdate("grants", queryObj, updateObj, function(error, results) {
+    if (back) {
+        grantUpdateObj = {
+            $pull: {},
+            $addToSet: {}
+        };
+        grantUpdateObj.$pull['stages.' + card.curStage + '.' + card.curCol] = card.id;
+        grantUpdateObj.$addToSet['stages.' + card.newStage + '.' + card.newCol] = card.id;
+
+        cardUpdateObj.$set['lock.' + card.newStage] = false;
+    }
+    else {
+        grantUpdateObj = {
+            $addToSet: {}
+        };
+        grantUpdateObj.$addToSet['stages.' + card.newStage + '.' + card.newCol] = card.id;
+
+        cardUpdateObj.$set['lock.' + card.curStage] = true;
+    }
+
+    // Update grant
+    mongoUpdate("grants", grantQueryObj, grantUpdateObj, function(error, results) {
         if (error)
             callback(error);
     });
 
     // Update card lock
-    var queryObj = {_id: ObjectID(card.id)};
-    var updateObj = {
-        $set: {}
-    };
-    updateObj.$set['lock.' + card.curStage] = true;
-
-    mongoUpdate("cards", queryObj, updateObj, function(error, results) {
+    mongoUpdate("cards", cardQueryObj, cardUpdateObj, function(error, results) {
         if (error)
             callback(error);
         else

@@ -321,7 +321,7 @@ app.post('/moveCardStage/:id', authenticateAdmin, function(req, res) {
         card.newCol = "cards"
     }
 
-    collectionDriver.moveCardStage(grantId, card, function(error, results) {
+    collectionDriver.moveCardStage(grantId, card, back, function(error, results) {
         if (error)
             res.status(400).send(error);
         else
