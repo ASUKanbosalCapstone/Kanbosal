@@ -11,7 +11,7 @@
         <div class="portlet panel panel-default">
           <div class="portlet-header panel-heading" data-toggle="modal" data-target="#{{_id}}" id="detail-card">
             {{#if moveBack}} 
-              <a id="preventPropagation" onclick="moveCardColumn('{{_id}}', 'false')"><span class="fa fa-backward pull-left" data-toggle="tooltip" data-placement="right" title="Needs Work"></span></a>
+              <a val="{{_id}}" data-toggle="modal" data-target="#modalNeedsWork"><span class="fa fa-backward pull-left" data-toggle="tooltip" data-placement="right" title="Needs Work"></span></a>
             {{/if}}
             {{#if done}}
               <a><span class="fa fa-check fa-check-alt pull-right" data-toggle="tooltip" data-placement="left" title="Grant Complete"></span></a>

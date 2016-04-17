@@ -171,9 +171,9 @@ $.ajax({
           cardTemplate = Handlebars.compile(data);
           $('#columnList').html(cardTemplate(cards));
 
-          $("#preventPropagation").bind('click', function() {
-            event.stopPropagation();
-          });
+          // $("#preventPropagation").bind('click', function() {
+          //   event.stopPropagation();
+          // });
         }
       });
       // Updates the individual card modals
@@ -314,13 +314,19 @@ $(function() {
     });
   });
 
+  // Sends the given card back for changes
+  $("#confirmSendBackButton").click(function() {
+    var cardId = $(".currentCard").attr("id");
+    moveCardColumn(cardId, 'false');
+  });
+
   $('[data-toggle="popover"]').popover({
     container:'body',
     html : true
   });
 });
 
-$('#cardGen').on('hidden.bs.modal', function () {
+$('#cardGen').on('hidden.bs.modal', function() {
   $("#cardGenTitle").val("");
   $("#cardGenBody").val("Enter card body here.");
   $("#cardGenDocLink").val("");
