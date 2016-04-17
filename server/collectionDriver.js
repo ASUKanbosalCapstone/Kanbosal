@@ -100,6 +100,7 @@ CollectionDriver.prototype.getCards = function(grantId, userPermissionId, callba
                 complete: []
             };
             var cards = grant.stages[userPermissionId];
+            returnCards.grantTitle = grant.title;
             returnCards.progress = cards.progress;
             var toDoIds = cards.toDo.map(function(item) {
                 return ObjectID(item);
