@@ -10,7 +10,7 @@
       {{#each toDo}}
         <div class="portlet panel panel-default">
           <div class="portlet-header panel-heading" data-toggle="modal" data-target="#{{_id}}" id="detail-card">
-            {{#if moveBack}} 
+            {{#if moveBack}}
               <a val="{{_id}}" data-toggle="modal" data-target="#modalNeedsWork"><span class="fa fa-backward pull-left" data-toggle="tooltip" data-placement="right" title="Needs Work"></span></a>
             {{/if}}
             {{#if done}}
@@ -70,7 +70,7 @@
                 <span class="label label-success card-icons card-tag">{{this}}</span>
               {{/each}}
             {{else}}
-              <small class="pull-left card-tag-badge"><a tabindex="0" role="button" data-toggle="popover" data-trigger="focus" data-placement="right" data-content="{{#each tags}}<span class=&quot;label label-primary card-icons card-tag&quot;>{{this}}</span></br>{{/each}}"><span class="label label-success label-as-badge">{{tags.length}} Tags</span></a></small>
+              <small class="pull-left card-tag-badge"><a tabindex="0" role="button" data-toggle="popover" data-trigger="focus" data-placement="right" data-content="{{#each tags}}<span class=&quot;label label-primary card-icons card-tag&quot;>{{this}}</span>{{/each}}"><span class="label label-success label-as-badge">{{tags.length}} Tags</span></a></small>
             {{/compare}}
             {{#compare userIds.length "<" 3}}
               {{#each userIds}}
@@ -115,7 +115,7 @@
                 <span class="label label-success card-icons card-tag">{{this}}</span>
               {{/each}}
             {{else}}
-              <small class="pull-left card-tag-badge"><a tabindex="0" role="button" data-toggle="popover" data-trigger="focus" data-placement="right" data-content="{{#each tags}}<span class=&quot;label label-primary card-icons card-tag&quot;>{{this}}</span></br>{{/each}}"><span class="label label-success label-as-badge">{{tags.length}} Tags</span></a></small>
+              <small class="pull-left card-tag-badge"><a tabindex="0" role="button" data-toggle="popover" data-trigger="focus" data-placement="right" data-content="{{#each tags}}<span class=&quot;label label-primary card-icons card-tag&quot;>{{this}}</span>{{/each}}"><span class="label label-success label-as-badge">{{tags.length}} Tags</span></a></small>
             {{/compare}}
             {{#compare userIds.length "<" 3}}
               {{#each userIds}}

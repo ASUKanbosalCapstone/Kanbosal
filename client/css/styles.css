@@ -349,11 +349,16 @@ footer h2 {
   float: none;
   overflow: hidden;
   margin-right: 10px;
+  margin-bottom: 5px;
 }
 
-#cardGenCreate, .card-open-link, .card-delete {
+#cardGenCreate, .card-open-link, .card-delete, .add-tag {
   float: right;
-  margin-left: 10px;
+  margin-left: 5px;
+}
+
+.edit-time {
+  margin-top: 5px;
 }
 
 @media screen and (min-width: 768px) {
@@ -440,6 +445,10 @@ footer h2 {
 
 .label-as-badge {
   border-radius: 1em;
+}
+
+.card-tag-new {
+  width: 35%;
 }
 
 

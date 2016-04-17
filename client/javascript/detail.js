@@ -39,7 +39,7 @@ var convertDates = function(cards) {
   for (var i = 0; i < cards.length; i++) {
     var date = new Date(cards[i].timeLastEdit);
     cards[i].timeLastEdit = date.toLocaleString();
-  } 
+  }
 }
 
 /* Populates the cards with user images and names */
@@ -272,9 +272,38 @@ $(function() {
 
   // Stores card info to check for changes against
   $('.currentCard').on('shown.bs.modal', function() {
+    currentCard.id = $(this).attr('id');
     currentCard.title = $(this).find('.card-title').val();
     currentCard.notes = $(this).find('.card-notes').summernote('code');
     currentCard.documentUrl = $(this).find('.card-doc-link').val();
+    currentCard.tag = $(this).find('.card-tag-new');
+
+    // Adds a new tag to the grant
+    $('.add-tag').click(function() {
+      var cardId = currentCard.id;
+      var newTag = currentCard.tag.val();
+
+      var updateParams = {$addToSet: {tags: newTag}};
+
+      if (newTag != "" && newTag.length < 30) {
+        $.ajax({
+          url: '/cards/' + cardId,
+          type: 'POST',
+          data: JSON.stringify(updateParams),
+          contentType: 'application/json',
+          success: function() {
+            window.location.reload(true);
+          }
+        });
+      }
+      else {
+        $('.add-tag').tooltip('show');
+
+        setTimeout(function () {
+          $('.add-tag').tooltip('hide');
+        }, 5000);
+      }
+    });
   });
 
   // Updates the card whenever the modal is closed
@@ -400,7 +429,7 @@ function displayToDatabaseColumnName(columnName)
 
 function getCurrentDepartmentName(user)
 {
-  switch(user.permissions.stage)
+  switch(parseInt(user.permissions.stage))
   {
     case 0:
       return "Research";

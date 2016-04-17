@@ -196,8 +196,14 @@ var mongoUpdate = function(collectionName, queryObj, updateObj, callback) {
 CollectionDriver.prototype.update = function(collectionName, updateObj, docId, userId, callback) {
     var queryObj = {_id: ObjectID(docId)};
     if (collectionName == "cards") {
-        updateObj.$addToSet = {userIds: userId};   // Adds the current user to the list of users in the card
-        updateObj.$currentDate = {timeLastEdit: true}  // Updates the timeLastEdit to the current time
+        if (updateObj.$addToSet) {
+            updateObj.$addToSet.userIds = userId;
+            updateObj.$currentDate = {timeLastEdit: true}
+        }
+        else {
+            updateObj.$addToSet = {userIds: userId};   // Adds the current user to the list of users in the card
+            updateObj.$currentDate = {timeLastEdit: true}  // Updates the timeLastEdit to the current time
+        }
     }
 
     mongoUpdate(collectionName, queryObj, updateObj, callback);
