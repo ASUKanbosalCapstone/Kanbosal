@@ -180,7 +180,7 @@ app.get('/getAdmin', authenticateAdmin, function (req, res) {
             inactiveUsers: []
         }
     };
-    
+
     collectionDriver.findSome('users', { 'permissions.stage': -1 }, setPending);
 
     function setPending(error, results) {
@@ -302,22 +302,31 @@ app.post('/moveCard/:id', authenticate, function(req, res) {
 app.post('/moveCardStage/:id', authenticateAdmin, function(req, res) {
     var back = req.query.back;
     var stage = req.session.user.permissions.stage;
+    var grantId = req.session.grantLoadId;
+    var columnDestination;
+
+    if(parseInt(stage) + 1 != 3) {
+      columnDestination = "toDo";
+    }
+    else {
+      columnDestination = "cards";
+    }
+
     var card = {
         id: req.params.id,
-        curStage: stage,
+        curStage: parseInt(stage),
         curCol: "complete",
-        newStage: stage + 1,
-        newCol: "toDo"
+        newStage: parseInt(stage) + 1,
+        newCol: columnDestination
     };
-    var grantId = req.session.grantLoadId;
 
     if (back) {
         card.curCol = "toDo";
-        card.newStage = stage - 1;
+        card.newStage = parseInt(stage) - 1;
         card.newCol = "complete";
     }
 
-    collectionDriver.moveCard(grantId, card, function(error, results) {
+    collectionDriver.moveCardStage(grantId, card, back, function(error, results) {
         if (error)
             res.status(400).send(error);
         else

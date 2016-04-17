@@ -3,13 +3,22 @@
     <div class="column">
       <h4>
         To Do
-        <a data-toggle="modal" data-target="#cardGen"><span class="fa fa-plus-square pull-right" data-toggle="tooltip" data-placement="left" title="New Card"></span></a>
+        {{#compare currentStage "==" 0}}
+          <a data-toggle="modal" data-target="#cardGen"><span class="fa fa-plus-square pull-right" data-toggle="tooltip" data-placement="left" title="New Card"></span></a>
+        {{/compare}}
       </h4>
       {{#each toDo}}
         <div class="portlet panel panel-default">
           <div class="portlet-header panel-heading" data-toggle="modal" data-target="#{{_id}}" id="detail-card">
-            {{#if moveBack}}
-              <a id="preventPropagation" onclick="moveCardColumn('{{_id}}', 'false')"><span class="fa fa-backward pull-left" data-toggle="tooltip" data-placement="left" title="Needs Work"></span></a>
+            {{#if moveBack}} 
+              <a val="{{_id}}" data-toggle="modal" data-target="#modalNeedsWork"><span class="fa fa-backward pull-left" data-toggle="tooltip" data-placement="right" title="Needs Work"></span></a>
+            {{/if}}
+            {{#if done}}
+              <a><span class="fa fa-check fa-check-alt pull-right" data-toggle="tooltip" data-placement="left" title="Grant Complete"></span></a>
+            {{else}}
+              {{#if stageDone}}
+                <a><span class="fa fa-check pull-right" data-toggle="tooltip" data-placement="left" title="Stage Complete"></span></a>
+              {{/if}}
             {{/if}}
             <h3 class="panel-title">{{title}}</h3>
           </div>
@@ -45,6 +54,13 @@
       {{#each inProgress}}
         <div class="portlet panel panel-default">
           <div class="portlet-header panel-heading" data-toggle="modal" data-target="#{{_id}}" id="detail-card">
+            {{#if done}}
+              <a><span class="fa fa-check fa-check-alt pull-right" data-toggle="tooltip" data-placement="left" title="Grant Complete"></span></a>
+            {{else}}
+              {{#if stageDone}}
+                <a><span class="fa fa-check pull-right" data-toggle="tooltip" data-placement="left" title="Stage Complete"></span></a>
+              {{/if}}
+            {{/if}}
             <h3 class="panel-title">{{title}}</h3>
           </div>
           <div class="portlet-content panel-body">
@@ -79,8 +95,16 @@
       {{#each complete}}
         <div class="portlet panel panel-default">
           <div class="portlet-header panel-heading" data-toggle="modal" data-target="#{{_id}}" id="detail-card">
-            {{#if moveForward}}
-              <a id="preventPropagation" onclick="moveCardColumn('{{_id}}', 'true')"><span class="fa fa-forward pull-right" data-toggle="tooltip" data-placement="left" title="Approve"></span></a>
+            {{#if done}}
+              <a><span class="fa fa-check fa-check-alt pull-right" data-toggle="tooltip" data-placement="left" title="Grant Complete"></span></a>
+            {{else}}
+              {{#if stageDone}}
+                <a><span class="fa fa-check pull-right" data-toggle="tooltip" data-placement="left" title="Stage Complete"></span></a>
+              {{else}}
+                {{#if moveForward}}
+                  <a id="preventPropagation" onclick="moveCardColumn('{{_id}}', 'true')"><span class="fa fa-forward pull-right" data-toggle="tooltip" data-placement="left" title="Approve"></span></a>
+                {{/if}}
+              {{/if}}
             {{/if}}
             <h3 class="panel-title">{{title}}</h3>
           </div>

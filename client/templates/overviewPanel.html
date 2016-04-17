@@ -39,6 +39,16 @@
             </div>
             {{/compare}}
           </div>
+          {{#if ../../departmentNames}}
+            {{#compare @index '==' ../../currentDepartment}}
+              <a onclick="loadDepartment('{{../_id}}', '{{@index}}')"><strong>Jump To {{lookup ../../departmentNames @index}}</strong></a>
+            {{/compare}}
+            {{#compare @index '<' 3}}
+              {{#compare @index '!=' ../../currentDepartment}}
+                <a onclick="loadDepartment('{{../_id}}', '{{@index}}')">Jump To {{lookup ../../departmentNames @index}}</a>
+              {{/compare}}
+            {{/compare}}
+          {{/if}}
         </div>
         {{/each}}
       </div>

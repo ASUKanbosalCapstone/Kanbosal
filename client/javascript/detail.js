@@ -20,7 +20,7 @@ var calculateProgress = function(cards) {
 }
 
 /* Sets up the cards returned upon page load */
-var setupCards = function(cards) {
+var setupCards = function(user, cards) {
   convertDates(cards.toDo);
   convertDates(cards.inProgress);
   convertDates(cards.complete);
@@ -28,6 +28,10 @@ var setupCards = function(cards) {
   populateUsers(cards.toDo);
   populateUsers(cards.inProgress);
   populateUsers(cards.complete);
+
+  updateLocks(user, cards.toDo);
+  updateLocks(user, cards.inProgress);
+  updateLocks(user, cards.complete);
 }
 
 /* Converts card's timeLastEdit to equivalent local time */
@@ -52,6 +56,18 @@ var populateUsers = function(cards) {
         }
       });
     }
+  }
+}
+
+/* Updates the card's lock attribute for just the current displayed stage */
+var updateLocks = function(user, cards) {
+  for (var i = 0; i < cards.length; i++) {
+    // card has been approved all stages
+    if (cards[i].lock[2] == true)
+      cards[i].done = true;
+    // card has been approved for current stage
+    else if (cards[i].lock[user.permissions.stage] == true)
+      cards[i].stageDone = true;
   }
 }
 
@@ -126,8 +142,9 @@ $.ajax({
   success: function (detailView) {
     var user = detailView.user;
     var cards = detailView.cards;
+    cards.currentStage = user.permissions.stage;
 
-    setupCards(cards);
+    setupCards(user, cards);
     loadNavbar(user);
 
     modifyCardMovement(user, cards);
@@ -154,9 +171,9 @@ $.ajax({
           cardTemplate = Handlebars.compile(data);
           $('#columnList').html(cardTemplate(cards));
 
-          $("#preventPropagation").bind('click', function() {
-            event.stopPropagation();
-          });
+          // $("#preventPropagation").bind('click', function() {
+          //   event.stopPropagation();
+          // });
         }
       });
       // Updates the individual card modals
@@ -297,13 +314,19 @@ $(function() {
     });
   });
 
+  // Sends the given card back for changes
+  $("#confirmSendBackButton").click(function() {
+    var cardId = $(".currentCard").attr("id");
+    moveCardColumn(cardId, 'false');
+  });
+
   $('[data-toggle="popover"]').popover({
     container:'body',
     html : true
   });
 });
 
-$('#cardGen').on('hidden.bs.modal', function () {
+$('#cardGen').on('hidden.bs.modal', function() {
   $("#cardGenTitle").val("");
   $("#cardGenBody").val("Enter card body here.");
   $("#cardGenDocLink").val("");
