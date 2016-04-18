@@ -82,47 +82,26 @@ var isCardChanged = function(card) {
   return false;
 }
 
-var modifyCardMovement = function(user, cards)
-{
-  if(user.permissions.level == 1)
-  {
+var modifyCardMovement = function(user, cards) {
+  if(user.permissions.level == 1) {
     if(user.permissions.stage > 0)
-    {
       for(var i = 0; i < cards.toDo.length; i++)
-      {
         cards.toDo[i].moveBack = "holder";
-      }
-    }
     if(user.permissions.stage < 3)
-    {
       for(var i = 0; i < cards.complete.length; i++)
-      {
         cards.complete[i].moveForward = "holder";
-      }
-    }
   }
-}
+};
 
-var moveCardColumn = function(cardID, isMovingForward)
-{
+var moveCardColumn = function(cardID, isMovingForward) {
   var isCallable = true;
   var query = '/moveCardStage/';
 
-  if(isMovingForward == 'true')
-  {
-    query += cardID;
-  }
-  else if(isMovingForward == 'false')
-  {
-    query += cardID + '?back=true';
-  }
-  else
-  {
-    isCallable = false;
-  }
+  if (isMovingForward == 'true') query += cardID;
+  else if (isMovingForward == 'false') query += cardID + '?back=true';
+  else isCallable = false;
 
-  if(isCallable)
-  {
+  if (isCallable) {
     $.ajax({
       url: query,
       type: 'POST',
@@ -132,7 +111,7 @@ var moveCardColumn = function(cardID, isMovingForward)
       }
     });
   }
-}
+};
 
 $.ajax({
   url: '/getDetail',
@@ -198,6 +177,27 @@ $.ajax({
       });
     }
   }
+}).then(function () {
+  $('[data-toggle="popover"]').popover({
+    container:'body',
+    html : true
+  });
+}).then(function () {
+  // apply click for remove a tag after popover init
+  $('.remove-tag').click(function() {
+    var updateParams = {$pull: {tags: $(this).data('tagvalue')}};
+
+    $.ajax({
+      url: '/cards/' + $(this).data('cardid'),
+      type: 'POST',
+      data: JSON.stringify(updateParams),
+      contentType: 'application/json',
+      success: function() {
+        // window.location.reload(true);
+        // $(this).remove();
+      }
+    });
+  });
 });
 
 $.ajax({
@@ -295,13 +295,21 @@ $(function() {
             window.location.reload(true);
           }
         });
-      }
-      else {
+      } else {
         $('.add-tag').tooltip('show');
 
         setTimeout(function () {
           $('.add-tag').tooltip('hide');
         }, 5000);
+      }
+    });
+  });
+
+  $('body').on('click', function (e) {
+    $('[data-toggle=popover]').each(function () {
+      // hide any open popovers when the anywhere else in the body is clicked
+      if (!$(this).is(e.target) && $(this).has(e.target).length === 0 && $('.popover').has(e.target).length === 0) {
+        $(this).popover('hide');
       }
     });
   });
@@ -356,16 +364,6 @@ $(function() {
   $("#confirmSendBackButton").click(function() {
     var cardId = $(".currentCard").attr("id");
     moveCardColumn(cardId, 'false');
-  });
-
-  $('[data-toggle="popover"]').popover({
-    container:'body',
-    html : true
-  });
-
-  // Removes a tag
-  $('.remove-tag').click(function() {
-    var test = 0;
   });
 });
 
