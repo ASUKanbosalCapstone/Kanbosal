@@ -1,5 +1,5 @@
 $('.editable').summernote({
-  minHeight: 200,
+  minHeight: 150,
   placeholder: 'Enter description here.',
   toolbar: [
     // [groupName, [list of button]]
