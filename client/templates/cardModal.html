@@ -70,7 +70,7 @@
           <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
           <div class="modal-title">
             <form id="modalHeader">
-              <input class="form-control card-title" id="myModalLabel" value="{{title}}" placeholder="Enter a title here!">
+              <input class="form-control card-title" id="myModalLabel" value="{{title}}" placeholder="Enter a title here!" {{#if done}}disabled{{/if}} {{#if stageDone}}disabled{{/if}}>
             </form>
           </div>
         </div>
@@ -85,7 +85,7 @@
           <a class="btn btn-gold card-open-link" target="_blank" href="{{documentUrl}}">Open Document</a>
           <div>
             <form>
-              <input class="form-control card-doc-link" placeholder="Enter a document link here!" value="{{documentUrl}}">
+              <input class="form-control card-doc-link" placeholder="Enter a document link here!" value="{{documentUrl}}" {{#if done}}disabled{{/if}} {{#if stageDone}}disabled{{/if}}>
             </form>
           </div>
         </div>

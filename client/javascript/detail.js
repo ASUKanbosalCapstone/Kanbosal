@@ -195,6 +195,12 @@ $.ajax({
           modalTemplate = Handlebars.compile(data);
           $('#cardModals').html(modalTemplate(cards));
         }
+      }).then(function () {
+        for (var i in cards.complete) {
+          if (cards.complete[i].done || cards.complete[i].stageDone) {
+            $('#' + cards.complete[i]._id + ' * .editable').summernote('disable');
+          }
+        }
       });
     }
   }
