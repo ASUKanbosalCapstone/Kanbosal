@@ -93,7 +93,7 @@
         Complete
       </h4>
       {{#each complete}}
-        <div class="portlet panel panel-default">
+        <div class="portlet panel panel-default {{#if done}}disable-sort{{/if}} {{#if stageDone}}disable-sort{{/if}}">
           <div class="portlet-header panel-heading" data-toggle="modal" data-target="#{{_id}}" id="detail-card">
             {{#if done}}
               <a><span class="fa fa-check fa-check-alt pull-right" data-toggle="tooltip" data-placement="left" title="Grant Complete"></span></a>

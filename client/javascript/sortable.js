@@ -2,7 +2,7 @@ $(function() {
   $( ".column" ).sortable({
     connectWith: ".column",
     handle: ".portlet-header",
-    cancel: ".portlet-toggle",
+    cancel: ".disable-sort",//".portlet-toggle",
     placeholder: "portlet-placeholder ui-corner-all"
   });
 
