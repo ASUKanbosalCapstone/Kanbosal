@@ -184,7 +184,7 @@ $.ajax({
   });
 }).then(function () {
   // Removes tag from the card object and view
-  var removeTag = function(tag) {
+  var removeTag = function(tag, callback) {
     var updateParams = {$pull: {tags: tag.value}};
 
     $.ajax({
@@ -193,7 +193,7 @@ $.ajax({
       data: JSON.stringify(updateParams),
       contentType: 'application/json',
       success: function() {
-        tag.this.remove();
+        callback();
       }
     });
   }
@@ -205,7 +205,9 @@ $.ajax({
       value: $(this).data('tagvalue'),
       cardId: $(this).data('cardid')
     };
-    removeTag(tag);
+    removeTag(tag, function() {
+      tag.this.remove();
+    });
   });
 
   // Removes tags from popover
@@ -215,7 +217,9 @@ $.ajax({
       value: $(this).data('tagvalue'),
       cardId: $(this).data('cardid')
     };
-    removeTag(tag);
+    removeTag(tag, function() {
+      window.location.reload(true);
+    });
   });
 });
 
