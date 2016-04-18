@@ -39,7 +39,7 @@ var convertDates = function(cards) {
   for (var i = 0; i < cards.length; i++) {
     var date = new Date(cards[i].timeLastEdit);
     cards[i].timeLastEdit = date.toLocaleString();
-  } 
+  }
 }
 
 /* Populates the cards with user images and names */
@@ -82,47 +82,26 @@ var isCardChanged = function(card) {
   return false;
 }
 
-var modifyCardMovement = function(user, cards)
-{
-  if(user.permissions.level == 1)
-  {
+var modifyCardMovement = function(user, cards) {
+  if(user.permissions.level == 1) {
     if(user.permissions.stage > 0)
-    {
       for(var i = 0; i < cards.toDo.length; i++)
-      {
         cards.toDo[i].moveBack = "holder";
-      }
-    }
     if(user.permissions.stage < 3)
-    {
       for(var i = 0; i < cards.complete.length; i++)
-      {
         cards.complete[i].moveForward = "holder";
-      }
-    }
   }
-}
+};
 
-var moveCardColumn = function(cardID, isMovingForward)
-{
+var moveCardColumn = function(cardID, isMovingForward) {
   var isCallable = true;
   var query = '/moveCardStage/';
 
-  if(isMovingForward == 'true')
-  {
-    query += cardID;
-  }
-  else if(isMovingForward == 'false')
-  {
-    query += cardID + '?back=true';
-  }
-  else
-  {
-    isCallable = false;
-  }
+  if (isMovingForward == 'true') query += cardID;
+  else if (isMovingForward == 'false') query += cardID + '?back=true';
+  else isCallable = false;
 
-  if(isCallable)
-  {
+  if (isCallable) {
     $.ajax({
       url: query,
       type: 'POST',
@@ -132,7 +111,7 @@ var moveCardColumn = function(cardID, isMovingForward)
       }
     });
   }
-}
+};
 
 $.ajax({
   url: '/getDetail',
@@ -198,6 +177,50 @@ $.ajax({
       });
     }
   }
+}).then(function () {
+  $('[data-toggle="popover"]').popover({
+    container:'body',
+    html : true
+  });
+}).then(function () {
+  // Removes tag from the card object and view
+  var removeTag = function(tag, callback) {
+    var updateParams = {$pull: {tags: tag.value}};
+
+    $.ajax({
+      url: '/cards/' + tag.cardId,
+      type: 'POST',
+      data: JSON.stringify(updateParams),
+      contentType: 'application/json',
+      success: function() {
+        callback();
+      }
+    });
+  }
+
+  // apply click for remove a tag after popover init
+  $('.remove-tag').click(function() {
+    var tag = {
+      this: $(this).parent('.card-tag'),
+      value: $(this).data('tagvalue'),
+      cardId: $(this).data('cardid')
+    };
+    removeTag(tag, function() {
+      tag.this.remove();
+    });
+  });
+
+  // Removes tags from popover
+  $('body').on('click', '.remove-tag', function() {
+    var tag = {
+      this: $(this).parent('.card-tag'),
+      value: $(this).data('tagvalue'),
+      cardId: $(this).data('cardid')
+    };
+    removeTag(tag, function() {
+      window.location.reload(true);
+    });
+  });
 });
 
 $.ajax({
@@ -272,9 +295,46 @@ $(function() {
 
   // Stores card info to check for changes against
   $('.currentCard').on('shown.bs.modal', function() {
+    currentCard.id = $(this).attr('id');
     currentCard.title = $(this).find('.card-title').val();
     currentCard.notes = $(this).find('.card-notes').summernote('code');
     currentCard.documentUrl = $(this).find('.card-doc-link').val();
+    currentCard.tag = $(this).find('.card-tag-new');
+
+    // Adds a new tag to the grant
+    $('.add-tag').click(function() {
+      var cardId = currentCard.id;
+      var newTag = currentCard.tag.val();
+
+      var updateParams = {$addToSet: {tags: newTag}};
+
+      if (newTag != "" && newTag.length < 30) {
+        $.ajax({
+          url: '/cards/' + cardId,
+          type: 'POST',
+          data: JSON.stringify(updateParams),
+          contentType: 'application/json',
+          success: function() {
+            window.location.reload(true);
+          }
+        });
+      } else {
+        $('.add-tag').tooltip('show');
+
+        setTimeout(function () {
+          $('.add-tag').tooltip('hide');
+        }, 5000);
+      }
+    });
+  });
+
+  $('body').on('click', function (e) {
+    $('[data-toggle=popover]').each(function () {
+      // hide any open popovers when the anywhere else in the body is clicked
+      if (!$(this).is(e.target) && $(this).has(e.target).length === 0 && $('.popover').has(e.target).length === 0) {
+        $(this).popover('hide');
+      }
+    });
   });
 
   // Updates the card whenever the modal is closed
@@ -327,11 +387,6 @@ $(function() {
   $("#confirmSendBackButton").click(function() {
     var cardId = $(".currentCard").attr("id");
     moveCardColumn(cardId, 'false');
-  });
-
-  $('[data-toggle="popover"]').popover({
-    container:'body',
-    html : true
   });
 });
 
@@ -400,7 +455,7 @@ function displayToDatabaseColumnName(columnName)
 
 function getCurrentDepartmentName(user)
 {
-  switch(user.permissions.stage)
+  switch(parseInt(user.permissions.stage))
   {
     case 0:
       return "Research";

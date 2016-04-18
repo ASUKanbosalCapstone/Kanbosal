@@ -353,11 +353,16 @@ footer h2 {
   float: none;
   overflow: hidden;
   margin-right: 10px;
+  margin-bottom: 5px;
 }
 
-#cardGenCreate, .card-open-link, .card-delete {
+#cardGenCreate, .card-open-link, .card-delete, .add-tag {
   float: right;
-  margin-left: 10px;
+  margin-left: 5px;
+}
+
+.edit-time {
+  margin-top: 5px;
 }
 
 @media screen and (min-width: 768px) {
@@ -433,6 +438,9 @@ footer h2 {
 .card-tag {
   display: inline-block;
   margin-left: 5px;
+  color: #2a2a2a;
+  background-color: #ffc425;
+  font-weight: normal;
 }
 
 .detail-card-placeholder {
@@ -442,8 +450,22 @@ footer h2 {
   height: 100%;
 }
 
+.badge-tags {
+  border-radius: 1em;
+  color: #2a2a2a;
+  background-color: #ffc425;
+  font-weight: normal;
+}
+
 .label-as-badge {
   border-radius: 1em;
+  color: #ffffff;
+  background-color: #d13252;
+  font-weight: normal;
+}
+
+.card-tag-new {
+  width: 35%;
 }
 
 

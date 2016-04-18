@@ -16,12 +16,18 @@
           </div>
         </div>
         <div class="modal-footer">
-          <p>Last Edited: {{timeLastEdit}}</p>
+          <div display="inline-block">
+            <form>
+              <input class="form-control card-tag-new pull-left" placeholder="Add new tag">
+            </form>
+            <a class="btn btn-gold add-tag pull-left" data-toggle="tooltip" data-placement="top" title="Tag must be between 1 and 30 characters" data-trigger="manual">Add</a>
+            <div class="edit-time pull-right">Last Edited: {{timeLastEdit}}</div>
+          </div>
           <a class="btn btn-primary card-delete" data-toggle="modal" data-target="#modalDelete">Delete</a>
           <a class="btn btn-gold card-open-link" target="_blank" href="{{documentUrl}}">Open Document</a>
           <div>
             <form>
-              <input class="form-control card-doc-link" placeholder="Enter a document link here!" value="{{documentUrl}}">
+              <input class="form-control" placeholder="Enter a document link here!" value="{{documentUrl}}">
             </form>
           </div>
         </div>
@@ -48,7 +54,13 @@
           </div>
         </div>
         <div class="modal-footer">
-          <p>Last Edited: {{timeLastEdit}}</p>
+          <div display="inline-block">
+            <form>
+              <input class="form-control card-tag-new pull-left" placeholder="Add new tag">
+            </form>
+            <a class="btn btn-gold add-tag pull-left" data-toggle="tooltip" data-placement="top" title="Tag must be between 1 and 30 characters" data-trigger="manual">Add</a>
+            <div class="edit-time pull-right">Last Edited: {{timeLastEdit}}</div>
+          </div>
           <a class="btn btn-primary card-delete" data-toggle="modal" data-target="#modalDelete">Delete</a>
           <a class="btn btn-gold card-open-link" target="_blank" href="{{documentUrl}}">Open Document</a>
           <div>
@@ -80,7 +92,13 @@
           </div>
         </div>
         <div class="modal-footer">
-          <p>Last Edited: {{timeLastEdit}}</p>
+          <div display="inline-block">
+            <form>
+              <input class="form-control card-tag-new pull-left" placeholder="Add new tag">
+            </form>
+            <a class="btn btn-gold add-tag pull-left" data-toggle="tooltip" data-placement="top" title="Tag must be between 1 and 30 characters" data-trigger="manual">Add</a>
+            <div class="edit-time pull-right">Last Edited: {{timeLastEdit}}</div>
+          </div>
           <a class="btn btn-primary card-delete" data-toggle="modal" data-target="#modalDelete">Delete</a>
           <a class="btn btn-gold card-open-link" target="_blank" href="{{documentUrl}}">Open Document</a>
           <div>
