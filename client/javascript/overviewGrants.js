@@ -84,6 +84,9 @@ $(function() {
       $('#grantEditSubmit').click(function () {
         editGrant(grantid);
       });
+      $('#grantEditDismiss').click(function () {
+        $('#grantEditSubmit').unbind();
+      })
     });
   });
 });
