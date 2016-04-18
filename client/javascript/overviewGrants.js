@@ -1,9 +1,7 @@
 var template;
 
-var loadDepartmentNavigation = function(overview)
-{
-  if(overview.user.permissions.level == 1)
-  {
+var loadDepartmentNavigation = function(overview) {
+  if(overview.user.permissions.level == 1) {
     var stages = ["Research", "Internal", "ASU", "Complete"];
 
     overview.departmentNames = stages;
@@ -11,8 +9,7 @@ var loadDepartmentNavigation = function(overview)
   }
 }
 
-var loadDepartment = function(grantID, stageIndex)
-{
+var loadDepartment = function(grantID, stageIndex) {
   var query = '/setAdminStage?stage=' + stageIndex;
   $.ajax({
     url: query,

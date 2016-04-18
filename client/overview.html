@@ -46,11 +46,9 @@
               <div class="col-sm-9"><input type="text" class="form-control" id="grantUrl" placeholder="http:// (nsf.gov, usda.gov, grants.gov, etc.)"></div>
             </div>
             <div class="form-group">
-              <label class="col-sm-3 control-label">
-                <small><a tabindex="0" class="fa fa-fw fa-question-circle" role="button" data-toggle="popover" data-trigger="focus" data-placement="right" title="Need help with markdown text?" data-content="Refer to the <a href=&quot;https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet&quot; target=&quot;_blank&quot;>Markdown Cheatsheet</a>. Some syntax may differ. <small class=&quot;text-info&quot;>Tip: add a blank line between sections to appropriately render the markdown.</small>"></a></small>&nbsp; Description
-              </label>
+              <label class="col-sm-3 control-label" for="grantDescription">Description</label>
               <div class="col-sm-9">
-                <div class="editable"></div>
+                <div class="editable" id="grantDescription"></div>
               </div>
             </div>
           </form>
@@ -63,36 +61,70 @@
     </div>
   </div>
 
+  <div class="modal fade" id="grantEdit" tabindex="-1" role="dialog" aria-labelledby="detailModalLabel">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <div class="modal-title">
+            <h3>Edit Grant</h3>
+          </div>
+        </div>
+        <div class="modal-body">
+          <form class="form-horizontal">
+            <div class="form-group">
+              <label class="col-sm-3 control-label" for="grantNameEdit">Grant Name</label>
+              <div class="col-sm-9"><input type="text" class="form-control" id="grantNameEdit" placeholder="grant name"></div>
+            </div>
+            <div class="form-group">
+              <label class="col-sm-3 control-label" for="grantUrlEdit">Official URL</label>
+              <div class="col-sm-9"><input type="text" class="form-control" id="grantUrlEdit" placeholder="http:// (nsf.gov, usda.gov, grants.gov, etc.)"></div>
+            </div>
+            <div class="form-group">
+              <label class="col-sm-3 control-label" for="grantDescriptionEdit">Description</label>
+              <div class="col-sm-9">
+                <div class="editable" id="grantDescriptionEdit"></div>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <a class="btn btn-primary" id="grantEditDismiss" data-dismiss="modal">Cancel</a>
+          <a class="btn btn-gold" id="grantEditSubmit" data-dismiss="modal">Confirm Changes</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <div id="wrapper">
     <nav class="navbar navbar-inverse navbar-fixed-top"></nav>
-
     <div id="content">
       <div id="contentview" class="container-fluid toggled">
         <div class="container-fluid vert-panels">
           <div class="panel-tabs">
-            <div class="col-xs-3">
-              <div class="tab-top">
-                <div>
-                  <h4>
-                    Research
-                    <a data-toggle="modal" data-target="#grantGen"><span class="fa fa-plus-square pull-right" data-toggle="tooltip" data-placement="left" title="Add Grant"></span></a>
-                  </h4>
+            <div class="row">
+              <div class="col-xs-3">
+                <div class="tab-top">
+                  <div>
+                    <h4 class="overflow-ellipses" style="width:calc(100% - 30px)!important; display:inline-block!important; vertical-align:bottom;">Research</h4><h4 style="width:30px; padding-left:7px; display:inline-block!important;"><a data-toggle="modal" data-target="#grantGen"><span class="fa fa-plus-square" data-toggle="tooltip" data-placement="left" title="Add Grant"></span></a>
+                    </h4>
+                  </div>
                 </div>
               </div>
-            </div>
-            <div class="col-xs-3">
-              <div class="tab-top">
-                <div><h4>Internal</h4></div>
+              <div class="col-xs-3">
+                <div class="tab-top">
+                  <div><h4>Internal</h4></div>
+                </div>
               </div>
-            </div>
-            <div class="col-xs-3">
-              <div class="tab-top">
-                <div><h4>ASU</h4></div>
+              <div class="col-xs-3">
+                <div class="tab-top">
+                  <div><h4>ASU</h4></div>
+                </div>
               </div>
-            </div>
-            <div class="col-xs-3">
-              <div class="tab-top">
-                <div><h4>Complete</h4></div>
+              <div class="col-xs-3">
+                <div class="tab-top">
+                  <div><h4>Complete</h4></div>
+                </div>
               </div>
             </div>
           </div>
