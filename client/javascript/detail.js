@@ -185,16 +185,19 @@ $.ajax({
 }).then(function () {
   // apply click for remove a tag after popover init
   $('.remove-tag').click(function() {
-    var updateParams = {$pull: {tags: $(this).data('tagvalue')}};
+    var thisTag = $(this).parent('.card-tag');
+    var tagValue = $(this).data('tagvalue');
+    var cardId = $(this).data('cardid');
+    var updateParams = {$pull: {tags: tagValue}};
 
     $.ajax({
-      url: '/cards/' + $(this).data('cardid'),
+      url: '/cards/' + cardId,
       type: 'POST',
       data: JSON.stringify(updateParams),
       contentType: 'application/json',
       success: function() {
         // window.location.reload(true);
-        // $(this).remove();
+        thisTag.remove();
       }
     });
   });
