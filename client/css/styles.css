@@ -434,6 +434,9 @@ footer h2 {
 .card-tag {
   display: inline-block;
   margin-left: 5px;
+  color: #2a2a2a;
+  background-color: #ffc425;
+  font-weight: normal;
 }
 
 .detail-card-placeholder {
@@ -443,8 +446,18 @@ footer h2 {
   height: 100%;
 }
 
+.badge-tags {
+  border-radius: 1em;
+  color: #2a2a2a;
+  background-color: #ffc425;
+  font-weight: normal;
+}
+
 .label-as-badge {
   border-radius: 1em;
+  color: #ffffff;
+  background-color: #d13252;
+  font-weight: normal;
 }
 
 .card-tag-new {

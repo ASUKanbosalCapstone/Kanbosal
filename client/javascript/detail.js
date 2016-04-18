@@ -362,6 +362,11 @@ $(function() {
     container:'body',
     html : true
   });
+
+  // Removes a tag
+  $('.remove-tag').click(function() {
+    var test = 0;
+  });
 });
 
 $('#cardGen').on('hidden.bs.modal', function() {

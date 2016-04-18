@@ -26,10 +26,10 @@
             <a target="_blank" href="{{documentUrl}}" class="fa fa-file card-icons pull-left"></a>
             {{#compare tags.length "<=" 2}}
               {{#each tags}}
-                <span class="label label-success card-icons card-tag">{{this}}</span>
+                <span class="label label-warning card-icons card-tag"><a class="fa fa-times remove-tag" aria-hidden="true"></a> {{this}} </span>
               {{/each}}
             {{else}}
-              <small class="pull-left card-tag-badge"><a tabindex="0" role="button" data-toggle="popover" data-trigger="focus" data-placement="right" data-content="{{#each tags}}<span class=&quot;label label-primary card-icons card-tag&quot;>{{this}}</span>{{/each}}"><span class="label label-success label-as-badge">{{tags.length}} Tags</span></a></small>
+              <small class="pull-left card-tag-badge"><a tabindex="0" role="button" data-toggle="popover" data-trigger="focus" data-placement="right" data-content="{{#each tags}}<span class=&quot;label label-warning card-icons card-tag&quot;><a class=&quot;fa fa-times remove-tag&quot; aria-hidden=&quot;true&quot;></a> {{this}} </span>{{/each}}"><span class="label label-warning badge-tags">{{tags.length}} Tags</span></a></small>
             {{/compare}}
             {{#compare userIds.length "<" 3}}
               {{#each userIds}}
@@ -67,10 +67,10 @@
             <a target="_blank" href="{{documentUrl}}" class="fa fa-file card-icons pull-left"></a>
             {{#compare tags.length "<=" 2}}
               {{#each tags}}
-                <span class="label label-success card-icons card-tag">{{this}}</span>
+                <span class="label label-warning card-icons card-tag"><a class="fa fa-times remove-tag" aria-hidden="true"></a> {{this}} </span>
               {{/each}}
             {{else}}
-              <small class="pull-left card-tag-badge"><a tabindex="0" role="button" data-toggle="popover" data-trigger="focus" data-placement="right" data-content="{{#each tags}}<span class=&quot;label label-primary card-icons card-tag&quot;>{{this}}</span>{{/each}}"><span class="label label-success label-as-badge">{{tags.length}} Tags</span></a></small>
+              <small class="pull-left card-tag-badge"><a tabindex="0" role="button" data-toggle="popover" data-trigger="focus" data-placement="right" data-content="{{#each tags}}<span class=&quot;label label-warning card-icons card-tag&quot;><a class=&quot;fa fa-times remove-tag&quot; aria-hidden=&quot;true&quot;></a> {{this}} </span>{{/each}}"><span class="label label-warning badge-tags">{{tags.length}} Tags</span></a></small>
             {{/compare}}
             {{#compare userIds.length "<" 3}}
               {{#each userIds}}
@@ -112,10 +112,10 @@
             <a target="_blank" href="{{documentUrl}}" class="fa fa-file card-icons pull-left"></a>
             {{#compare tags.length "<=" 2}}
               {{#each tags}}
-                <span class="label label-success card-icons card-tag">{{this}}</span>
+                <span class="label label-warning card-icons card-tag"><a class="fa fa-times remove-tag" aria-hidden="true"></a> {{this}} </span>
               {{/each}}
             {{else}}
-              <small class="pull-left card-tag-badge"><a tabindex="0" role="button" data-toggle="popover" data-trigger="focus" data-placement="right" data-content="{{#each tags}}<span class=&quot;label label-primary card-icons card-tag&quot;>{{this}}</span>{{/each}}"><span class="label label-success label-as-badge">{{tags.length}} Tags</span></a></small>
+              <small class="pull-left card-tag-badge"><a tabindex="0" role="button" data-toggle="popover" data-trigger="focus" data-placement="right" data-content="{{#each tags}}<span class=&quot;label label-warning card-icons card-tag&quot;><a class=&quot;fa fa-times remove-tag&quot; aria-hidden=&quot;true&quot;></a> {{this}} </span>{{/each}}"><span class="label label-warning badge-tags">{{tags.length}} Tags</span></a></small>
             {{/compare}}
             {{#compare userIds.length "<" 3}}
               {{#each userIds}}
