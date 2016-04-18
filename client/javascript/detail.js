@@ -183,23 +183,39 @@ $.ajax({
     html : true
   });
 }).then(function () {
-  // apply click for remove a tag after popover init
-  $('.remove-tag').click(function() {
-    var thisTag = $(this).parent('.card-tag');
-    var tagValue = $(this).data('tagvalue');
-    var cardId = $(this).data('cardid');
-    var updateParams = {$pull: {tags: tagValue}};
+  // Removes tag from the card object and view
+  var removeTag = function(tag) {
+    var updateParams = {$pull: {tags: tag.value}};
 
     $.ajax({
-      url: '/cards/' + cardId,
+      url: '/cards/' + tag.cardId,
       type: 'POST',
       data: JSON.stringify(updateParams),
       contentType: 'application/json',
       success: function() {
-        // window.location.reload(true);
-        thisTag.remove();
+        tag.this.remove();
       }
     });
+  }
+
+  // apply click for remove a tag after popover init
+  $('.remove-tag').click(function() {
+    var tag = {
+      this: $(this).parent('.card-tag'),
+      value: $(this).data('tagvalue'),
+      cardId: $(this).data('cardid')
+    };
+    removeTag(tag);
+  });
+
+  // Removes tags from popover
+  $('body').on('click', '.remove-tag', function() {
+    var tag = {
+      this: $(this).parent('.card-tag'),
+      value: $(this).data('tagvalue'),
+      cardId: $(this).data('cardid')
+    };
+    removeTag(tag);
   });
 });
 
