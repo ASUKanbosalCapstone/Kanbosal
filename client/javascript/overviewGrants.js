@@ -1,5 +1,6 @@
 var template;
 var user;
+var grantid;
 
 var loadDepartmentNavigation = function(overview) {
   if(overview.user.permissions.level == 1) {
@@ -72,7 +73,7 @@ $(function() {
 
   $('#grantEdit').on('show.bs.modal', function (event) {
     var button = $(event.relatedTarget); // Button that triggered the modal
-    var grantid = button.data('grantid'); // Extract info from data-* attributes
+    grantid = button.data('grantid'); // Extract info from data-* attributes
     var modal = $(this);
 
     $.ajax({
@@ -86,9 +87,9 @@ $(function() {
       $('#grantEditSubmit').click(function () {
         editGrant(grantid);
       });
-      $('#grantEditDismiss').click(function () {
-        $('#grantEditSubmit').unbind();
-      })
+      // $('#grantEditDismiss').click(function () {
+      //   $('#grantEditSubmit').unbind();
+      // })
     });
   });
 
@@ -149,4 +150,19 @@ $(function() {
       }
     });
   })
+
+  $('#modalDelete').on('hidden.bs.modal', function() {
+    $('#grantEdit').modal('hide');
+  });
+
+  $('#confirmDeleteButton').click(function() {
+    $.ajax({
+      url: '/grants/' + grantid,
+      type: 'DELETE',
+      contentType: 'application/json',
+      success: function() {
+        window.location.reload(true);
+      }
+    });
+  });
 });
