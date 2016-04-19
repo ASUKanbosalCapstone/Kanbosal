@@ -371,7 +371,7 @@ app.post('/:collection/:id', authenticate, function(req, res) {
 });
 
 /* DELETE: deletes a document with id in the collection. */
-app.delete('/:collection/:id', function(req, res) {
+app.delete('/:collection/:id', authenticate, function(req, res) {
     var id = req.params.id;
     var collection = req.params.collection;
 

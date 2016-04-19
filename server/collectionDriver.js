@@ -264,6 +264,10 @@ CollectionDriver.prototype.delete = function(collectionName, docId, callback) {
                 else if (collectionName == "cards") {
                     removeCardsFromGrant(docId, callback);
                 }
+                // Remove the grantId from the users
+                else if (collectionName == "grants") {
+                    removeGrantFromUsers(docId, callback);
+                }
                 callback(null, doc);
             });
         }
@@ -285,6 +289,19 @@ var removeCardsFromGrant = function(cardId, callback) {
                     callback(error);
             });
             grants.update({"stages.complete": cardId}, {$pull: {"stages.$.complete": cardId}}, {multi: true}, function(error, result) {
+                if (error)
+                    callback(error);
+            });
+        }
+    });
+};
+
+var removeGrantFromUsers = function(grantId, callback) {
+    db.collection("users", function(error, users) {
+        if (error)
+            callback(error);
+        else {
+            users.update({}, {$pull: {grantIds: grantId}}, {multi: true}, function(error, result) {
                 if (error)
                     callback(error);
             });
