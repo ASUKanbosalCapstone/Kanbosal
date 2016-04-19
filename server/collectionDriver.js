@@ -140,25 +140,13 @@ CollectionDriver.prototype.getCards = function(grantId, userPermissionId, callba
 };
 
 /* Inserts the doc in the collection with collectionName. */
-CollectionDriver.prototype.save = function(collectionName, doc, callback) {
-    // ensure correct format for collection entry
+CollectionDriver.prototype.save = function(collectionName, doc, userId, callback) {
     if (collectionName == "cards") {
         doc.timeCreated = new Date();
         doc.timeLastEdit = new Date();
-
-        // ensureCardFormat(doc, function(error) {
-        //     callback({error: "invalid card format: " + error});
-        // });
     }
     else if (collectionName == "grants") {
-        // ensureGrantFormat(doc, function(error) {
-        //     callback({error: "invalid grant format: " + error});
-        // });
-    }
-    else if (collectionName == "users") {
-        // ensureUserFormat(doc, function(error) {
-        //     callback({error: "invalid user format: " + error});
-        // });
+        doc.users.push(userId);
     }
     else {
         callback({error: "invalid collection"});
@@ -168,7 +156,6 @@ CollectionDriver.prototype.save = function(collectionName, doc, callback) {
         if (error)
             callback(error);
         else {
-            // doc.created_at = new Date();
             collection.insertOne(doc, function() {
                 callback(null, doc);
             });

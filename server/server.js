@@ -255,11 +255,12 @@ app.get('/:collection/:id', function(req, res) {
 });
 
 /* PUT: insert document in collection. */
-app.put('/:collection', function(req, res) {
+app.put('/:collection', authenticate, function(req, res) {
     var doc = req.body;
     var collection = req.params.collection;
+    var userId = req.session.user._id;
 
-    collectionDriver.save(collection, doc, function(error, results) {
+    collectionDriver.save(collection, doc, userId, function(error, results) {
         if (error)
             res.status(400).send(error);
         else
@@ -339,7 +340,6 @@ app.post('/updateGrant', function(req, res) {
     var docUpdates = req.body;
     var grantId = req.session.grantLoadId;
     var userId = req.session.user._id;
-
 
     collectionDriver.update("grants", docUpdates, grantId, userId, function(error, results) {
         if (error)
