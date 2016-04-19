@@ -21,9 +21,10 @@ app.set('view engine', 'html');
 // Sets up our session variable definitions
 app.use(sessions({
   cookieName: 'session',
-  secret: 'random_string_goes_here',
+  secret: 'This is the super secret secret for Kanbosal, no funny business.',
   duration: 30 * 60 * 1000, // 30 minutes
   activeDuration: 5 * 60 * 1000, // 5 minutes
+  httpOnly: true,
   ephemeral: true
 }));
 
@@ -221,7 +222,7 @@ app.get('/getAdmin', authenticateAdmin, function (req, res) {
 });
 
 /* GET: findAll of collection. or enter query to narrow down list*/
-app.get('/:collection', function(req, res) {
+app.get('/:collection', authenticate, function(req, res) {
     var collectionName = req.params.collection;
     var queryData = req.query;
 
@@ -238,7 +239,7 @@ app.get('/:collection', function(req, res) {
 });
 
 /* GET: find id in collection. */
-app.get('/:collection/:id', function(req, res) {
+app.get('/:collection/:id', authenticate, function(req, res) {
     var collection = req.params.collection;
     var id = req.params.id;
 
@@ -336,7 +337,7 @@ app.post('/moveCardStage/:id', authenticateAdmin, function(req, res) {
 });
 
 /* Updates the grant in session. */
-app.post('/updateGrant', function(req, res) {
+app.post('/updateGrant', authenticate, function(req, res) {
     var docUpdates = req.body;
     var grantId = req.session.grantLoadId;
     var userId = req.session.user._id;
