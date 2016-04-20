@@ -257,25 +257,40 @@ CollectionDriver.prototype.delete = function(collectionName, docId, callback) {
         if (error)
             callback(error);
         else {
-            collection.deleteOne({'_id': ObjectID(docId)}, function(error, doc) {
-                if (error)
-                    callback(error);
-                //Remove the cardId from grants
-                else if (collectionName == "cards") {
-                    removeCardsFromGrant(docId, callback);
-                }
-                // Remove the grantId from the users
-                else if (collectionName == "grants") {
-                    removeGrantFromUsers(docId, callback);
-                }
-                callback(null, doc);
-            });
+            if (collectionName == "grants") {
+                collection.findOne({_id: ObjectID(docId)}, function(error, doc) {
+                    if (error)
+                        callback(error);
+                    else {
+                        removeGrantFromUsers(docId, callback);
+                        var cardsToDelete = buildCardIdsToDelete(doc);
+                        deleteCards(cardsToDelete);
+
+                        collection.removeOne({_id: ObjectID(docId)}, function(error, doc) {
+                            if (error)
+                                callback(error);
+                            else
+                                callback(null, doc);
+                        });
+                    }
+                });
+            }
+            else {
+                collection.deleteOne({'_id': ObjectID(docId)}, function(error, doc) {
+                    if (error)
+                        callback(error);
+                    else if (collectionName == "cards") {
+                        removeCardFromGrant(docId, callback);
+                    }
+                    callback(null, doc);
+                });
+            }
         }
     });
 };
 
 /* Removes the given cardId from all grants */
-var removeCardsFromGrant = function(cardId, callback) {
+var removeCardFromGrant = function(cardId, callback) {
     db.collection("grants", function(error, grants) {
         if (error)
             callback(error);
@@ -296,6 +311,7 @@ var removeCardsFromGrant = function(cardId, callback) {
     });
 };
 
+/* Removes the grantId from the user object */
 var removeGrantFromUsers = function(grantId, callback) {
     db.collection("users", function(error, users) {
         if (error)
@@ -308,5 +324,49 @@ var removeGrantFromUsers = function(grantId, callback) {
         }
     });
 };
+
+/* Assembles the card ids to delete in an array */
+var buildCardIdsToDelete = function(grant, callback) {
+    var idArray = [];
+    for (var i = 0; i < grant.stages.length; i++) {
+        if (i == grant.stages.length - 1) {
+            var cards = grant.stages[i];
+            var cardIds = cards.cards.map(function(item) {
+                return ObjectID(item);
+            });
+            idArray = idArray.concat(cardIds);
+        }
+        else {
+            var cards = grant.stages[i];
+            var toDoIds = cards.toDo.map(function(item) {
+                return ObjectID(item);
+            });
+            var inProgressIds = cards.inProgress.map(function(item) {
+                return ObjectID(item);
+            });
+            var completeIds = cards.complete.map(function(item) {
+                return ObjectID(item);
+            });
+            idArray = idArray.concat(toDoIds);
+            idArray = idArray.concat(inProgressIds);
+            idArray = idArray.concat(completeIds);
+        }
+    }
+    return idArray;
+}
+
+/* Deletes the cards in the given cardIds array */
+var deleteCards = function(cardIds, callback) {
+    db.collection("cards", function(error, cards) {
+        if (error)
+            callback(error);
+        else {
+            cards.deleteMany({_id: {$in: cardIds}}, function(error, result) {
+                if (error)
+                    callback(error);
+            });
+        }
+    });
+}
 
 exports.CollectionDriver = CollectionDriver;
