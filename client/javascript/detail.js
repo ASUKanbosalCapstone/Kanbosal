@@ -1,72 +1,14 @@
-/*
-  Overview: Provided a grant name, will access the respective json file represnting that grant
-    and retrieve the necessary info. There are helper variables in this class to assist in
-    parsing the json file.
+var progressBarTemplate;
+var cardTemplate;
+var modalTemplate;
+var newCardTemplate;
+var cardGenInfo;
+var currentCard = {};
+var parser = new DOMParser();
 
-  The current structure of the JSON is to be as follows:
-  {
-    "Grants": [
-      {
-        "Grant_Name" : "NSF Career",
-        "Grant_Columns" : [
-          {
-            "Column_Name" : "To Do",
-            "Cards": [
-              {
-                "Card_Name": "Cover Sheet",
-                "Modal_ID" : "Cover_Sheet",
-                "Modal_Body": "<h3>Required</h3><ul><li><b>Program Solicitation Number</b></li><li><b>NSF Unit of Consideration</b></li><li><b>Project Title</b></li><li><b>Co-PIs</b></li><li><b>PI eligibility information</b></li></ul>",
-                "Document_Link": "http://www.github.com"
-              }
-            ]
-          },
-
-          {
-            "Column_Name" : "In Progress",
-            "Cards": [
-              {
-                "Card_Name": "References Cited",
-                "Modal_ID" : "References_Cited",
-                "Modal_Body": "",
-                "Document_Link": "http://www.github.com",
-                "Assigned_People" : ["Waffles", "Waffles"]
-              }
-            ]
-          },
-
-          {
-            "Column_Name" : "Complete",
-            "Cards": [
-              {
-                "Card_Name": "Departmental Letter",
-                "Modal_ID" : "Departmental_Letter",
-                "Modal_Body": "",
-                "Document_Link": "http://www.github.com",
-                "Tag_List" : ["Under Review", "Complete"]
-              }
-            ]
-          }
-        ]
-      }
-    ]
-  }
-
-  NOTE:
-    * Tag_List and Assigned_People are optional
-    * Rest of the fields are required
-
-  Current Status:
-    * Dynamic column generation
-    * Dynamic card generation
-    * Displays body contents on In Progress or Complete column (People, Links, Tags)
-    * Supported Tags for Complete column are, Under Review and Complete
-    * Sick documentation @see above
-  TODO:
-    * Support Comments
-    * Support additional tags
-
-  @author: Morgan Nesbitt
-*/
+var progressBar = {
+  progress: 0
+};
 
 var totalCards = function(cards) {
   return cards.toDo.length + cards.inProgress.length + cards.complete.length;
@@ -74,121 +16,221 @@ var totalCards = function(cards) {
 
 var calculateProgress = function(cards) {
   progressBar.progress = (cards.complete.length + 0.5 * cards.inProgress.length) / totalCards(cards) * 100;
-  return progressBar
+  return progressBar;
 }
 
-var cardTemplate;
-var modalTemplate;
-var newCardTemplate;
-var cardGenInfo;
-var cardList;
+/* Sets up the cards returned upon page load */
+var setupCards = function(user, cards) {
+  convertDates(cards.toDo);
+  convertDates(cards.inProgress);
+  convertDates(cards.complete);
 
-var progressBar = {
-  progress: 0
+  populateUsers(cards.toDo);
+  populateUsers(cards.inProgress);
+  populateUsers(cards.complete);
+
+  updateLocks(user, cards.toDo);
+  updateLocks(user, cards.inProgress);
+  updateLocks(user, cards.complete);
+}
+
+/* Converts card's timeLastEdit to equivalent local time */
+var convertDates = function(cards) {
+  for (var i = 0; i < cards.length; i++) {
+    var date = new Date(cards[i].timeLastEdit);
+    cards[i].timeLastEdit = date.toLocaleString();
+  }
+}
+
+/* Populates the cards with user images and names */
+var populateUsers = function(cards) {
+  for(var i = 0; i < cards.length; i++) {
+    for(var j = 0; j < cards[i].userIds.length; j++) {
+      $.ajax({
+        url: '/users/' + cards[i].userIds[j],
+        type: 'GET',
+        dataType: 'json',
+        async: false,
+        success: function(user) {
+          cards[i].userIds[j] = user;
+        }
+      });
+    }
+  }
+}
+
+/* Updates the card's lock attribute for just the current displayed stage */
+var updateLocks = function(user, cards) {
+  for (var i = 0; i < cards.length; i++) {
+    // card has been approved all stages
+    if (cards[i].lock[2] == true)
+      cards[i].done = true;
+    // card has been approved for current stage
+    else if (cards[i].lock[user.permissions.stage] == true)
+      cards[i].stageDone = true;
+  }
+}
+
+/* Checks to see if any changes have occured in the card displayed in the modal */
+var isCardChanged = function(card) {
+  if (card.title != currentCard.title)
+    return true;
+  if (card.notes != currentCard.notes)
+    return true;
+  if (card.documentUrl != currentCard.documentUrl)
+    return true;
+  return false;
+}
+
+var modifyCardMovement = function(user, cards) {
+  if(user.permissions.level == 1) {
+    if(user.permissions.stage > 0)
+      for(var i = 0; i < cards.toDo.length; i++)
+        cards.toDo[i].moveBack = "holder";
+    if(user.permissions.stage < 3)
+      for(var i = 0; i < cards.complete.length; i++)
+        cards.complete[i].moveForward = "holder";
+  }
 };
 
-// Will contain the list of gathered cards from the database
-var testCards = {
-  "progress":80,
-  "toDo": [{
-    "_id":"56f330b1fc88b4120a05a3e6",
-    "title":"TestCard1",
-    "notes":"<h3>Required</h3><ul><li><b>Program Solicitation Number</b></li><li><b>NSF Unit of Consideration</b></li><li><b>Project Title</b></li><li><b>Co-PIs</b></li><li><b>PI eligibility information</b></li></ul>",
-    "documentUrl":"testurl",
-    "status":"to_do",
-    "tags":[],
-    "userIds":[],
-    "lock":[false,false,false,false],
-    "timeCreated":"2016-03-24T00:11:29.590Z",
-    "timeLastEdit":"2016-03-24T00:11:29.590Z"
-  }, {
-    "_id":"56f330f3fc88b4120a05a3e7",
-    "title":"TestCard2",
-    "notes":[],
-    "documentUrl":"testurl",
-    "status":"to_do",
-    "tags":[],
-    "userIds":[],
-    "lock":[false,false,false,false],
-    "timeCreated":"2016-03-24T00:12:35.775Z",
-    "timeLastEdit":"2016-03-24T00:12:35.775Z"
-  }],
-  "inProgress": [{
-    "_id":"56f9c4b5dbbb88cd45208b75",
-    "title":"TestCard3",
-    "notes":[],
-    "documentUrl":"testurl",
-    "status":"to_do",
-    "tags":[],
-    "userIds":[],
-    "lock":[false,false,false,false],
-    "timeCreated":"2016-03-28T23:56:37.594Z",
-    "timeLastEdit":"2016-03-28T23:56:37.594Z"
-  }],
-  "complete": [{
-    "_id":"56f9c4f1dbbb88cd45208b76",
-    "title":"TestCard4",
-    "notes":[],
-    "documentUrl":"testurl",
-    "status":"to_do",
-    "tags":[],
-    "userIds":[],
-    "lock":[false,false,false,false],
-    "timeCreated":"2016-03-28T23:57:37.411Z",
-    "timeLastEdit":"2016-03-28T23:57:37.411Z"
-  }]
+var moveCardColumn = function(cardID, isMovingForward) {
+  var isCallable = true;
+  var query = '/moveCardStage/';
+
+  if (isMovingForward == 'true') query += cardID;
+  else if (isMovingForward == 'false') query += cardID + '?back=true';
+  else isCallable = false;
+
+  if (isCallable) {
+    $.ajax({
+      url: query,
+      type: 'POST',
+      contentType: 'application/json',
+      success: function() {
+        window.location.reload(true);
+      }
+    });
+  }
 };
 
 $.ajax({
-  url: 'http://localhost:3000/grants/56f33152fc88b4120a05a3e8/0/cards',
+  url: '/getDetail',
+  type: 'GET',
   dataType: 'json',
-  method: 'GET',
   async: false,
-  success: function (cards) {
+  success: function (detailView) {
+    var user = detailView.user;
+    var cards = detailView.cards;
+    cards.currentStage = user.permissions.stage;
+
+    setupCards(user, cards);
+    loadNavbar(user);
+
+    modifyCardMovement(user, cards);
+
+    var departmentName = getCurrentDepartmentName(user);
+
+    var detailGrant = '<h4>' + departmentName + '</h4>';
+    var detailDepartment = '<p>' + detailView.cards.grantTitle + '</p>';
+
+    $('#detail-grant').html(detailGrant);
+    $('#detail-department').html(detailDepartment);
+
+
     // Updates the progress bar
-    $.ajax({
-      url: 'templates/progressBar.html',
-      dataType: 'html',
-      method: 'GET',
-      async: false,
-      success: function(data) {
-        cardTemplate = Handlebars.compile(data);
-        $('#progressBar').html(cardTemplate(calculateProgress(cards)));
-      }
-    });
-    // Updates the whole board
-    $.ajax({
-      url: 'templates/detailBoard.html',
-      dataType: 'html',
-      method: 'GET',
-      async: false,
-      success: function(data) {
-        cardTemplate = Handlebars.compile(data);
-        $('#columnList').html(cardTemplate(cards));
-      }
-    });
-    // Updates the individual card modals
-    $.ajax({
-      url: 'templates/cardModal.html',
-      dataType: 'html',
-      method: 'GET',
-      async: false,
-      success: function(data) {
-        modalTemplate = Handlebars.compile(data);
-        $('#cardModals').html(modalTemplate(cards));
-      }
-    });
-  },
-  error: function (jqXHR, status, error) {
-    console.log(status);
-    if (globalVars.unloaded)
-      return;
+    if (cards) {
+      $.ajax({
+        url: '/templates/progressBar.html',
+        dataType: 'html',
+        method: 'GET',
+        async: false,
+        success: function(data) {
+          progressBarTemplate = Handlebars.compile(data);
+          $('#progressBar').html(progressBarTemplate(calculateProgress(cards)));
+        }
+      });
+      // Updates the whole board
+      $.ajax({
+        url: '/templates/detailBoard.html',
+        dataType: 'html',
+        method: 'GET',
+        async: false,
+        success: function(data) {
+          cardTemplate = Handlebars.compile(data);
+          $('#columnList > div').html(cardTemplate(cards));
+
+          // $("#preventPropagation").bind('click', function() {
+          //   event.stopPropagation();
+          // });
+        }
+      });
+      // Updates the individual card modals
+      $.ajax({
+        url: '/templates/cardModal.html',
+        dataType: 'html',
+        method: 'GET',
+        async: false,
+        success: function(data) {
+          modalTemplate = Handlebars.compile(data);
+          $('#cardModals').html(modalTemplate(cards));
+        }
+      }).then(function () {
+        for (var i in cards.complete) {
+          if (cards.complete[i].done || cards.complete[i].stageDone) {
+            $('#' + cards.complete[i]._id + ' * .editable').summernote('disable');
+          }
+        }
+      });
+    }
   }
+}).then(function () {
+  $('[data-toggle="popover"]').popover({
+    container:'body',
+    html : true
+  });
+}).then(function () {
+  // Removes tag from the card object and view
+  var removeTag = function(tag, callback) {
+    var updateParams = {$pull: {tags: tag.value}};
+
+    $.ajax({
+      url: '/cards/' + tag.cardId,
+      type: 'POST',
+      data: JSON.stringify(updateParams),
+      contentType: 'application/json',
+      success: function() {
+        callback();
+      }
+    });
+  }
+
+  // apply click for remove a tag after popover init
+  $('.remove-tag').click(function() {
+    var tag = {
+      this: $(this).parent('.card-tag'),
+      value: $(this).data('tagvalue'),
+      cardId: $(this).data('cardid')
+    };
+    removeTag(tag, function() {
+      tag.this.remove();
+    });
+  });
+
+  // Removes tags from popover
+  $('body').on('click', '.remove-tag', function() {
+    var tag = {
+      this: $(this).parent('.card-tag'),
+      value: $(this).data('tagvalue'),
+      cardId: $(this).data('cardid')
+    };
+    removeTag(tag, function() {
+      window.location.reload(true);
+    });
+  });
 });
 
-
 $.ajax({
-  url : 'templates/newCard.html',
+  url : '/templates/newCard.html',
   dataType: 'html',
   method: 'GET',
   success: function(data) {
@@ -198,6 +240,7 @@ $.ajax({
 
 $(function() {
   $('[data-toggle="tooltip"]').tooltip();
+
   $( "#cardGenCreate" ).click(function() {
     var title = $("#cardGenTitle").val();
     var body = $("#cardGenBody").html();
@@ -221,7 +264,7 @@ $(function() {
         }
       ]
     };
-    $("#columnList > div:first-child * .column").append(newCardTemplate(cardGenInfo));
+    $("#columnList > div > div:first-child * .sortable").append(newCardTemplate(cardGenInfo));
 
     var testCard = {
       title: title,
@@ -234,33 +277,196 @@ $(function() {
     }
 
     $.ajax({
-      url: 'http://localhost:3000/cards',
+      url: '/cards',
       type: 'PUT',
       data: JSON.stringify(testCard),
       contentType: 'application/json',
-      success: function(results) {
+      success: function(card) {
         // update grant here with result's _id parameter
         // might need to add progress bar updating here as well
-        var updateParams = {$inc: {cardCount: 1}, $addToSet: {"stages.0.toDo": results._id}} // Can update the specified index with the given user Permission index
+        var updateParams = {$inc: {cardCount: 1}, $addToSet: {"stages.0.toDo": card._id}};
 
         $.ajax({
-          url: 'http://localhost:3000/grants/' + '56f482f70fbb7aee0e113d10',  // replace with passed grantid
+          url: '/updateGrant',
           type: 'POST',
-          data: updateParams,
+          data: JSON.stringify(updateParams),
           contentType: 'application/json',
-          success: function(results) {
-            var test = results;
+          success: function() {
+            window.location.reload(true);
           }
         });
-
-        $('#cardModals').append(modalTemplate(result));
       }
     });
   });
+
+  // Stores card info to check for changes against
+  $('.currentCard').on('shown.bs.modal', function() {
+    currentCard.id = $(this).attr('id');
+    currentCard.title = $(this).find('.card-title').val();
+    currentCard.notes = $(this).find('.card-notes').summernote('code');
+    currentCard.documentUrl = $(this).find('.card-doc-link').val();
+    currentCard.tag = $(this).find('.card-tag-new');
+
+    // Adds a new tag to the grant
+    $('.add-tag').click(function() {
+      var cardId = currentCard.id;
+      var newTag = currentCard.tag.val();
+
+      var updateParams = {$addToSet: {tags: newTag}};
+
+      if (newTag != "" && newTag.length < 30) {
+        $.ajax({
+          url: '/cards/' + cardId,
+          type: 'POST',
+          data: JSON.stringify(updateParams),
+          contentType: 'application/json',
+          success: function() {
+            window.location.reload(true);
+          }
+        });
+      } else {
+        $('.add-tag').tooltip('show');
+
+        setTimeout(function () {
+          $('.add-tag').tooltip('hide');
+        }, 5000);
+      }
+    });
+  });
+
+  $('body').on('click', function (e) {
+    $('[data-toggle=popover]').each(function () {
+      // hide any open popovers when the anywhere else in the body is clicked
+      if (!$(this).is(e.target) && $(this).has(e.target).length === 0 && $('.popover').has(e.target).length === 0) {
+        $(this).popover('hide');
+      }
+    });
+  });
+
+  // Updates the card whenever the modal is closed
+  $('.currentCard').on('hidden.bs.modal', function () {
+    var card = {
+      id: $(this).attr('id'),
+      title: $(this).find('.card-title').val(),
+      notes: $(this).find('.card-notes').summernote('code'),
+      documentUrl: $(this).find('.card-doc-link').val()
+    };
+
+    if (isCardChanged(card)) {
+      var updateParams = {$set: {title: card.title, notes: card.notes, documentUrl: card.documentUrl}};
+
+      $.ajax({
+        url: '/cards/' + card.id,
+        type: 'POST',
+        data: JSON.stringify(updateParams),
+        contentType: 'application/json',
+        success: function() {
+          window.location.reload(true);
+        }
+      });
+    }
+  });
+
+  // Removes both modals if modalDelete gets hidden
+  $("#modalDelete").on("hidden.bs.modal", function() {
+    $(".currentCard").modal("hide");
+  });
+
+  // Deletes the current card after delete confirmation
+  $("#confirmDeleteButton").click(function() {
+    var cardId = $(".currentCard").attr("id");
+
+    $.ajax({
+      url: "/cards/" + cardId,
+      type: "DELETE",
+      contentType: "application/json",
+      success: function() {
+        window.location.reload(true);
+      },
+      error: function(data) {
+        var test = data;
+      }
+    });
+  });
+
+  // Sends the given card back for changes
+  $("#confirmSendBackButton").click(function() {
+    var cardId = $(".currentCard").attr("id");
+    moveCardColumn(cardId, 'false');
+  });
 });
 
-$('#cardGen').on('hidden.bs.modal', function () {
+$('#cardGen').on('hidden.bs.modal', function() {
   $("#cardGenTitle").val("");
-  $("#cardGenBody").val("Enter card body here.");
   $("#cardGenDocLink").val("");
 })
+
+$( ".sortable" ).sortable({
+  //When a column receives a sortable
+  receive : function (event, ui)
+  {
+    var cardID, senderColumn, receivingColumn;
+
+    //Extract Card ID
+    var innerHTML = ui.item.context.innerHTML;
+    var xmlDOC = parser.parseFromString(innerHTML, "text/xml");
+    cardID = xmlDOC.getElementById("detail-card").getAttribute("data-target").substring(1);
+
+    //Get column name for receiving column.
+    receivingColumn = event.target.parentElement.children[0].innerText;
+
+    //Get name of column it moved from
+    senderColumn = ui.sender.context.parentElement.children[0].innerText;
+
+    //TODO insert in correct position
+    moveCard(cardID, senderColumn, receivingColumn, -1);
+  }
+});
+
+function moveCard(cardID, senderColumn, receivingColumn)
+{
+  var databaseSenderColumnName = displayToDatabaseColumnName(senderColumn);
+  var databaseReceivingColumnName = displayToDatabaseColumnName(receivingColumn);
+
+  $.ajax({
+    url: 'moveCard/'+ cardID +'?curCol='+ databaseSenderColumnName +'&newCol='+ databaseReceivingColumnName,
+    type: 'POST',
+    contentType: 'application/json',
+    success: function() {
+      window.location.reload(true);
+    }
+  });
+
+  //Diagnostics
+  // console.log("CARD ID: " + cardID)
+  // console.log("Moved from column: " + databaseSenderColumnName);
+  // console.log("To column: " + databaseReceivingColumnName)
+}
+
+function displayToDatabaseColumnName(columnName)
+{
+  switch(columnName)
+  {
+    case "To Do":
+      return "toDo";
+    case "In Progress":
+      return "inProgress";
+    case "Complete":
+      return "complete";
+  }
+}
+
+function getCurrentDepartmentName(user)
+{
+  switch(parseInt(user.permissions.stage))
+  {
+    case 0:
+      return "Research";
+    case 1:
+      return "Internal";
+    case 2:
+      return "ASU";
+    case 3:
+      return "Complete";
+  }
+}

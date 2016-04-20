@@ -3,24 +3,46 @@
     <div class="column">
       <h4>
         To Do
-        <a data-toggle="modal" data-target="#cardGen"><span class="fa fa-plus-square pull-right" data-toggle="tooltip" data-placement="left" title="New Card"></span></a>
+        {{#compare currentStage "==" 0}}
+          <a data-toggle="modal" data-target="#cardGen"><span class="fa fa-plus-square pull-right" data-toggle="tooltip" data-placement="left" title="New Card"></span></a>
+        {{/compare}}
       </h4>
+      <div class="sortable">
       {{#each toDo}}
         <div class="portlet panel panel-default">
-          <div class="portlet-header panel-heading" data-toggle="modal" data-target="#{{_id}}">
+          <div class="portlet-header panel-heading" data-toggle="modal" data-target="#{{_id}}" id="detail-card">
+            {{#if moveBack}}
+              <a val="{{_id}}" data-toggle="modal" data-target="#modalNeedsWork"><span class="fa fa-backward pull-left" data-toggle="tooltip" data-placement="right" title="Needs Work"></span></a>
+            {{/if}}
+            {{#if done}}
+              <a><span class="fa fa-check fa-check-alt pull-right" data-toggle="tooltip" data-placement="left" title="Grant Complete"></span></a>
+            {{else}}
+              {{#if stageDone}}
+                <a><span class="fa fa-check pull-right" data-toggle="tooltip" data-placement="left" title="Stage Complete"></span></a>
+              {{/if}}
+            {{/if}}
             <h3 class="panel-title">{{title}}</h3>
           </div>
           <div class="portlet-content panel-body">
-            <a target="_blank" href="{{documentUrl}}" class="fa fa-file card-icons"></a>
-            {{#each tags}}
-              <span class="label label-success card-icons">{{this}}</span>
-            {{/each}}
-            {{#each userIds}}
-              <span class="fa fa-user pull-right card-icons"></span>
-            {{/each}}
+            <a target="_blank" href="{{documentUrl}}" class="fa fa-file card-icons pull-left"></a>
+            {{#compare tags.length "<=" 3}}
+              {{#each tags}}
+                <span class="label label-warning card-icons card-tag"><a class="fa fa-times remove-tag" aria-hidden="true" data-tagvalue="{{this}}" data-cardid="{{../_id}}"></a> {{this}} </span>
+              {{/each}}
+            {{else}}
+              <small class="pull-left card-tag-badge"><a tabindex="0" role="button" data-toggle="popover" data-placement="right" data-content="{{#each tags}}<span class=&quot;label label-warning card-icons card-tag&quot;><a class=&quot;fa fa-times remove-tag&quot; aria-hidden=&quot;true&quot; data-tagvalue=&quot;{{this}}&quot; data-cardid=&quot;{{../_id}}&quot;></a> {{this}} </span>{{/each}}"><span class="label label-warning badge-tags">{{tags.length}} Tags</span></a></small>
+            {{/compare}}
+            {{#compare userIds.length "<=" 3}}
+              {{#each userIds}}
+                <img class="pull-right card-icons user-img-sml img-circle" data-toggle="tooltip" title="{{name}}" src="{{imageUrl}}">
+              {{/each}}
+            {{else}}
+              <small class="pull-right card-tag-badge"><a tabindex="0" role="button" data-toggle="popover" data-trigger="focus" data-placement="left" data-content="{{#each userIds}}<img class=&quot;pull-left card-icons user-img-sml img-circle&quot; src=&quot;{{imageUrl}}&quot;>{{name}}</br>{{/each}}"><span class="label label-primary label-as-badge">{{userIds.length}} Users</span></a></small>
+            {{/compare}}
           </div>
         </div>
       {{/each}}
+      </div>
     </div>
   </div>
 </div>
@@ -31,24 +53,39 @@
       <h4>
         In Progress
       </h4>
+      <div class="sortable">
       {{#each inProgress}}
         <div class="portlet panel panel-default">
-          <div class="portlet-header panel-heading" data-toggle="modal" data-target="#{{_id}}">
+          <div class="portlet-header panel-heading" data-toggle="modal" data-target="#{{_id}}" id="detail-card">
+            {{#if done}}
+              <a><span class="fa fa-check fa-check-alt pull-right" data-toggle="tooltip" data-placement="left" title="Grant Complete"></span></a>
+            {{else}}
+              {{#if stageDone}}
+                <a><span class="fa fa-check pull-right" data-toggle="tooltip" data-placement="left" title="Stage Complete"></span></a>
+              {{/if}}
+            {{/if}}
             <h3 class="panel-title">{{title}}</h3>
           </div>
           <div class="portlet-content panel-body">
-            {{#if documentUrl}}
-              <a target="_blank" href="{{documentUrl}}" class="fa fa-file card-icons"></a>
-            {{/if}}
-            {{#each tags}}
-              <span class="label label-success card-icons">{{this}}</span>
-            {{/each}}
-            {{#each userIds}}
-              <span class="fa fa-user pull-right card-icons"></span>
-            {{/each}}
+            <a target="_blank" href="{{documentUrl}}" class="fa fa-file card-icons pull-left"></a>
+            {{#compare tags.length "<=" 3}}
+              {{#each tags}}
+                <span class="label label-warning card-icons card-tag"><a class="fa fa-times remove-tag" aria-hidden="true" data-tagvalue="{{this}}" data-cardid="{{../_id}}"></a> {{this}} </span>
+              {{/each}}
+            {{else}}
+              <small class="pull-left card-tag-badge"><a tabindex="0" role="button" data-toggle="popover" data-placement="right" data-content="{{#each tags}}<span class=&quot;label label-warning card-icons card-tag&quot;><a class=&quot;fa fa-times remove-tag&quot; aria-hidden=&quot;true&quot; data-tagvalue=&quot;{{this}}&quot; data-cardid=&quot;{{../_id}}&quot;></a> {{this}} </span>{{/each}}"><span class="label label-warning badge-tags">{{tags.length}} Tags</span></a></small>
+            {{/compare}}
+            {{#compare userIds.length "<=" 3}}
+              {{#each userIds}}
+                <img class="pull-right card-icons user-img-sml img-circle" data-toggle="tooltip" title="{{name}}" src="{{imageUrl}}">
+              {{/each}}
+            {{else}}
+              <small class="pull-right card-tag-badge"><a tabindex="0" role="button" data-toggle="popover" data-trigger="focus" data-placement="left" data-content="{{#each userIds}}<img class=&quot;pull-left card-icons user-img-sml img-circle&quot; src=&quot;{{imageUrl}}&quot;>{{name}}</br>{{/each}}"><span class="label label-primary label-as-badge">{{userIds.length}} Users</span></a></small>
+            {{/compare}}
           </div>
         </div>
       {{/each}}
+      </div>
     </div>
   </div>
 </div>
@@ -59,24 +96,43 @@
       <h4>
         Complete
       </h4>
+      <div class="sortable">
       {{#each complete}}
-        <div class="portlet panel panel-default">
-          <div class="portlet-header panel-heading" data-toggle="modal" data-target="#{{_id}}">
+        <div class="portlet panel panel-default {{#if done}}disable-sort{{/if}} {{#if stageDone}}disable-sort{{/if}}">
+          <div class="portlet-header panel-heading" data-toggle="modal" data-target="#{{_id}}" id="detail-card">
+            {{#if done}}
+              <a><span class="fa fa-check fa-check-alt pull-right" data-toggle="tooltip" data-placement="left" title="Grant Complete"></span></a>
+            {{else}}
+              {{#if stageDone}}
+                <a><span class="fa fa-check pull-right" data-toggle="tooltip" data-placement="left" title="Stage Complete"></span></a>
+              {{else}}
+                {{#if moveForward}}
+                  <a id="preventPropagation" onclick="moveCardColumn('{{_id}}', 'true')"><span class="fa fa-forward pull-right" data-toggle="tooltip" data-placement="left" title="Approve"></span></a>
+                {{/if}}
+              {{/if}}
+            {{/if}}
             <h3 class="panel-title">{{title}}</h3>
           </div>
           <div class="portlet-content panel-body">
-            {{#if documentUrl}}
-              <a target="_blank" href="{{documentUrl}}" class="fa fa-file card-icons"></a>
-            {{/if}}
-            {{#each tags}}
-              <span class="label label-success card-icons">{{this}}</span>
-            {{/each}}
-            {{#each userIds}}
-              <span class="fa fa-user pull-right card-icons"></span>
-            {{/each}}
+            <a target="_blank" href="{{documentUrl}}" class="fa fa-file card-icons pull-left"></a>
+            {{#compare tags.length "<=" 3}}
+              {{#each tags}}
+                <span class="label label-warning card-icons card-tag"><a class="fa fa-times remove-tag" aria-hidden="true" data-tagvalue="{{this}}" data-cardid="{{../_id}}"></a> {{this}} </span>
+              {{/each}}
+            {{else}}
+              <small class="pull-left card-tag-badge"><a tabindex="0" role="button" data-toggle="popover" data-placement="right" data-content="{{#each tags}}<span class=&quot;label label-warning card-icons card-tag&quot;><a class=&quot;fa fa-times remove-tag&quot; aria-hidden=&quot;true&quot; data-tagvalue=&quot;{{this}}&quot; data-cardid=&quot;{{../_id}}&quot;></a> {{this}} </span>{{/each}}"><span class="label label-warning badge-tags">{{tags.length}} Tags</span></a></small>
+            {{/compare}}
+            {{#compare userIds.length "<=" 3}}
+              {{#each userIds}}
+                <img class="pull-right card-icons user-img-sml img-circle" data-toggle="tooltip" title="{{name}}" src="{{imageUrl}}">
+              {{/each}}
+            {{else}}
+              <small class="pull-right card-tag-badge"><a tabindex="0" role="button" data-toggle="popover" data-trigger="focus" data-placement="left" data-content="{{#each userIds}}<img class=&quot;pull-left card-icons user-img-sml img-circle&quot; src=&quot;{{imageUrl}}&quot;>{{name}}</br>{{/each}}"><span class="label label-primary label-as-badge">{{userIds.length}} Users</span></a></small>
+            {{/compare}}
           </div>
         </div>
       {{/each}}
+      </div>
     </div>
   </div>
 </div>

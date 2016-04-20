@@ -1,6 +1,6 @@
 {
   "name": "kanbosal-service",
-  "version": "0.0.2",
+  "version": "0.0.9",
   "license": "MIT",
   "private": true,
   "contributors": [
@@ -19,7 +19,8 @@
   },
   "dependencies": {
     "body-parser": "^1.15.0",
-    "cors": "^2.7.1",
+    "client-sessions": "^0.7.0",
+    "ejs": "^2.4.1",
     "express": "~4.13.4",
     "mongodb": "~2.1.7"
   },

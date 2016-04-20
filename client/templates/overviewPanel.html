@@ -1,46 +1,63 @@
-{{#if grant}}
-  {{#each grant}}
+{{#if grants}}
+  {{#each grants}}
   <div class="grant-panel tab-left">
     <div>
       <div class="grant-info">
-        <a href="detail" title="{{title}}">{{title}}</a><br>
+        <span data-toggle="tooltip" data-placement="top" title="Modify Grant"><a class="fa fa-pencil-square" data-toggle="modal" data-target="#grantEdit" data-grantid="{{_id}}"></a></span> <a href="detail/{{_id}}" title="{{title}}">{{title}}</a><br>
         {{#if url}}
         <small><small><strong><a href="{{url}}" target="_blank">View Official Grant</a></strong></small></small>
         {{/if}}
       </div>
       <div class="grant-content">
         {{!-- since each grant will for sure have a stage, even if no cards, check not needed --}}
-        {{#each stage}}
-        <div class="col-xs-3">
-          <div>
-            {{#compare @index "<=" 2}}
-            {{#compare (math complete.length "+" (math inProgress.length "+" toDo.length)) "===" 0}}
-            <div class="progress" data-toggle="tooltip" data-placement="top" title="{{math complete.length "+" (math inProgress.length "+" toDo.length)}} items">
-            {{/compare}}
-            {{#compare (math complete.length "+" (math inProgress.length "+" toDo.length)) "!=" 0}}
-            <div class="progress">
-            {{/compare}}
-              <div class="progress-bar progress-bar-warning" style="width:{{math (math toDo.length "/" (math complete.length "+" (math inProgress.length "+" toDo.length))) "*" 100}}%" data-toggle="tooltip" data-placement="top" title="{{toDo.length}} of {{math complete.length "+" (math inProgress.length "+" toDo.length)}} not yet started">
-                {{!-- <span class="sr-only">{{math (math toDo.length "/" (math complete.length "+" (math inProgress.length "+" toDo.length))) "*" 100}}%</span> --}}
+        <div class="row">
+          {{#each stages}}
+          <div class="col-xs-3">
+            <div>
+              {{#compare @index "<=" 2}}
+              {{#compare (math complete.length "+" (math inProgress.length "+" toDo.length)) "===" 0}}
+              <div class="progress" data-toggle="tooltip" data-placement="top" title="{{math complete.length "+" (math inProgress.length "+" toDo.length)}} items">
+              {{/compare}}
+              {{#compare (math complete.length "+" (math inProgress.length "+" toDo.length)) "!=" 0}}
+              <div class="progress">
+              {{/compare}}
+                <div class="progress-bar progress-bar-warning" style="width:{{math (math toDo.length "/" (math complete.length "+" (math inProgress.length "+" toDo.length))) "*" 100}}%" data-toggle="tooltip" data-placement="top" title="{{toDo.length}} of {{math complete.length "+" (math inProgress.length "+" toDo.length)}} not yet started">
+                  <span class="sr-only">{{math (math toDo.length "/" (math complete.length "+" (math inProgress.length "+" toDo.length))) "*" 100}}%</span>
+                </div>
+                <div class="progress-bar progress-bar-info" style="width:{{math (math inProgress.length "/" (math complete.length "+" (math inProgress.length "+" toDo.length))) "*" 100}}%" data-toggle="tooltip" data-placement="top" title="{{inProgress.length}} of {{math complete.length "+" (math inProgress.length "+" toDo.length)}} in progress">
+                  <span class="sr-only">{{math (math inProgress.length "/" (math complete.length "+" (math inProgress.length "+" toDo.length))) "*" 100}}%</span>
+                </div>
+                <div class="progress-bar progress-bar-success" style="width:{{math (math complete.length "/" (math complete.length "+" (math inProgress.length "+" toDo.length))) "*" 100}}%" data-toggle="tooltip" data-placement="top" title="{{complete.length}} of {{math complete.length "+" (math inProgress.length "+" toDo.length)}} completed">
+                  <span class="sr-only">{{math (math complete.length "/" (math complete.length "+" (math inProgress.length "+" toDo.length))) "*" 100}}%</span>
+                </div>
               </div>
-              <div class="progress-bar progress-bar-info" style="width:{{math (math inProgress.length "/" (math complete.length "+" (math inProgress.length "+" toDo.length))) "*" 100}}%" data-toggle="tooltip" data-placement="top" title="{{inProgress.length}} of {{math complete.length "+" (math inProgress.length "+" toDo.length)}} in progress">
-                {{!-- <span class="sr-only">{{math (math inProgress.length "/" (math complete.length "+" (math inProgress.length "+" toDo.length))) "*" 100}}%</span> --}}
+              {{/compare}}
+              {{#compare @index "===" 3}}
+              <div class="progress" data-toggle="tooltip" data-placement="top" title="Complete: {{cards.length}} of {{../cardCount}}">
+                <div class="progress-bar progress-bar-success" style="width:{{math (math cards.length "/" ../cardCount) "*" 100}}%">
+                  <span class="sr-only">{{math cards.length "/" ../cardCount}}%</span>
+                </div>
               </div>
-              <div class="progress-bar progress-bar-success" style="width:{{math (math complete.length "/" (math complete.length "+" (math inProgress.length "+" toDo.length))) "*" 100}}%" data-toggle="tooltip" data-placement="top" title="{{complete.length}} of {{math complete.length "+" (math inProgress.length "+" toDo.length)}} completed">
-                {{!-- <span class="sr-only">{{math (math complete.length "/" (math complete.length "+" (math inProgress.length "+" toDo.length))) "*" 100}}%</span> --}}
-              </div>
+              {{/compare}}
             </div>
-            {{/compare}}
-            {{#compare @index "===" 3}}
-            <div class="progress" data-toggle="tooltip" data-placement="top" title="Complete: {{cards.length}} of {{../cardCount}}">
-              <div class="progress-bar progress-bar-success" style="width:{{math (math cards.length "/" ../cardCount) "*" 100}}%">
-                <span class="sr-only">{{math cards.length "/" ../cardCount}}%</span>
-              </div>
-            </div>
-            {{/compare}}
+            {{#if ../../departmentNames}}
+              {{#compare @index '==' ../../currentDepartment}}
+                <a class="btn btn-xs btn-gold btn-block" onclick="loadDepartment('{{../_id}}', '{{@index}}')">Jump To {{lookup ../../departmentNames @index}}</a>
+              {{/compare}}
+              {{#compare @index '<' 3}}
+                {{#compare @index '!=' ../../currentDepartment}}
+                  <a class="btn btn-xs btn-secondary btn-block" onclick="loadDepartment('{{../_id}}', '{{@index}}')">Jump To {{lookup ../../departmentNames @index}}</a>
+                {{/compare}}
+              {{/compare}}
+            {{/if}}
+          </div>
+          {{/each}}
+        </div>
+        <div class="row">
+          <div class="col-xs-12" style="padding-top:15px;">
+            <strong>Description:</strong> {{{description}}}
           </div>
         </div>
-        {{/each}}
       </div>
     </div>
   </div>

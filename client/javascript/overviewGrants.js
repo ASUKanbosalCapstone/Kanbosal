@@ -1,115 +1,57 @@
 var template;
-var user = {
-  "name" : "string",        //google email -- use as ref when user logs in?
-  "email" : "string",
-  "hashKey" : "string",       //from google auth, stored hash
-  "imageUrl" : "string",
-  "title" : "string",
-  "description" : "string",
-  "permissions" : {
-    "level" : "int",        //normal (0), PI (1), etc
-    "department" : "string"     //Research, Internal, ASU, etc
-  }//,
-  // "grantIds" : [input.grant[0], input.grant[1], input.grant[2]]   //grants they have access to
-};
-var card = {
-  "title" : "string",
-  "notes" : ["string"],       //array of strings using boots
-  "documentUrl" : "string",        //url to document
-  "timeCreated" : "datetime",
-  "timeLastEdit" : "datetime",
-  "tags" : ["string"],        //might be unnecessary
-  "userIds" : ["string"]      //users who have contributed
-};
-var input = {
-  "grant" : [{
-    "title" : "NSF Career",
-    "description" : "Example description of this grant proposal.",
-    "url" : "http://www.nsf.gov/awardsearch/showAward?AWD_ID=1323753&HistoricalAwards=false",
-    "users" : [user, user, user, user],
-    "cardCount" : 7,
-    "stage" : [{
-      "progress" : "28.5714286",
-      "toDo" : [card, card, card, card],
-      "inProgress" : [card, card],
-      "complete" : [card]
-    }, {
-      "progress" : 0,
-      "toDo" : [card],                  //this = research.complete[]
-      "inProgress" : [],
-      "complete" : []
-    }, {
-      "progress" : 0,
-      "toDo" : [],                      //this = internal.complete[]
-      "inProgress" : [],
-      "complete" : []
-    }, {
-      "progress" : 0,
-      "cards" : []                      //this = asu.complete[]
-    }]
-  }, {
-    "title" : "NSF Air Force",
-    "description" : "This is also a description of the grant proposal.",
-    "url" : "http://www.nsf.gov/awardsearch/showAward?AWD_ID=1313312&HistoricalAwards=false",
-    "users" : [user, user, user, user],
-    "cardCount" : 10,
-    "stage" : [{
-      "progress" : 28.5714286,
-      "toDo" : [card, card],
-      "inProgress" : [card, card],
-      "complete" : [card, card, card, card, card, card]
-    }, {
-      "progress" : 0,
-      "toDo" : [card],                  //this = research.complete[]
-      "inProgress" : [card, card],
-      "complete" : [card, card, card]
-    }, {
-      "progress" : 0,
-      "toDo" : [],                      //this = internal.complete[]
-      "inProgress" : [],
-      "complete" : [card, card, card]
-    }, {
-      "progress" : 0,
-      "cards" : [card, card, card]                      //this = asu.complete[]
-    }]
-  }, {
-    "title" : "NSF Air Force Copy",
-    "description" : "This is also a description of the grant proposal.",
-    "url" : null,
-    "users" : [user, user, user, user],
-    "cardCount" : 10,
-    "stage" : [{
-      "progress" : 28.5714286,
-      "toDo" : [],
-      "inProgress" : [],
-      "complete" : [card, card, card, card, card, card, card, card, card, card]
-    }, {
-      "progress" : 0,
-      "toDo" : [card],                  //this = research.complete[]
-      "inProgress" : [card, card, card, card, card, card],
-      "complete" : [card, card, card]
-    }, {
-      "progress" : 0,
-      "toDo" : [card],                      //this = internal.complete[]
-      "inProgress" : [],
-      "complete" : [card, card]
-    }, {
-      "progress" : 0,
-      "cards" : [card, card]                      //this = asu.complete[]
-    }]
-  }]
+var user;
+var grantid;
+
+var loadDepartmentNavigation = function(overview) {
+  if(overview.user.permissions.level == 1) {
+    var stages = ["Research", "Internal", "ASU", "Complete"];
+
+    overview.departmentNames = stages;
+    overview.currentDepartment = overview.user.permissions.stage;
+  }
 };
 
-$(function () {
+var loadDepartment = function(grantID, stageIndex) {
+  var query = '/setAdminStage?stage=' + stageIndex;
   $.ajax({
-    url : 'http://localhost:3000/users/' + '56f74e27bfc234c01809b0c7' + '/grants',
-    dataType: 'html',
-    method: 'GET',
-    success: function(json) {
-      var cardsArray = JSON.parse(json);
-      var retrieved = {
-        "grant" : cardsArray
-      };
+    url: query,
+    type: 'POST',
+    contentType: 'application/json',
+    success: function() {
+      window.location = '/detail/' + grantID;
+    }
+  });
+};
+
+var editGrant = function (grantid) {
+  jsonObj = {
+    title: $('#grantNameEdit').val(),
+    description: $('#grantDescriptionEdit').summernote('code'),
+    url: $('#grantUrlEdit').val()
+  };
+
+  $.ajax({
+    url: '/grants/' + grantid,
+    type: 'POST',
+    contentType: 'application/json',
+    data: JSON.stringify({
+      $set: jsonObj
+    }),
+  }).done(function() {
+    window.location.reload(true);
+  });
+}
+
+$(function() {
+  $.ajax({
+    url: 'getOverview',
+    type: 'GET',
+    dataType: 'json',
+    success: function(overview) {
+      user = overview.user;
+      loadNavbar(user);
+
+      loadDepartmentNavigation(overview);
 
       $.ajax({
         url : 'templates/overviewPanel.html',
@@ -117,29 +59,110 @@ $(function () {
         method: 'GET',
         success: function(data) {
           template = Handlebars.compile(data);
-          $("#overviewContent").append(template(retrieved));
+          $("#overviewContent").append(template(overview));
           $('[data-toggle="tooltip"]').tooltip({container:'body'});
         }
       });
     }
   });
 
-  $('#grant-descr-editor').markdown({
-    resize: 'vertical',
-    iconlibrary: 'fa',
-    hiddenButtons: ['cmdPreview'],
-    fullscreen: {
-      enable: false
-    },
-    footer: '<small><div id="grant-descr-editor-ftr"></div></small>',
-    onChange: function(e) {
-      var content = e.parseContent();
-      $('#grant-descr-editor-ftr').show().html(content);
-    }
-  });
-
   $('#grantGen * [data-toggle="popover"]').popover({
     container:'body',
     html : true
+  });
+
+  $('#grantEdit').on('show.bs.modal', function (event) {
+    var button = $(event.relatedTarget); // Button that triggered the modal
+    grantid = button.data('grantid'); // Extract info from data-* attributes
+    var modal = $(this);
+
+    $.ajax({
+      url: '/grants/' + grantid,
+      type: 'GET',
+      dataType: 'json'
+    }).done(function(data) {
+      $('#grantNameEdit').val(data.title);
+      $('#grantUrlEdit').val(data.url);
+      $('#grantDescriptionEdit').summernote('code', data.description);
+      $('#grantEditSubmit').click(function () {
+        editGrant(grantid);
+      });
+      // $('#grantEditDismiss').click(function () {
+      //   $('#grantEditSubmit').unbind();
+      // })
+    });
+  });
+
+  $("#cardGenCreate").click(function () {
+    var grantDescription = $("#grantDescription").summernote('code');
+    var grantName = $("#grantName").val();
+    var grantUrl = $("#grantUrl").val();
+
+    var myGrant = {
+      title : grantName,
+      description : grantDescription,
+      url : grantUrl,
+      users : [],
+      cardCount : 0,
+      stages: [
+        {
+          progress: 0.0,
+          toDo: [],
+          inProgress: [],
+          complete: []
+        },
+        {
+          progress: 0.0,
+          toDo: [],
+          inProgress: [],
+          complete: []
+        },
+        {
+          progress: 0.0,
+          toDo: [],
+          inProgress: [],
+          complete: []
+        },
+        {
+          progress: 0.0,
+          cards: []
+        }
+      ]
+    };
+
+    $.ajax({
+      url: '/grants',
+      type: 'PUT',
+      data: JSON.stringify(myGrant),
+      contentType: 'application/json',
+      success: function(result) {
+        var updateObj = {$addToSet: {grantIds: result._id}};
+
+        $.ajax({
+          url: '/users/' + user._id,
+          type: 'POST',
+          contentType: 'application/json',
+          data: JSON.stringify(updateObj),
+          success: function() {
+            window.location.reload(true);
+          }
+        });
+      }
+    });
+  })
+
+  $('#modalDelete').on('hidden.bs.modal', function() {
+    $('#grantEdit').modal('hide');
+  });
+
+  $('#confirmDeleteButton').click(function() {
+    $.ajax({
+      url: '/grants/' + grantid,
+      type: 'DELETE',
+      contentType: 'application/json',
+      success: function() {
+        window.location.reload(true);
+      }
+    });
   });
 });

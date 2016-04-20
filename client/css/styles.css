@@ -32,24 +32,56 @@ h6 { font-size: 16px; font-style: italic; }
     background-color: #353535;
 }
 
+.flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 /* bootstrap style mods begin */
-.btn-primary {
-    background-color: #a30046;
-    border: 1px solid transparent;
+.btn:focus, .btn:active:focus {
+    outline: 0 none!important;
+}
+.btn:hover, .btn:focus {
+    border: 1px solid transparent!important;
+    color: #505050;
+    text-decoration: none!important;
 }
 
-.btn-primary:hover {
-    background-color: #d13252;
-    border: 1px solid transparent;
+.btn-primary { 
+    color: #ffffff;
+    background-color: #a30046!important;
+}
+.btn-primary:hover, .btn-primary:focus, .btn-primary:active { 
+    color: #ffffff;
+    background-color: #d13252!important;
 }
 
-.btn-gold {
+.btn-gold { 
     color: #2a2a2a;
-    background-color: #ffc425;
+    background-color: #ffc425!important;
+}
+.btn-gold:hover, .btn-gold:focus, .btn-gold:active { 
+    color: #2a2a2a;
+    background-color: #ffcf54!important;
 }
 
-.btn-gold:hover {
-    background-color: #ffcf54;
+.btn-blue { 
+    color: #ffffff;
+    background-color: #009cdb!important;
+}
+.btn-blue:hover, .btn-blue:focus, .btn-blue:active { 
+    color: #ffffff;
+    background-color: #0aa9fc!important;
+}
+
+.btn-secondary { 
+    color: #2a2a2a;
+    background-color: #dbdbdb!important;
+}
+.btn-secondary:hover, .btn-secondary:focus, .btn-secondary:active { 
+    color: #2a2a2a;
+    background-color: #f2f2f2!important;
 }
 
 /* asu secondary color */
@@ -87,13 +119,22 @@ h6 { font-size: 16px; font-style: italic; }
     padding: 40px 15px;
 }
 
+.fa {
+  border: 0 !important;
+}
+
 .navbar * a, #sidebar * a, .btn,
 .navbar * a:hover, #sidebar * a:hover, .btn:hover,
 .fa, .glyphicon, .fa:hover, .glyphicon:hover {
-    border-bottom: 0;
+    border: 1px solid transparent;
 }
 
-a, a:hover {
+.fa-check-alt {
+  color: green;
+}
+
+a, a:hover,
+button, button:hover {
     text-decoration: none;
     transition: all 0.25s ease-in-out 0s;
 }
@@ -226,8 +267,8 @@ footer h2 {
     padding-right: 30px;
 }
 
-.panel-tabs > div {
-    padding-right: 0;
+.panel-tabs > div > div {
+    padding-left: 0;
 }
 
 /* when using this class, child must be div for borders*/
@@ -255,9 +296,9 @@ footer h2 {
     display: inline-block;
     white-space: nowrap;
     overflow: hidden;
-    width: 11.7%;
+    width: calc(15% - 15px);
     text-overflow: ellipsis;
-    padding-left: 2%;
+    padding-left: 15px;
 }
 
 .grant-info > a {
@@ -267,11 +308,11 @@ footer h2 {
 .grant-content, .panel-tabs {
     float: right;
     display: inline-block;
-    width: 88%;
+    width: 85%;
 }
 
-.grant-content > div {
-    padding-left: 30px;
+.grant-content > div > div {
+    padding: 0 30px 0 15px;
 }
 
 .grant-content * .progress {
@@ -299,9 +340,29 @@ footer h2 {
   color: #a30046;
 }
 
+.delete-buttons {
+  text-align: center;
+}
+
 .modal {
   padding-bottom: 5em;
   text-align: center;
+}
+
+.modal-footer > div {
+  float: none;
+  overflow: hidden;
+  margin-right: 10px;
+  margin-bottom: 5px;
+}
+
+#cardGenCreate, .card-open-link, .card-delete, .add-tag {
+  float: right;
+  margin-left: 5px;
+}
+
+.edit-time {
+  margin-top: 5px;
 }
 
 @media screen and (min-width: 768px) {
@@ -361,14 +422,50 @@ footer h2 {
 }
 
 .card-icons {
-    margin: 0 5px;
+  margin: 4px 5px 0 5px;
+}
+
+.card-tag-badge {
+  margin: 0 5px 0 5px;
+}
+
+.user-img-sml {
+  width: 18px;
+  height: 18px;
+  margin: 2px 5px 0 5px;
+}
+
+.card-tag {
+  display: inline-block;
+  margin-left: 5px;
+  color: #2a2a2a;
+  background-color: #ffc425;
+  font-weight: normal;
 }
 
 .detail-card-placeholder {
-    border: 1px dotted black;
-    margin: 2px;
-    margin-bottom: 5px;
-    height: 100%;
+  border: 1px dotted black;
+  margin: 2px;
+  margin-bottom: 5px;
+  height: 100%;
+}
+
+.badge-tags {
+  border-radius: 1em;
+  color: #2a2a2a;
+  background-color: #ffc425;
+  font-weight: normal;
+}
+
+.label-as-badge {
+  border-radius: 1em;
+  color: #ffffff;
+  background-color: #d13252;
+  font-weight: normal;
+}
+
+.card-tag-new {
+  width: 35%;
 }
 
 
@@ -472,4 +569,37 @@ footer h2 {
 
 #hero * h2 {
     color: #8C1D40;
+}
+
+/* 
+ ------------------------------------------------------------------------------------------
+                                      Admin Page
+ ------------------------------------------------------------------------------------------
+ */
+
+/* single line styling to prevent wrap by adding ellipses */
+.overflow-ellipses {
+    display: inline-block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 100%;
+}
+
+#pendingUsers * img {
+    max-width: 50px;
+}
+
+#inactiveUsers * img, .dept-users * img {
+    max-width: 22px;
+    display: inline-block;
+    margin-right: 4px;
+}
+
+#selectGrantsEdit, #selectedGrantsEdit,
+#selectGrantsConfirm, #selectedGrantsConfirm {
+  display: inline-block!important;
+  width: calc(100% - 44px)!important;
+  width: -moz-calc(100% - 44px)!important;
+  width: -webkit-calc(100% - 44px)!important;
 }

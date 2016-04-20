@@ -1,8 +1,8 @@
 $(function() {
-  $( ".column" ).sortable({
-    connectWith: ".column",
+  $( ".sortable" ).sortable({
+    connectWith: ".sortable",
     handle: ".portlet-header",
-    cancel: ".portlet-toggle",
+    cancel: ".disable-sort",//".portlet-toggle",
     placeholder: "portlet-placeholder ui-corner-all"
   });
 

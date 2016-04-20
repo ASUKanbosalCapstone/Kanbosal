@@ -7,11 +7,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="google-signin-client_id" content="994369169298-85bcp2rukasedk61fu4rl6o4q4na71vq.apps.googleusercontent.com">
   <title>Kanbosal</title>
-  
+
   <!-- css libraries -->
   <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet" integrity="sha256-MfvZlkHCEqatNoGiOXveE8FIwMzZg4W85qfrfIFBfYc= sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ==" crossorigin="anonymous">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-markdown/2.10.0/css/bootstrap-markdown.min.css">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+  <link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.1/summernote.css" rel="stylesheet">
 
   <!-- local stylesheets -->
   <link rel="stylesheet" type="text/css" href="css/styles.css">
@@ -19,9 +19,7 @@
   <!-- js libraries -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js" integrity="sha512-K1qjQ+NcF2TYO/eI3M6v8EiNYZfA95pQumfvcVrTHtwQVDG+aHRqLi/ETn2uB+1JqwYqVG3LIvdm9lj6imS/pQ==" crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-markdown/2.10.0/js/bootstrap-markdown.js"></script>
-  <script src="http://www.codingdrama.com/bootstrap-markdown/js/markdown.js"></script>
-  <script src="http://www.codingdrama.com/bootstrap-markdown/js/to-markdown.js"></script>
+  <script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.1/summernote.js"></script>
   <script src="https://apis.google.com/js/platform.js?onload=onLoad" async defer></script>
   <script src="javascript/authentication.js"></script>
 
@@ -45,29 +43,12 @@
             </div>
             <div class="form-group">
               <label class="col-sm-3 control-label" for="grantUrl">Official URL</label>
-              <div class="col-sm-9"><input type="text" class="form-control" id="grantUrl" placeholder="http:// (nsf.gov, usda.gov, grants.gov, etc.)"></div>
+              <div class="col-sm-9"><input type="text" class="form-control" id="grantUrl" placeholder="https:// (nsf.gov, usda.gov, grants.gov, etc.)"></div>
             </div>
             <div class="form-group">
-              <label class="col-sm-3 control-label">
-                <small><a tabindex="0" class="fa fa-fw fa-question-circle" role="button" data-toggle="popover" data-trigger="focus" data-placement="right" title="Need help with markdown text?" data-content="Refer to the <a href=&quot;https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet&quot; target=&quot;_blank&quot;>Markdown Cheatsheet</a>. Some syntax may differ. <small class=&quot;text-info&quot;>Tip: add a blank line between sections to appropriately render the markdown.</small>"></a></small>&nbsp; Description
-              </label>
+              <label class="col-sm-3 control-label" for="grantDescription">Description</label>
               <div class="col-sm-9">
-                <textarea id="grant-descr-editor" class="form-control" rows="5">### Test
-This is an example piece of markdown. To see a preview of the rendered markdown, start typing!
-
-- Lists
-- and
-- stuff</textarea>
-              </div>
-            </div>
-            <div class="form-group">
-              <label class="col-sm-3 control-label" for="grantTemplate">Template</label>
-              <div class="col-sm-9">
-                <select class="form-control" id="grantTemplate">
-                  <option>Template One</option>
-                  <option>Template Two</option>
-                  <option>Custom (blank)</option>
-                </select>
+                <div class="editable" id="grantDescription"></div>
               </div>
             </div>
           </form>
@@ -80,36 +61,86 @@ This is an example piece of markdown. To see a preview of the rendered markdown,
     </div>
   </div>
 
+  <div class="modal fade" id="grantEdit" tabindex="-1" role="dialog" aria-labelledby="detailModalLabel">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <div class="modal-title">
+            <h3>Edit Grant</h3>
+          </div>
+        </div>
+        <div class="modal-body">
+          <form class="form-horizontal">
+            <div class="form-group">
+              <label class="col-sm-3 control-label" for="grantNameEdit">Grant Name</label>
+              <div class="col-sm-9"><input type="text" class="form-control" id="grantNameEdit" placeholder="grant name"></div>
+            </div>
+            <div class="form-group">
+              <label class="col-sm-3 control-label" for="grantUrlEdit">Official URL</label>
+              <div class="col-sm-9"><input type="text" class="form-control" id="grantUrlEdit" placeholder="https:// (nsf.gov, usda.gov, grants.gov, etc.)"></div>
+            </div>
+            <div class="form-group">
+              <label class="col-sm-3 control-label" for="grantDescriptionEdit">Description</label>
+              <div class="col-sm-9">
+                <div class="editable" id="grantDescriptionEdit"></div>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <a class="btn btn-primary pull-left" id="grantEditDismiss" data-toggle="modal" data-target="#modalDelete">Delete</a>
+          <a class="btn btn-primary" id="grantEditDismiss" data-dismiss="modal">Cancel</a>
+          <a class="btn btn-gold" id="grantEditSubmit" data-dismiss="modal">Confirm Changes</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="modalDelete" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="detailModalLabel">
+    <div class="modal-dialog modal-sm" role="document">
+      <div class="modal-content">
+        <div class="modal-body">
+          Are you sure you want to delete this grant? (This cannot be undone!)
+        </div>
+        <div class="modal-footer delete-buttons">
+          <div class="row" style="margin-right:-15px;">
+            <div class="col-xs-6"><a class="btn btn-block btn-gold" data-dismiss="modal" aria-label="Close">Cancel</a></div>
+            <div class="col-xs-6"><a id="confirmDeleteButton" class="btn btn-block btn-primary" data-dismiss="modal">Delete</a></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <div id="wrapper">
     <nav class="navbar navbar-inverse navbar-fixed-top"></nav>
-
     <div id="content">
       <div id="contentview" class="container-fluid toggled">
         <div class="container-fluid vert-panels">
           <div class="panel-tabs">
-            <div class="col-xs-3">
-              <div class="tab-top">
-                <div>
-                  <h4>
-                    Research
-                    <a data-toggle="modal" data-target="#grantGen"><span class="fa fa-plus-square pull-right" data-toggle="tooltip" data-placement="left" title="Add Grant"></span></a>
-                  </h4>
+            <div class="row">
+              <div class="col-xs-3">
+                <div class="tab-top">
+                  <div>
+                    <h4 class="overflow-ellipses" style="width:calc(100% - 30px)!important; display:inline-block!important; vertical-align:bottom;">Research</h4><h4 style="width:30px; padding-left:7px; display:inline-block!important;"><a data-toggle="modal" data-target="#grantGen"><span class="fa fa-plus-square" data-toggle="tooltip" data-placement="left" title="Add Grant"></span></a>
+                    </h4>
+                  </div>
                 </div>
               </div>
-            </div>
-            <div class="col-xs-3">
-              <div class="tab-top">
-                <div><h4>Internal</h4></div>
+              <div class="col-xs-3">
+                <div class="tab-top">
+                  <div><h4>Internal</h4></div>
+                </div>
               </div>
-            </div>
-            <div class="col-xs-3">
-              <div class="tab-top">
-                <div><h4>ASU</h4></div>
+              <div class="col-xs-3">
+                <div class="tab-top">
+                  <div><h4>ASU</h4></div>
+                </div>
               </div>
-            </div>
-            <div class="col-xs-3">
-              <div class="tab-top">
-                <div><h4>Complete</h4></div>
+              <div class="col-xs-3">
+                <div class="tab-top">
+                  <div><h4>Complete</h4></div>
+                </div>
               </div>
             </div>
           </div>
@@ -127,6 +158,7 @@ This is an example piece of markdown. To see a preview of the rendered markdown,
   <script src="javascript/overviewGrants.js"></script>
   <script src="javascript/navbar.js"></script>
   <script src="javascript/footer.js"></script>
+  <script src="/javascript/summernoteMods.js"></script>
 
 </body>
 </html>

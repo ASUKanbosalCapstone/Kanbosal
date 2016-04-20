@@ -1,24 +1,35 @@
 {{#each toDo}}
-  <div class="modal fade" id="{{_id}}" tabindex="-1" role="dialog" aria-labelledby="detailModalLabel">
+  <div class="modal fade currentCard" id="{{_id}}" tabindex="-1" role="dialog" aria-labelledby="detailModalLabel">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
           <div class="modal-title">
             <form id="modalHeader">
-              <input class="form-control" id="myModalLabel" value="{{title}}" placeholder="Enter a title here!">
+              <input class="form-control card-title" id="myModalLabel" value="{{title}}" placeholder="Enter a title here!">
             </form>
           </div>
         </div>
         <div class="modal-body">
-          <div class="editable">
+          <div id="summernote" class="editable card-notes">
             {{{notes}}}
           </div>
         </div>
         <div class="modal-footer">
-          <p>Lasted Edited: {{timeLastEdit}}</p>
-          <a class="btn btn-primary" data-dismiss="modal">Close</a>
-          <a class="btn btn-gold" target="_blank" href="{{documentUrl}}">Open Document</a>
+          <div display="inline-block">
+            <form>
+              <input class="form-control card-tag-new pull-left" placeholder="Add new tag">
+            </form>
+            <a class="btn btn-gold add-tag pull-left" data-toggle="tooltip" data-placement="top" title="Tag must be between 1 and 30 characters" data-trigger="manual">Add</a>
+            <div class="edit-time pull-right">Last Edited: {{timeLastEdit}}</div>
+          </div>
+          <a class="btn btn-primary card-delete" data-toggle="modal" data-target="#modalDelete">Delete</a>
+          <a class="btn btn-gold card-open-link" target="_blank" href="{{documentUrl}}">Open Document</a>
+          <div>
+            <form>
+              <input class="form-control" placeholder="Enter a document link here!" value="{{documentUrl}}">
+            </form>
+          </div>
         </div>
       </div>
     </div>
@@ -26,26 +37,37 @@
 {{/each}}
 
 {{#each inProgress}}
-  <div class="modal fade" id="{{_id}}" tabindex="-1" role="dialog" aria-labelledby="detailModalLabel">
+  <div class="modal fade currentCard" id="{{_id}}" tabindex="-1" role="dialog" aria-labelledby="detailModalLabel">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
           <div class="modal-title">
             <form id="modalHeader">
-              <input class="form-control" id="myModalLabel" value="{{title}}" placeholder="Enter a title here!">
+              <input class="form-control card-title" id="myModalLabel" value="{{title}}" placeholder="Enter a title here!">
             </form>
           </div>
         </div>
         <div class="modal-body">
-          <div class="editable">
+          <div id="summernote" class="editable card-notes">
             {{{notes}}}
           </div>
         </div>
         <div class="modal-footer">
-          <p>Lasted Edited: {{timeLastEdit}}</p>
-          <a class="btn btn-primary" data-dismiss="modal">Close</a>
-          <a class="btn btn-gold" target="_blank" href="{{documentUrl}}">Open Document</a>
+          <div display="inline-block">
+            <form>
+              <input class="form-control card-tag-new pull-left" placeholder="Add new tag">
+            </form>
+            <a class="btn btn-gold add-tag pull-left" data-toggle="tooltip" data-placement="top" title="Tag must be between 1 and 30 characters" data-trigger="manual">Add</a>
+            <div class="edit-time pull-right">Last Edited: {{timeLastEdit}}</div>
+          </div>
+          <a class="btn btn-primary card-delete" data-toggle="modal" data-target="#modalDelete">Delete</a>
+          <a class="btn btn-gold card-open-link" target="_blank" href="{{documentUrl}}">Open Document</a>
+          <div>
+            <form>
+              <input class="form-control card-doc-link" placeholder="Enter a document link here!" value="{{documentUrl}}">
+            </form>
+          </div>
         </div>
       </div>
     </div>
@@ -53,26 +75,37 @@
 {{/each}}
 
 {{#each complete}}
-  <div class="modal fade" id="{{_id}}" tabindex="-1" role="dialog" aria-labelledby="detailModalLabel">
+  <div class="modal fade currentCard" id="{{_id}}" tabindex="-1" role="dialog" aria-labelledby="detailModalLabel">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
           <div class="modal-title">
             <form id="modalHeader">
-              <input class="form-control" id="myModalLabel" value="{{title}}" placeholder="Enter a title here!">
+              <input class="form-control card-title" id="myModalLabel" value="{{title}}" placeholder="Enter a title here!" {{#if done}}disabled{{/if}} {{#if stageDone}}disabled{{/if}}>
             </form>
           </div>
         </div>
         <div class="modal-body">
-          <div class="editable">
+          <div id="summernote" class="editable card-notes">
             {{{notes}}}
           </div>
         </div>
         <div class="modal-footer">
-          <p>Lasted Edited: {{timeLastEdit}}</p>
-          <a class="btn btn-primary" data-dismiss="modal">Close</a>
-          <a class="btn btn-gold" target="_blank" href="{{documentUrl}}">Open Document</a>
+          <div display="inline-block">
+            <form>
+              <input class="form-control card-tag-new pull-left" placeholder="Add new tag">
+            </form>
+            <a class="btn btn-gold add-tag pull-left" data-toggle="tooltip" data-placement="top" title="Tag must be between 1 and 30 characters" data-trigger="manual">Add</a>
+            <div class="edit-time pull-right">Last Edited: {{timeLastEdit}}</div>
+          </div>
+          <a class="btn btn-primary card-delete" data-toggle="modal" data-target="#modalDelete">Delete</a>
+          <a class="btn btn-gold card-open-link" target="_blank" href="{{documentUrl}}">Open Document</a>
+          <div>
+            <form>
+              <input class="form-control card-doc-link" placeholder="Enter a document link here!" value="{{documentUrl}}" {{#if done}}disabled{{/if}} {{#if stageDone}}disabled{{/if}}>
+            </form>
+          </div>
         </div>
       </div>
     </div>
