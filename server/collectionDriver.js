@@ -148,9 +148,6 @@ CollectionDriver.prototype.save = function(collectionName, doc, userId, callback
     else if (collectionName == "grants") {
         doc.users.push(userId);
     }
-    else {
-        callback({error: "invalid collection"});
-    }
 
     db.collection(collectionName, function(error, collection) {
         if (error)

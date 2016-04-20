@@ -255,6 +255,19 @@ app.get('/:collection/:id', authenticate, function(req, res) {
         res.status(400).send({error: 'bad url', url: req.url});
 });
 
+/* For inserting new users */
+app.put('/users', function(req, res) {
+    var doc = req.body;
+    var collection = req.params.collection;
+
+    collectionDriver.save("users", doc, 0, function(error, results) {
+        if (error)
+            res.status(400).send(error);
+        else
+            res.json(results);
+     });
+});
+
 /* PUT: insert document in collection. */
 app.put('/:collection', authenticate, function(req, res) {
     var doc = req.body;

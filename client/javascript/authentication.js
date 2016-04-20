@@ -64,7 +64,7 @@ function onSignIn(googleUser) {
       };
 
       $.ajax({
-        url: 'users',
+        url: '/users',
         type: 'PUT',
         contentType: 'application/json',
         data: JSON.stringify(newUser),
