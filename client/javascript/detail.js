@@ -157,7 +157,7 @@ $.ajax({
         async: false,
         success: function(data) {
           cardTemplate = Handlebars.compile(data);
-          $('#columnList').html(cardTemplate(cards));
+          $('#columnList > div').html(cardTemplate(cards));
 
           // $("#preventPropagation").bind('click', function() {
           //   event.stopPropagation();
@@ -264,7 +264,7 @@ $(function() {
         }
       ]
     };
-    $("#columnList > div:first-child * .column").append(newCardTemplate(cardGenInfo));
+    $("#columnList > div > div:first-child * .sortable").append(newCardTemplate(cardGenInfo));
 
     var testCard = {
       title: title,
@@ -401,7 +401,7 @@ $('#cardGen').on('hidden.bs.modal', function() {
   $("#cardGenDocLink").val("");
 })
 
-$( ".column" ).sortable({
+$( ".sortable" ).sortable({
   //When a column receives a sortable
   receive : function (event, ui)
   {
@@ -413,15 +413,13 @@ $( ".column" ).sortable({
     cardID = xmlDOC.getElementById("detail-card").getAttribute("data-target").substring(1);
 
     //Get column name for receiving column.
-    receivingColumn = event.target.outerText.split(/\n/)[0];
+    receivingColumn = event.target.parentElement.children[0].innerText;
 
     //Get name of column it moved from
-    senderColumn = ui.sender.context.outerText.split(/\n/)[0];
+    senderColumn = ui.sender.context.parentElement.children[0].innerText;
 
     //TODO insert in correct position
     moveCard(cardID, senderColumn, receivingColumn, -1);
-
-    //console.log(event);
   }
 });
 
@@ -440,9 +438,9 @@ function moveCard(cardID, senderColumn, receivingColumn)
   });
 
   //Diagnostics
-  console.log("CARD ID: " + cardID)
-  console.log("Moved from column: " + databaseSenderColumnName);
-  console.log("To column: " + databaseReceivingColumnName)
+  // console.log("CARD ID: " + cardID)
+  // console.log("Moved from column: " + databaseSenderColumnName);
+  // console.log("To column: " + databaseReceivingColumnName)
 }
 
 function displayToDatabaseColumnName(columnName)

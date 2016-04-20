@@ -9,7 +9,7 @@ $(function() {
     dataType: 'json',
     async: false,
     success: function(overview) {
-      console.log(overview);
+      // console.log(overview);
       $.ajax({
         url: '/templates/sidebar.html',
         dataType: 'html',

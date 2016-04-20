@@ -30,7 +30,7 @@
   */
   height: 100%;
   /* margin-top: 0; */
-  /* margin-bottom: 0; */
+  margin-bottom: 26px;
   padding-bottom: 18px;  /* assuming this works for the general bootstrap columns */
 }
 
