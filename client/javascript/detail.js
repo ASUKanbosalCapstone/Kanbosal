@@ -398,7 +398,6 @@ $(function() {
 
 $('#cardGen').on('hidden.bs.modal', function() {
   $("#cardGenTitle").val("");
-  $("#cardGenBody").val("Enter card body here.");
   $("#cardGenDocLink").val("");
 })
 
