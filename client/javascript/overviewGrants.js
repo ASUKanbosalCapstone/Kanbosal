@@ -131,7 +131,7 @@ $(function() {
     };
 
     $.ajax({
-      url: 'http://localhost:8080/grants',
+      url: '/grants',
       type: 'PUT',
       data: JSON.stringify(myGrant),
       contentType: 'application/json',
