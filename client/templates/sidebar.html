@@ -2,7 +2,7 @@
   {{#if grants}}
     {{#each grants}}
       <li>
-        <a href="detail/{{_id}}">{{title}}</a>
+        <a href="detail/{{_id}}" class="overflow-ellipses" title="{{title}}">{{title}}</a>
       </li>
     {{/each}}
   {{else}}

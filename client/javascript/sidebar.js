@@ -1,4 +1,3 @@
-
 var toggleElement = $('#menu-toggle');
 var template;
 
@@ -18,18 +17,16 @@ $(function() {
         success: function(data) {
           template = Handlebars.compile(data);
           $('#sidebar').html(template(overview));
+          console.log(overview);
         }
       });
     }
-  })
+  });
 
-})
-
-$(function() {
-    toggleElement.on('click', function(e) {
-        e.preventDefault();
-        $('#sidebar').toggleClass('toggled');
-        $('#contentview').toggleClass('toggled');
-        toggleElement.toggleClass('toggled');
-    });
+  toggleElement.on('click', function(e) {
+    e.preventDefault();
+    $('#sidebar').toggleClass('toggled');
+    $('#contentview').toggleClass('toggled');
+    toggleElement.toggleClass('toggled');
+  });
 });

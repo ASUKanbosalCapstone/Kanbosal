@@ -509,12 +509,11 @@ footer h2 {
 }
 
 .sidebar-nav {
-    width: 300px;
     margin: 0px;
     padding: 0px;
     list-style: none;
     font-size: 16px;
-    font-weight: 700;
+    font-weight: 400;
     background-color: #404040;
 }
 
@@ -524,6 +523,7 @@ footer h2 {
 }
 
 .sidebar-nav li a {
+    padding: 0 10px 0 0;
     display: block;
     text-decoration: none;
     color: #EDEDED; /* white */
