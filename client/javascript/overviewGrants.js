@@ -51,9 +51,9 @@ $(function() {
       user = overview.user;
       loadNavbar(user);
 
-      // Remove delete priveledges for non admins
+      // Remove delete privileges for non admins
       if (user.permissions.level != 1) {
-        $('#grantEditDismiss').remove();
+        $('#grantEditDelete').remove();
       }
 
       loadDepartmentNavigation(overview);
