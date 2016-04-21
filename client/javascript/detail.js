@@ -374,7 +374,7 @@ $(function() {
 
   // Deletes the current card after delete confirmation
   $("#confirmDeleteButton").click(function() {
-    var cardId = $(".currentCard").attr("id");
+    var cardId = currentCard.id;
 
     $.ajax({
       url: "/cards/" + cardId,
