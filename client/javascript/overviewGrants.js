@@ -4,7 +4,7 @@ var grantid;
 
 var loadDepartmentNavigation = function(overview) {
   if(overview.user.permissions.level == 1) {
-    var stages = ["Research", "Internal", "ASU", "Complete"];
+    var stages = ['Research', 'Internal', 'ASU', 'Complete'];
 
     overview.departmentNames = stages;
     overview.currentDepartment = overview.user.permissions.stage;
@@ -40,7 +40,57 @@ var editGrant = function (grantid) {
   }).done(function() {
     window.location.reload(true);
   });
-}
+};
+
+var insertGrant = function (myGrant) {
+  $.ajax({
+    url: '/grants',
+    type: 'PUT',
+    data: JSON.stringify(myGrant),
+    contentType: 'application/json',
+    success: function(result) {
+      var updateObj = {$addToSet: {grantIds: result.insertedIds[0]}};
+
+      $.ajax({
+        url: '/users/' + user._id,
+        type: 'POST',
+        contentType: 'application/json',
+        data: JSON.stringify(updateObj),
+        success: function() {
+          // window.location.reload(true);
+          window.location = '/detail/' + result.insertedIds[0];
+        }
+      });
+    }
+  });
+};
+
+var createGrant = function (myGrant, cardTemplates) {
+  if (cardTemplates)
+    $.ajax({
+      url: '/cards',
+      type: 'PUT',
+      data: JSON.stringify(cardTemplates),
+      contentType: 'application/json',
+    }).done(function(result) {
+      myGrant.cardCount = result.insertedCount;
+      myGrant.stages[0].toDo = result.insertedIds;
+    }).then(function () {
+      insertGrant(myGrant);
+    });
+  else insertGrant(myGrant);
+};
+
+// var insertTemplateCards = function (templateObj, callback) {
+//   $.ajax({
+//     url: '/cards',
+//     type: 'PUT',
+//     data: JSON.stringify(templateObj),
+//     contentType: 'application/json',
+//   }).done(function(card) {
+//     callback(card._id);
+//   });
+// };
 
 $(function() {
   $.ajax({
@@ -52,7 +102,7 @@ $(function() {
       loadNavbar(user);
 
       // Remove delete privileges for non admins
-      if (user.permissions.level != 1) {
+      if (user.permissions.level !== 1) {
         $('#grantEditDelete').remove();
       }
 
@@ -98,63 +148,64 @@ $(function() {
     });
   });
 
-  $("#cardGenCreate").click(function () {
-    var grantDescription = $("#grantDescription").summernote('code');
-    var grantName = $("#grantName").val();
-    var grantUrl = $("#grantUrl").val();
+  $('#cardGenCreate').click(function () {
+    var grantDescription = $('#grantDescription').summernote('code');
+    var grantName = $('#grantName').val();
+    var grantUrl = $('#grantUrl').val();
+    var grantTemplate = parseInt($('#grantTemplate').val(), 10);
+    var templates = [
+      [{"title":"Cover Sheet","documentUrl":"","tags":[],"userIds":[],"lock":[false,false,false,false]},{"title":"Project Description","documentUrl":"","tags":[],"userIds":[],"lock":[false,false,false,false]},{"title":"References Cited","documentUrl":"","tags":[],"userIds":[],"lock":[false,false,false,false]},{"title":"Biosketch","documentUrl":"","tags":[],"userIds":[],"lock":[false,false,false,false]},{"title":"Departmental Letter","documentUrl":"","tags":[],"userIds":[],"lock":[false,false,false,false]},{"title":"Letters of Collaboration (optional)","documentUrl":"","tags":[],"userIds":[],"lock":[false,false,false,false]},{"title":"Budget","documentUrl":"","tags":[],"userIds":[],"lock":[false,false,false,false]},{"title":"Budget Justification","documentUrl":"","tags":[],"userIds":[],"lock":[false,false,false,false]}]
+      //add more temaplate here is needed
+    ];
 
     var myGrant = {
-      title : grantName,
-      description : grantDescription,
-      url : grantUrl,
-      users : [],
-      cardCount : 0,
-      stages: [
-        {
-          progress: 0.0,
-          toDo: [],
-          inProgress: [],
-          complete: []
-        },
-        {
-          progress: 0.0,
-          toDo: [],
-          inProgress: [],
-          complete: []
-        },
-        {
-          progress: 0.0,
-          toDo: [],
-          inProgress: [],
-          complete: []
-        },
-        {
-          progress: 0.0,
-          cards: []
-        }
-      ]
+      title: grantName,
+      description: grantDescription,
+      url: grantUrl,
+      users: [],
+      cardCount: 0,
+      stages: [{
+        toDo: [],
+        inProgress: [],
+        complete: []
+      }, {
+        toDo: [],
+        inProgress: [],
+        complete: []
+      }, {
+        toDo: [],
+        inProgress: [],
+        complete: []
+      }, {
+        cards: []
+      }]
     };
 
-    $.ajax({
-      url: '/grants',
-      type: 'PUT',
-      data: JSON.stringify(myGrant),
-      contentType: 'application/json',
-      success: function(result) {
-        var updateObj = {$addToSet: {grantIds: result._id}};
+    var cardTemplate = {
+      cardCount: 0,
+      cardIds: []
+    };
 
-        $.ajax({
-          url: '/users/' + user._id,
-          type: 'POST',
-          contentType: 'application/json',
-          data: JSON.stringify(updateObj),
-          success: function() {
-            window.location.reload(true);
-          }
-        });
-      }
-    });
-  })
+    switch (grantTemplate) {
+      case 0:
+        createGrant(myGrant);
+        break;
+      case 1:
+        // for (card in templates[0])
+        //   insertTemplateCards(templates[0][card], function(cardId) {
+        //     cardTemplate.cardCount += 1;
+        //     cardTemplate.cardIds.push(cardId);
+        //   });
+        createGrant(myGrant, templates[0]);
+        break;
+      // add more cases here if needed
+      default:
+        break;
+    }
+    
+    // console.log(myGrant);
+    // createGrant(myGrant, cardTemplate);
+  });
 
   $('#modalDelete').on('hidden.bs.modal', function() {
     $('#grantEdit').modal('hide');
