@@ -81,17 +81,6 @@ var createGrant = function (myGrant, cardTemplates) {
   else insertGrant(myGrant);
 };
 
-// var insertTemplateCards = function (templateObj, callback) {
-//   $.ajax({
-//     url: '/cards',
-//     type: 'PUT',
-//     data: JSON.stringify(templateObj),
-//     contentType: 'application/json',
-//   }).done(function(card) {
-//     callback(card._id);
-//   });
-// };
-
 $(function() {
   $.ajax({
     url: 'getOverview',
