@@ -153,8 +153,8 @@ CollectionDriver.prototype.save = function(collectionName, doc, userId, callback
         if (error)
             callback(error);
         else {
-            collection.insertOne(doc, function() {
-                callback(null, doc);
+            collection.insert(doc, function(err, result) {
+                callback(null, result);
             });
         }
     });

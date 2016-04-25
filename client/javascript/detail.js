@@ -284,7 +284,7 @@ $(function() {
       success: function(card) {
         // update grant here with result's _id parameter
         // might need to add progress bar updating here as well
-        var updateParams = {$inc: {cardCount: 1}, $addToSet: {"stages.0.toDo": card._id}};
+        var updateParams = {$inc: {cardCount: card.insertedCount}, $addToSet: {"stages.0.toDo": card.insertedIds[0]}};
 
         $.ajax({
           url: '/updateGrant',
