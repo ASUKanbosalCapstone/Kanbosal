@@ -30,6 +30,13 @@ var editGrant = function (grantid) {
     url: $('#grantUrlEdit').val()
   };
 
+  // check to make sure entered documentLink has http/https appended to the front
+  var regex = new RegExp("(http|https|ftp)://");
+
+  if (!regex.test(jsonObj.url.toLowerCase())) {
+    jsonObj.url = "http://" + jsonObj.url.toLowerCase();
+  }
+
   $.ajax({
     url: '/grants/' + grantid,
     type: 'POST',
@@ -140,12 +147,19 @@ $(function() {
   $('#cardGenCreate').click(function () {
     var grantDescription = $('#grantDescription').summernote('code');
     var grantName = $('#grantName').val();
-    var grantUrl = $('#grantUrl').val();
+    var grantUrl = $('#grantUrl').val().toLowerCase();
     var grantTemplate = parseInt($('#grantTemplate').val(), 10);
     var templates = [
       [{"title":"Cover Sheet","documentUrl":"","tags":[],"userIds":[],"lock":[false,false,false,false]},{"title":"Project Description","documentUrl":"","tags":[],"userIds":[],"lock":[false,false,false,false]},{"title":"References Cited","documentUrl":"","tags":[],"userIds":[],"lock":[false,false,false,false]},{"title":"Biosketch","documentUrl":"","tags":[],"userIds":[],"lock":[false,false,false,false]},{"title":"Departmental Letter","documentUrl":"","tags":[],"userIds":[],"lock":[false,false,false,false]},{"title":"Letters of Collaboration (optional)","documentUrl":"","tags":[],"userIds":[],"lock":[false,false,false,false]},{"title":"Budget","documentUrl":"","tags":[],"userIds":[],"lock":[false,false,false,false]},{"title":"Budget Justification","documentUrl":"","tags":[],"userIds":[],"lock":[false,false,false,false]}]
       //add more temaplate here is needed
     ];
+
+    // check to make sure entered documentLink has http/https appended to the front
+    var regex = new RegExp("(http|https|ftp)://");
+
+    if (!regex.test(grantUrl.toLowerCase())) {
+      grantUrl = "http://" + grantUrl.toLowerCase();
+    }
 
     var myGrant = {
       title: grantName,

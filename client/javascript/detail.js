@@ -244,7 +244,7 @@ $(function() {
   $( "#cardGenCreate" ).click(function() {
     var title = $("#cardGenTitle").val();
     var body = $("#cardGenBody").html();
-    var documentLink = $("#cardGenDocLink").val();
+    var documentLink = $("#cardGenDocLink").val().toLowerCase();
     var modalID = title.replace(" ", "-");
     cardGenInfo = {
       Card_Name: title,
@@ -265,6 +265,13 @@ $(function() {
       ]
     };
     $("#columnList > div > div:first-child * .sortable").append(newCardTemplate(cardGenInfo));
+
+    // check to make sure entered documentLink has http/https appended to the front
+    var regex = new RegExp("(http|https|ftp)://");
+
+    if (!regex.test(documentLink)) {
+      documentLink = "http://" + documentLink;
+    }
 
     var testCard = {
       title: title,
@@ -353,6 +360,13 @@ $(function() {
     };
 
     if (isCardChanged(card)) {
+      // check to make sure entered documentLink has http/https appended to the front
+      var regex = new RegExp("(http|https|ftp)://");
+
+      if (!regex.test(card.documentUrl.toLowerCase())) {
+        card.documentUrl = "http://" + card.documentUrl.toLowerCase();
+      }
+
       var updateParams = {$set: {title: card.title, notes: card.notes, documentUrl: card.documentUrl}};
 
       $.ajax({
