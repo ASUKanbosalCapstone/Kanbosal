@@ -16,6 +16,12 @@ var totalCards = function(cards) {
 
 var calculateProgress = function(cards) {
   progressBar.progress = (cards.complete.length + 0.5 * cards.inProgress.length) / totalCards(cards) * 100;
+
+  if (isNaN(progressBar.progress))
+    progressBar.progress = 0;
+
+  progressBar.progress = Math.round(progressBar.progress * 100) / 100
+
   return progressBar;
 }
 
