@@ -11,7 +11,7 @@ var sessions = require('client-sessions');
 var app = express();
 
 // Express settings
-app.set('port', process.env.PORT || 8080);
+app.set('port', process.env.PORT || 3000);
 app.use(express.static(path.join(__dirname, '../client')));
 app.use(bodyParser.json());
 app.set('views', __dirname + '/../client');
